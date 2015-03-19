@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: "../../WebContent/module/",
+	baseUrl: "../web-modules/module/",
 	paths: {
 		jquery: "_lib/jquery.min",
 		alertMsg: "alertMsg/alertMsg",
