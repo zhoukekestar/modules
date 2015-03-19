@@ -1,11 +1,14 @@
-Web modules.
-## 1、HTML5 Form
-* 由于HTML5在大多游览器上的支持不够好，特别是在表单属性和表单类型上。
-* 为了方便表单的广泛使用，也是为了对HTML5更加友好。
-* 该项目用javascript的方式去实现某些HTML5的现有标准。
+nodejs project.
+## 1、MongoDb log system
+* 基于mongodb的日志系统
 
-## 2、Form validator
-* 由于HTML5的表单属性pattern未得到广泛支持，所以用javascript的方式去实现。
+## 2、bootstrap-core
+* bootstrap-core 使用bootstrap的核心样式，以便与其他框架结合
 
-## 3、alert
-* 以$.alertMsg("")的方式，提示并自动消失
+## 3、压缩js
+* 使用grunt-contrib-uglify和grunt-contrib-requirejs压缩js的样例
+
+## 4、模块化js
+* 1) alertMsg
+* 2) formValidator
+* 3) formSubmit
