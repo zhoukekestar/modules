@@ -7,6 +7,7 @@
 
 module.exports = function (grunt) {
   'use strict';
+    debugger;
    // Project configuration.
   grunt.initConfig({
 
@@ -38,9 +39,10 @@ module.exports = function (grunt) {
 	},
   });
   
-  
+  console.log("hi");
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-less');
-  
+
+    console.log("end");
   grunt.registerTask('default', ['less:compileCore', "cssmin:minifyCore"]);
 };

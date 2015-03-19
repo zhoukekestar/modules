@@ -37,7 +37,7 @@ module.exports = function(grunt){
 			},
 			compileb: {
 				options: {
-					name: "b",
+					name: "bb",
 					mainConfigFile: "./requirejs.config.js",
 					out: "./output/require.b.js",
 					include: ["a"]

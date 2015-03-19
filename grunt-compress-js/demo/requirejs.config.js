@@ -1,11 +1,11 @@
 require.config({
 	paths: {
 		a: "a",
-		b: "b"
+		bb: "b"
 	},
 	shim: {
 		a: {
-			deps: ["b"]
+			deps: ["bb"]
 		}
 	}
 });

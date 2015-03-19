@@ -1,13 +1,35 @@
 module.exports = function(grunt){
 
-	var nameList = ["alertMsg", 
-	                "formValidator", 
-	                "formSubmit"];
+	var nameList = [
+        "alertMsg",                 // 1
+	    "formValidator",            // 2
+	    "formSubmit",               // 3
+        "baseUtils",                // 4
+        "pullDown",                 // 5
+        "pullUp",                   // 6
+
+        "swiper",                   // 7
+        "gaodeMap",                 // 8
+        "jqueryCookie",             // 9
+        "jqueryLazyload",           // 10
+
+        "jweixin",                  // 11
+    ];
 	var excludeList = [
-	                   ["jquery"], 
-	                   ["jquery", "alertMsg"], 
-	                   ["formValidator"]
-	                  ];
+        ["jquery"],                  //alertMsg             1
+        ["jquery", "alertMsg"],     // formValidator        2
+        ["formValidator"],          // formSubmit           3
+        ["jquery"],                 // baseUtils            4
+        ["jquery"],                 // pullDown             5
+        ["jquery"],                 // pullUp               6
+
+        [],                         // swiper               7
+        [],                         // gaodeMap             8
+        ["jquery"],                 // jqueryCookie         9
+        ["jquery"],                 // jqueryLazyload       10
+
+        [],                         // jweixin              11
+    ];
 	
 	var uglifyList = new Array();
 	var requireTask = {};
