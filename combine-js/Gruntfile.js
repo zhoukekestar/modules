@@ -1,19 +1,21 @@
 module.exports = function(grunt){
 
 	var nameList = [
-        "alertMsg",                 // 1
-	    "formValidator",            // 2
-	    "formSubmit",               // 3
-        "baseUtils",                // 4
-        "pullDown",                 // 5
-        "pullUp",                   // 6
+        "alertMsg",                      // 1
+	    "formValidator",                // 2
+	    "formSubmit",                   // 3
+        "baseUtils",                    // 4
+        "pullDown",                     // 5
+        "pullUp",                       // 6
 
-        "swiper",                   // 7
-        "gaodeMap",                 // 8
-        "jqueryCookie",             // 9
-        "jqueryLazyload",           // 10
+        "swiper",                       // 7
+        "gaodeMap",                    // 8
+        "jqueryCookie",               // 9
+        "jqueryLazyload",              // 10
 
-        "jweixin",                  // 11
+        "jweixin",                      // 11
+        "shareWX",                      // 12
+        "jqueryMobile",                 // 13
     ];
 	var excludeList = [
         ["jquery"],                  //alertMsg             1
@@ -29,6 +31,8 @@ module.exports = function(grunt){
         ["jquery"],                 // jqueryLazyload       10
 
         [],                         // jweixin              11
+        ["jquery", "jweixin"],      // shareWX              12
+        ["jquery"],                 // JqueryMobile         13
     ];
 	
 	var uglifyList = new Array();
@@ -65,7 +69,7 @@ module.exports = function(grunt){
             },
             release: {
                 files: {
-                	"./output/all.min.js": uglifyList
+                	"./output/web-modules.min.js": uglifyList
                 }
             }
         },

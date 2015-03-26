@@ -7,7 +7,6 @@
 
 module.exports = function (grunt) {
   'use strict';
-    debugger;
    // Project configuration.
   grunt.initConfig({
 
@@ -18,12 +17,6 @@ module.exports = function (grunt) {
             ' * Copyright 2011-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
             ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
             ' */\n',
-	less: {
-	  compileCore: {
-		src: "less/bootstrap.less",
-		dest: "dist/<%= pkg.name %>.css"
-	  }
-	},
 	cssmin: {
 		options: {
 			// TODO: disable `zeroUnits` optimization once clean-css 3.2 is released
@@ -32,17 +25,16 @@ module.exports = function (grunt) {
 			keepSpecialComments: '*',
 			advanced: false
 		},
-		minifyCore: {
-			src: 'dist/<%= pkg.name %>.css',
-			dest: 'dist/<%= pkg.name %>.min.css'
-		}
+        cssTest: {
+            files: {
+                "all.css": ["a.css", "b.css"]
+            }
+        }
 	},
   });
-  
-  console.log("hi");
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-less');
 
-    console.log("end");
-  grunt.registerTask('default', ['less:compileCore', "cssmin:minifyCore"]);
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+
+
+  grunt.registerTask('default', ["cssmin:cssTest"]);
 };

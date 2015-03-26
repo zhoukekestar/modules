@@ -17,7 +17,9 @@ require.config({
 		pullDown: 'pull-v2/pullDown',
 		pullUp: 'pull-v2/pullUp',
 		formValidator: 'H5Form/formValidator',
-		formSubmit: 'H5Form/formSubmit'
+		formSubmit: 'H5Form/formSubmit',
+        shareWX: 'shareWX/shareWX',
+        jqueryMobile: '_lib/jquery-mobile/jquery.mobile.custom'
 		
 	},
 	shim: {
