@@ -25,6 +25,7 @@ module.exports = function (grunt) {
             ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
             ' * Licensed under <%= pkg.license %>\n' +
             ' * Include ' + nameList.toString() + ' \n' +
+            ' * Update on <%= grunt.template.today("yyyy-mm-dd hh:MM;ss") %> \n' +
             ' */\n',
         footer: "\n/*! include:" + nameList.toString() + "*/",
         less: {

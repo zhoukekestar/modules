@@ -8,6 +8,10 @@
 *
 */
 
+// add by zkk @ 20150327
+!(function(){
+// add by zkk @ 20150327
+
 (function ( root, doc, factory ) {
 	if ( typeof define === "function" && define.amd ) {
 		// AMD. Register as an anonymous module.
@@ -6825,3 +6829,8 @@ $.mobile.transitionFallbacks.turn = "fade";
 
 
 }));
+
+
+    // add by zkk @ 20150327
+}());
+// add by zkk @ 20150327

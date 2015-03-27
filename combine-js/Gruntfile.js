@@ -1,5 +1,7 @@
 module.exports = function(grunt){
 
+    // TODO config requirejs.config.js
+
 	var nameList = [
         "alertMsg",                      // 1
 	    "formValidator",                // 2
@@ -16,6 +18,7 @@ module.exports = function(grunt){
         "jweixin",                      // 11
         "shareWX",                      // 12
         "jqueryMobile",                 // 13
+        "citySelect",                 // 14
     ];
 	var excludeList = [
         ["jquery"],                  //alertMsg             1
@@ -33,6 +36,7 @@ module.exports = function(grunt){
         [],                         // jweixin              11
         ["jquery", "jweixin"],      // shareWX              12
         ["jquery"],                 // JqueryMobile         13
+        ["jquery"],                 // citySelect         14
     ];
 	
 	var uglifyList = new Array();
@@ -57,15 +61,20 @@ module.exports = function(grunt){
 		requireTask["compile-" + nameList[i]] = t;
 		
 	}
-	
 
     // 项目配置
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-                footer: "\n/*! include:" + nameList.toString() + "*/"
+               banner: '/*!\n' +
+                        ' * web-moduels v<%= pkg.version %>\n' +
+                        ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+                        ' * Licensed under <%= pkg.license %>\n' +
+                        ' * Include ' + nameList.toString() + ' \n' +
+                        ' * Update on <%= grunt.template.today("yyyy-mm-dd hh:MM;ss") %> \n' +
+                        ' */\n',
+                footer: "\n/*! @zkk */"
             },
             release: {
                 files: {

@@ -19,7 +19,8 @@ require.config({
 		formValidator: 'H5Form/formValidator',
 		formSubmit: 'H5Form/formSubmit',
         shareWX: 'shareWX/shareWX',
-        jqueryMobile: '_lib/jquery-mobile/jquery.mobile.custom'
+        jqueryMobile: '_lib/jquery-mobile/jquery.mobile.custom',
+        citySelect: 'citySelect/citySelect'
 		
 	},
 	shim: {
