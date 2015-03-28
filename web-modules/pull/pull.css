@@ -1,0 +1,91 @@
+.pull-container{
+	width:100%;
+	position: relative;
+}
+.pull-wrapper{
+	position: absolute;
+	width: 100%;
+}
+
+/*下拉加载样式*/
+.pull-down-fresher{
+	position: absolute;
+width: 100%;
+height: 800px;
+top: -800px;
+}
+.pull-down-fresher:before,
+.pull-down-fresher:after
+{
+	content: "";
+	display: block;
+	position: absolute;
+	bottom: 20px;
+	height: 20px;
+	width: 20px;
+	left: 50%;
+}
+.pull-down-fresher:before{
+	margin-left: -60px;
+	background-image: url(scroll-down.png);
+	background-size: 100%;
+	transition: transform 1s;
+	-webkit-transition: -webkit-transform 1s;
+}
+.pull-down-fresher:after{
+	width: 50%;
+	content:"下拉刷新";
+	margin-left: -30px;
+}
+
+.pull-down-fresher.tip:before{
+	transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+}
+.pull-down-fresher.tip:after{
+	content: "下拉刷新";
+}
+
+.pull-down-fresher.ready:before{
+	transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+}
+.pull-down-fresher.ready:after{
+	content: "释放以更新";
+}
+
+.pull-down-fresher.loading:before{
+	background-image: url(loading.gif);
+}
+.pull-down-fresher.loading:after{
+	content: "加载中";
+}
+
+/*上拉加载*/
+.pull-up-loader{
+	position: relative;
+	height: 20px;
+}
+.pull-up-loader:before,
+.pull-up-loader:before{
+	display: block;
+	height: 20px;
+	width: 20px;
+	background-color: #f0f;
+	position: absolute;
+}
+.pull-up-loader:before{
+	content: "";
+	left: 50%;
+	margin-left: -60px;
+	background: url(loading.gif);
+	background-size: 100%;
+}
+.pull-up-loader:after{
+	content: "加载中";
+	position: absolute;
+	width: 50%;
+	left: 50%;
+	top: 0;
+	margin-left: -24px;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+
+<style>
+.ui-radio{
+	height: 30px;
+	width: 30px;
+	background-image: none;
+	display: inline-block;
+	background-color: transparent;
+	-webkit-appearance: none;
+	appearance: none;
+	border: solid 3px #ccc;
+	border-radius: 50%;
+	outline: none !important;
+	position: relative;
+	box-sizing: border-box;
+	margin: 3px;
+}
+.ui-radio:checked{
+	border: solid 3px #34b93d;
+}
+.ui-radio:checked:before{
+	content: "";
+position: absolute;
+height: 50%;
+width: 50%;
+background-color: #34b93d;
+display: block;
+border-radius: 100%;
+left: 25%;
+top: 25%;
+}
+.ui-radio.ui-radio-sm{
+height: 15px;
+width: 15px;
+border: solid 2px #ccc;
+}
+.ui-radio.ui-radio-sm:checked{
+border: solid 2px #34b93d;
+}
+
+
+
+</style>
+</head>
+<body>
+<label>
+	<input type="radio" class="ui-radio" checked name="a" value="1">
+	等于1
+</label>
+<label>
+<input type="radio" class="ui-radio" name="a" value="2">
+	等于2
+</label>
+<label>
+	<input type="radio" class="ui-radio" name="a" value="3">
+	等于3
+</label>
+
+<br>
+
+<label>
+	<input type="radio" class="ui-radio ui-radio-sm" checked name="a" value="1">
+	1
+</label>
+<label>
+<input type="radio" class="ui-radio ui-radio-sm" name="a" value="2">
+	2
+</label>
+<label>
+	<input type="radio" class="ui-radio ui-radio-sm" name="a" value="3">
+	3
+</label>
+</body>
+</html>

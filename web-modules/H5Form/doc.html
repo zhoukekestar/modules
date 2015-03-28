@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<base charset="UTF-8">
+		<base target="_blank">
+		<style>
+			li span{
+				margin-left: 20px;
+				background-color: #4AFF45;
+				border-radius: 5px;
+				padding: 0 6px;
+			}
+			li.no-w3c{
+				color:#f00;
+			}
+			span.ignore{
+				background-color: #f00;
+			}
+			li.no-w3c::after {
+				content: "非官方";
+				font-size: 23%;
+				margin-left: 20px;
+				color: rgba(237, 11, 11, 0.23);
+			}
+		</style>
+	</head>
+	<body>
+		<a class="h3" href="http://www.w3school.com.cn/html5/html_5_form_input_types.asp">表单类型</a>
+		<ul>
+			<li>email<span>OK</span></li>
+			<li>url<span>OK</span></li>
+			<li>number<span>OK</span></li>
+			<li>range</li>
+			<li>Date pickers (date, month, week, time, datetime, datetime-local)</li>
+			<li>search</li>
+			<li>color</li>
+			<li class="no-w3c">cellphone<span>OK</span></li>
+			<li class="no-w3c">integer</li>
+		</ul>
+		<h3>新的 form 属性：</h3>
+		<ul>
+			<li>autocomplete<span class="ignore">ignore</span></li>
+			<li>novalidate</li>
+			<li class="no-w3c">data-role="H5Form" 启用H5特性</li>
+			<li class="no-w3c">data-proxy="" AJAX代理地址 </li>
+			<li class="no-w3c">data-data-type="" AJAX的data-type属性</li>
+			<li class="no-w3c">data-async="" AJAX的async属性</li>
+		</ul>
+		<a class="h3" href="http://www.w3school.com.cn/html5/html_5_form_attributes.asp">input 属性：</a>
+		<ul>
+			<li>autocomplete<span class="ignore">ingore</span></li>
+			<li>autofocus<span class="ignore">ingore</span></li>
+			<li>form</li>
+			<li>form overrides (formaction, formenctype, formmethod, formnovalidate, formtarget)</li>
+			<li>height 和 width<span class="ignore">ingore</span></li>
+			<li>list</li>
+			<li>min, max 和 step</li>
+			<li>multiple</li>
+			<li>pattern (regexp)<span>OK</span></li>
+			<li>placeholder<span class="ignore">ingore</span></li>
+			<li>required<span>OK</span></li>
+			<li class="no-w3c">data-msg-err="" 输入错误消息</li>
+			<li class="no-w3c">data-equalto="" 输入值等于 </li>
+			<li class="no-w3c">data-func="" 自定义函数校验  通过$.formValidator.addMethod(name, func)方法添加自定义函数</li>
+		</ul>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<link rel="stylesheet" href="pull.css">
+</head>
+<body style="padding:0; margin:0;">
+	
+	<div style="height:50px;background-color:#f00;z-index: 100;position: relative;">
+		<p style="margin:0; padding:0; color:#fff;">title</p>
+	</div>
+	<div class="pull-container">
+		<div class="pull-wrapper" style="background-color:#ff0;">
+			<div class="pull-down-fresher"></div>
+			<h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1><h1>12312</h1>
+			<div class="pull-up-loader"></div>
+		</div>
+	</div>
+	
+	<script src="//cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
+	<script>
+		require.config({
+			baseUrl: './',
+			paths: {
+				jquery: 'http://cdn.bootcss.com/jquery/2.1.3/jquery.min',
+				pullDown: 'pull',
+				pullUp: 'pull'
+			}
+		});
+
+		require(["pullDown", "pullUp"], function($){
+			
+			$(".pull-up-loader").pullUp(function($this, callback){
+				
+				setTimeout(function(){
+					$this.before(Math.random() + "<br>333<br><hr>");
+				
+					// 必须写此函数
+					callback();
+				}, 3000);
+			});
+			$(".pull-wrapper").pullDown({
+				loading: function(callback){
+					
+					console.log("loading...11111");
+					setTimeout(function(){
+						console.log("loading...2222");
+						callback();
+					}, 3000);
+				}
+			});
+		})
+	</script>
+</body>
+</html>

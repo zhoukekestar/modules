@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="paging.css" type="text/css" />
+</head>
+<body>
+	<div class="paging"></div>
+	<script src="//cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
+	<script>
+	require.config({
+		baseUrl: './',
+		paths: {
+			jquery: 'http://cdn.bootcss.com/jquery/2.1.3/jquery.min',
+			paging: 'paging',
+		}
+	});
+	function getQueryString(name) {
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	    var r = window.location.search.substr(1).match(reg);
+	    if (r != null) return decodeURI(r[2]); return null;
+	}
+	    
+	
+	require(["paging"], function(){
+		$(".paging").paging({
+			current: getQueryString("p"), 
+			onselect: function(n){
+				location.href = "./demo.html?p=" + n;
+			},
+			total: 1205,
+			pagesize: 10
+		});
+	});
+	</script>
+</body>
+</html>

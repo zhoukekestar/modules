@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+.main-menu,.sub-menu
+{
+    list-style-type: none;
+    padding: 0;
+}
+
+.main-menu > li
+{
+    line-height: 40px;
+    position: relative;
+    padding-left:52px;
+}
+.sub-menu > li{
+    line-height: 40px;
+    position: relative;
+    font-size: 12px;
+    /* padding-left: 18px; */
+}
+.main-menu > li > img
+{
+    position: absolute;
+    left: 25px;
+    top:12px;
+    height: 15px;
+    width: 15px;
+}
+.no-sub:hover,.sub-menu li:hover
+{
+    cursor: pointer;
+    color: #ccc;
+}
+.has-sub:hover
+{
+    cursor: pointer;
+}
+.main-active,.sub-active
+{
+    color: #000;
+    font-weight:bold;
+}
+.triangle-right{
+	border: solid 5px;
+	border-color: transparent transparent transparent #000;
+	height: 0;
+	width: 0;
+	display: block;
+	position: absolute;
+	top: 14px;
+	left: 121px;
+}
+.triangle-down{
+	border: solid 5px;
+	height: 0;
+	width: 0;
+	display: block;
+	position: absolute;
+	top: 17px;
+	left: 121px;
+	border-color: #000 transparent transparent;
+}

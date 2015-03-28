@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+.paging li {
+	display: block;
+	background-color: rgba(255, 255, 255, 1);
+	padding: 3px;
+	width: 25px;
+	text-align: center;
+	color: #26a3b7;
+	text-decoration: none;
+	float: left;
+	border-right: solid #A2A2A2 1px;
+	border-top: solid #A2A2A2 1px;
+	border-bottom: solid #A2A2A2 1px;
+	cursor: pointer;
+	font-weight: bolder;
+}
+.paging li.first-child{
+	border-left: solid #A2A2A2 1px;
+	border-radius: 5px 0 0 5px;
+}
+.paging li.last-child{
+	border-radius: 0 5px 5px 0;
+}
+.paging li:hover {
+	color: #fff;
+	background-color: #80D6E4;
+}
+.paging li.disabled:hover{
+	cursor: no-drop;
+	color: #26a3b7;
+	background-color: rgba(255, 255, 255, 1);
+}
+.paging li.active,.paging li.active:hover{
+	color: #FFF;
+	background-color: #26a3b7;
+}
+/*clearfix*/
+.paging:after {
+	content: "";
+	clear: both;
+	display: block;
+}

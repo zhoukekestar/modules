@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<base href="../../" />
+<meta charset="utf-8">
+<title>jQuery File Upload Example</title>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.base.util.js"></script>
+<link href="module/jquery-file-upload/fileupload.toomao.v2.css" rel="stylesheet" />
+
+</head>
+<body>
+	<div data-role="page">
+		<div class="upload-pic-note-div" style="display:none"></div>
+		<div role="main" class="ui-content">
+			<div id="zhou">
+				
+				
+			</div>
+			<div id="zhou111">一个的情况</div>
+			<br>
+			<br>
+			<div id="zhou2"></div>
+			<div id="zhou112">一个的情况,设置默认</div>
+			<br>
+			<br>
+			<div id="zhoukeke" style="height: 150px;"></div>
+			<div id="zhoukeke1">在有图片的情况下</div>
+			
+			<br>
+			<div id="zhoukeke2" style="height: 150px;"></div>
+			<div id="zhoukeke3">空的一个list</div>
+			
+		</div>
+	</div>
+
+	<script src="module/jquery-file-upload/all/js/vendor/jquery.ui.widget.js"></script>
+	<script src="module/jquery-file-upload/all/js/jquery.iframe-transport.js"></script>
+	<script src="module/jquery-file-upload/all/js/jquery.fileupload.js"></script>
+
+	<script src="module/jquery-file-upload/fileupload.toomao.v2.js"></script>
+	<script src="module/jquery-file-upload/fileupload.toomao.v2.list.js"></script>
+	<script>
+
+        $(function () {
+			$("#zhou").toomaoUpload({
+				submit:"zhou111",
+				single:true,
+				height:110, 
+				width:110,
+				running:function(d)
+				{
+					console.log("pro:" + d);
+				},
+				done:function(d)
+				{
+					console.log(d);
+				},
+				notDoneButClick:function()
+				{
+					console.log("not done");
+				}
+				});
+
+			$("#zhou2").toomaoUpload({
+				hadPic:"http://tb1.bdstatic.com/tb/maimeng.jpg",
+				submit:"zhou112",
+				single:true,
+				height:110, 
+				width:110,
+				running:function(d)
+				{
+					console.log("pro:" + d);
+				},
+				done:function(d)
+				{
+					console.log(d);
+				},
+				notDoneButClick:function()
+				{
+					console.log("not done");
+				}
+				});
+			
+
+        	$("#zhoukeke").toomaoUploadList({
+        		hadPics:["http://tb1.bdstatic.com/tb/maimeng.jpg",
+        		         "http://tb.himg.baidu.com/sys/portrait/item/d442bbd4bbcd323030386b6304"],
+        		submit:"zhoukeke1", 
+        		done:function(d){
+        			console.log("所有图片上传ok，图片上传完之后执行的函数放这里。\n" + d);
+        			$(".upload-pic-note-div").hide();
+        		},
+        		running:function(d, id)
+        		{
+        			$(".upload-pic-note-div").show();
+        			$("#zhoukeke .fileupload-list .fileupload-list-item").each(function(index){
+        				if ($(this).attr("id") == id)
+        				{
+        					var str = "第" + (index + 1) + "张图片已完成" + d + "%";
+        					$(".upload-pic-note-div").html(str);
+        				}
+        			});
+        		},
+        		height:120,
+        		width:250
+        	});
+        	
+        	$("#zhoukeke2").toomaoUploadList({submit:"zhoukeke3"});
+		
+        });
+
+    </script>
+</body>
+</html>
