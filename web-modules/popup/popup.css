@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+.page-popup{
+position: fixed;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.8);
+z-index: 2;
+color: #fff;
+/*transition: left .5s;*/
+overflow-y: scroll;
+top: 0;
+left: 0;
+}
+.popup-close{
+text-align: right;
+padding: 1em;
+margin: 0;
+font-size: 1.2em;
+}
+.popup-list{
+margin: 0;
+list-style: none;
+padding: 0;
+}
+.popup-list li{
+display: block;
+width: 12em;
+margin: auto;
+position: relative;
+padding: .5em 1em .5em 4em;
+}
+.popup-list li + li{
+border-top: solid 1px #fff;
+}
+.popup-list img{
+position: absolute;
+width: 2em;
+height: 2em;
+left: 1em;
+top: 1em;
+}
+.popup-list a{
+display: block;
+margin: 1em 0;
+color: #fff;
+text-decoration: none;
+}

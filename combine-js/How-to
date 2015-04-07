@@ -1,0 +1,9 @@
+Edit requirejs.config.js File.
+    If your module is AMD module, just add it to "paths" like:  citySelect: 'citySelect/citySelect';
+    If your module is not AMD module, add it to "paths" like:  jweixin: "_lib/jweixin-1.0.0",
+        then you should edit "shim" node to add its exports & dependencies.
+
+
+Edit Gruntfile.js
+    Add your module name (Define on requirejs.config.js) to namelist.
+    Add your module's dependencies to excludeList to min module.

@@ -10,7 +10,7 @@
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 			var r = window.location.search.substr(1).match(reg);
 			if (r != null)
-				return unescape(r[2]);
+				return decodeURI(r[2]);
 			return null;
 		},
 		getStyle : function(obj, attr) {
@@ -50,49 +50,6 @@
 			}else{
 				$codediv.text("重新获取").removeAttr("disabled");
 			}
-		},
-		checkCode: function (code, cellphone, type, callback) {
-			var v = code;
-			var ok = false;
-			if (v.length == 0)
-			{
-				return;	
-			}
-			if (v.length != 6)
-			{
-				$.alertMsg("验证码格式错误");
-				return;
-			}
-			$.tools.req({
-				method:"put",
-				url:$base + "user/checkverifycode?cellphone="+cellphone+"&authcode=" + code + "&type=" + type,
-				success: function(d) {
-					$.alertMsg("校验成功");
-					ok = true;
-				},
-				last:function()
-				{
-					if (typeof callback == "function")
-						callback(ok);
-				}
-			});
-		},
-		getCode: function (cellphone, $getCodeBtn, type, callback)
-		{
-			$.tools.get({
-				url:$base + "user/requestverifycode?cellphone="+ cellphone + "&type=" + type, 
-				success:function(d) {
-					$.alertMsg("短信已发送，请注意查收");
-					$.tools.stopWatch($getCodeBtn, 60);
-				},
-				error:function(){
-					$.alertMsg("网络错误");
-				},
-				last:function(){
-					if (typeof callback == "function")
-						callback();
-				}
-			});
 		},
 		freshImgCode: function ($imgDiv) {
 		  	$imgDiv.html("");

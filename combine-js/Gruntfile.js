@@ -19,6 +19,8 @@ module.exports = function(grunt){
         "shareWX",                      // 12
         "jqueryMobile",                 // 13
         "citySelect",                 // 14
+        'popup',                        // 15
+        'tabs'                          // 16
     ];
 	var excludeList = [
         ["jquery"],                  //alertMsg             1
@@ -33,10 +35,12 @@ module.exports = function(grunt){
         ["jquery"],                 // jqueryCookie         9
         ["jquery"],                 // jqueryLazyload       10
 
-        [],                         // jweixin              11
-        ["jquery", "jweixin"],      // shareWX              12
+        [],                           // jweixin              11
+        ["jquery", "jweixin"],     // shareWX              12
         ["jquery"],                 // JqueryMobile         13
         ["jquery"],                 // citySelect         14
+        ["popup"],                  // popup         15
+        ["tabs"],                   // tabs         16
     ];
 	
 	var uglifyList = new Array();

@@ -112,21 +112,23 @@
 	}
 	
 	// Form validation init.
-	$("form[data-role='H5Form']").find("input[type!='hidden']").each(function(){
-		// Get group
-		var group = $(this).parents(".form-group")[0];
-		
-		//Add input-tooltip
-		$(group).append("<span class='input-tooltip'></span>");
-		
-		// hide
-		$(group).find(".input-tooltip").hide();
-		
-		// valid
-		$(this).blur(function(){
-			validInput(this);
-		});
-	});
+    $.formValidator.init = function() {
+        $("form[data-role='H5Form']").find("input[type!='hidden']").each(function () {
+            // Get group
+            var group = $(this).parents(".form-group")[0];
+
+            //Add input-tooltip
+            $(group).append("<span class='input-tooltip'></span>");
+
+            // hide
+            $(group).find(".input-tooltip").hide();
+
+            // valid
+            $(this).blur(function () {
+                validInput(this);
+            });
+        });
+    }
 	
 	return validInput;
 });

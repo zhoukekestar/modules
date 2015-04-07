@@ -56,7 +56,14 @@
 
         // ---The User Setting.---
         // The input options(o) is primary!!
-        options = $.extend(options, o);
+        if (typeof o == "function") {
+            options = $.extend(options, {
+               success: o
+            });
+        } else {
+            options = $.extend(options, o);
+        }
+
 
         if (options.proxy == undefined || options.proxy == "") {
             $.ajax({
@@ -87,4 +94,6 @@
         }
 
     };
+
+    return $.formValidator.init;
 });

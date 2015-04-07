@@ -20,8 +20,9 @@ require.config({
 		formSubmit: 'H5Form/formSubmit',
         shareWX: 'shareWX/shareWX',
         jqueryMobile: '_lib/jquery-mobile/jquery.mobile.custom',
-        citySelect: 'citySelect/citySelect'
-		
+        citySelect: 'citySelect/citySelect',
+		popup: 'popup/popup',
+        tabs: 'tabs/tabs'
 	},
 	shim: {
         swiper: {

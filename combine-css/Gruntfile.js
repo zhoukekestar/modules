@@ -13,7 +13,9 @@ module.exports = function (grunt) {
                     base + "pull-v2/pull.css",
                     base + "baseCSS/base.css",
                     base + "_lib/jquery-mobile/jquery.mobile.custom.structure.css",
-                    base + "loading-page\loading-page.css"
+                    base + "loading-page/loading-page.css",
+                    base + "popup/popup.css",
+                    base + "tabs/tabs.css"
     ];
     var finalName = "dist/web-modules.min.css";
 
