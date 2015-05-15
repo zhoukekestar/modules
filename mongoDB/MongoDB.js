@@ -17,7 +17,7 @@ var operate = {
 		return mongoDB;
 	},
 	select: function(name, find, callback){
-		if (callback == undefined) {
+		if (callback === undefined) {
 			callback = find;
 			find = {};
 		}
@@ -35,9 +35,9 @@ var operate = {
 	},
 	insert: function(name, doc, callback){
 		var col = mongoDB.collection(name);
-		doc["_time"] = new Date().getTime();
+		doc._time = new Date().getTime();
 		col.insert(doc, function(err, result){
-			var id = result.ops[0]["_id"].toString();
+			var id = result.ops[0]._id.toString();
 			callback(err, id, result);
 		});
 	},
@@ -53,5 +53,6 @@ var operate = {
 			callback(err, result);
 		});
 	}
-}
+};
+
 module.exports = operate;

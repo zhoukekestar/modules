@@ -55,4 +55,4 @@ module.exports = function(grunt){
     grunt.registerTask('default', ['uglify:test', 'requirejs:compilea', 'requirejs:compileb']);
     grunt.registerTask('uglify-test', ['uglify:test']);
     grunt.registerTask('require-test', ['requirejs:compilea', 'requirejs:compileb']);
-}
+};
