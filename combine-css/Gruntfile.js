@@ -6,7 +6,7 @@
  */
 
 module.exports = function (grunt) {
-  'use strict';
+    'use strict';
     var base = "../web-modules/";
     var nameList = ["dist/bootstrap-core.css",
                     base + "_lib/swiper/swiper.min.css",
