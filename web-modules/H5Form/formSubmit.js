@@ -13,7 +13,7 @@
             success: function(d){
 
                 // specfic code
-                if (d.code != undefined && d.code == 0)
+                if (d.code !== undefined && d.code == 0)
                     options.afterSuccess(d);
             },
             afterSuccess:function(d){},
@@ -46,17 +46,17 @@
         // 3. data-data-type
         // 4. data-async
         // 5. data-proxy
-        if ($(firstForm).attr("method") != undefined) 		options.type 	= $(firstForm).attr("method");
-        if ($(firstForm).attr("action") != undefined) 		options.url 	= $(firstForm).attr("action");
-        if ($(firstForm).data("data-type") != undefined)	options.dataType = $(firstForm).data("data-type");
-        if ($(firstForm).data("async") != undefined) 		options.async 	= $(firstForm).data("async");
-        if ($(firstForm).data("proxy") != undefined)		options.proxy	= $(firstForm).data("proxy");
+        if ($(firstForm).attr("method") !== undefined) 		options.type 	= $(firstForm).attr("method");
+        if ($(firstForm).attr("action") !== undefined) 		options.url 	= $(firstForm).attr("action");
+        if ($(firstForm).data("data-type") !== undefined)	options.dataType = $(firstForm).data("data-type");
+        if ($(firstForm).data("async") !== undefined) 		options.async 	= $(firstForm).data("async");
+        if ($(firstForm).data("proxy") !== undefined)		options.proxy	= $(firstForm).data("proxy");
         // Get form's data
         options.data = $(this).serialize();
 
         // ---The User Setting.---
         // The input options(o) is primary!!
-        if (typeof o == "function") {
+        if (typeof o === "function") {
             options = $.extend(options, {
                success: o
             });
@@ -65,7 +65,7 @@
         }
 
 
-        if (options.proxy == undefined || options.proxy == "") {
+        if (options.proxy === undefined || options.proxy === "") {
             $.ajax({
                 type 	: options.type,
                 url 	: options.url,

@@ -12,13 +12,16 @@ module.exports = function (grunt) {
                     base + "_lib/swiper/swiper.min.css",
                     base + "pull-v2/pull.css",
                     base + "baseCSS/base.css",
-                    base + "_lib/jquery-mobile/jquery.mobile.custom.structure.css",
-                    base + "loading-page/loading-page.css",
+                    //base + "_lib/jquery-mobile/jquery.mobile.custom.structure.css",
+                    base + "loadingPage/loadingPage.css",
                     base + "popup/popup.css",
-                    base + "tabs/tabs.css"
+                    base + "tabs/tabs.css",
+                    base + 'loadpage/animate.css',
+                    base + 'loadingPage/loadingPage.css',
+                    base + 'loadpage/loadpage.css'
     ];
     var finalName = "dist/web-modules.min.css";
-
+    var copyto = 'G:\\svn\\toomao\\branches\\v2.0.0\\toomao-web\\toomao-mobile\\public\\css\\web-modules.min.css';
     grunt.initConfig({
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
@@ -57,12 +60,19 @@ module.exports = function (grunt) {
                     src: [ "dist/web-modules.min.css"]
                 }
             }
+        },
+      copy: {
+        css: {
+          src: finalName,
+          dest: copyto
         }
+      }
     });
 
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-banner');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
-  grunt.registerTask('default', ['less:compileCore', "cssmin:minifyCore", "usebanner:dist"]);
+  grunt.registerTask('default', ['less:compileCore', "cssmin:minifyCore", "usebanner:dist", "copy:css"]);
 };

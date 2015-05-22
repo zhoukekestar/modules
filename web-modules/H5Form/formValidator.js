@@ -33,30 +33,30 @@
 		// Form validation: required.
 		required: function(ele){
 			if (
-				($(ele).attr("required") != undefined) &&
-				($(ele).val() == null || $(ele).val() == undefined || $(ele).val() == "")
+				($(ele).attr("required") !== undefined) &&
+				($(ele).val() === null || $(ele).val() === undefined || $(ele).val() === "")
 			   )
 				return false;
 			return true;
 		},
 		// Form validation: pattern.
 		pattern: function(ele){
-			if ($(ele).attr("pattern") == undefined)
+			if ($(ele).attr("pattern") === undefined)
 				return true;
 			var reg = new RegExp($(ele).attr("pattern"));
 			return reg.test($(ele).val());
 		},
 		// Form validation: data-equalto=[selector].
 		equalto: function(ele){
-			if ($(ele).data("equalto") == undefined)
+			if ($(ele).data("equalto") === undefined)
 				return true;
-			if ($($(ele).data("equalto")).val() == $(ele).val())
+			if ($($(ele).data("equalto")).val() === $(ele).val())
 				return true;
 			return false;
 		},
 		// Form validation: data-func=[func].
 		func: function(ele){
-			if ($(ele).data("func") == undefined)
+			if ($(ele).data("func") === undefined)
 				return true;
 			else
 			{
@@ -66,7 +66,7 @@
 		},
 		// Show Error message
 		error: function(ele, msg){
-			
+
 			$(ele).removeClass("has-success").addClass("has-error").find(".input-tooltip").html(msg).show();
 		},
 		// Show Success message
@@ -79,38 +79,38 @@
 	{
 		validFunc[name] = func;
 	};
-	
+
 	// Form validation.
 	function validInput(ele){
 		var group = $(ele).parents(".form-group")[0];
 		// required
 		if (!validFunc.required(ele))
-		{	
+		{
 			validFunc.error(group, "必须填写");
 			return false;
 		}
-		
+
 		// type
 		// pattern
 		// equalto
 		// func
-		if (!validFunc.type(ele) || 
-			!validFunc.pattern(ele) || 
-			!validFunc.equalto(ele) || 
+		if (!validFunc.type(ele) ||
+			!validFunc.pattern(ele) ||
+			!validFunc.equalto(ele) ||
 			!validFunc.func(ele))
 		{
 			var msg = $(ele).data("msg-err");
-			if (msg == undefined)
+			if (msg === undefined)
 				validFunc.error(group, "请输入正确的值");
 			else
 				validFunc.error(group, msg);
 			return false;
 		}
-		
+
 		validFunc.success(group);
 		return true;
 	}
-	
+
 	// Form validation init.
     $.formValidator.init = function() {
         $("form[data-role='H5Form']").find("input[type!='hidden']").each(function () {
@@ -129,6 +129,6 @@
             });
         });
     }
-	
+
 	return validInput;
 });

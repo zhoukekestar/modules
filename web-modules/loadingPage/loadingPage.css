@@ -1,0 +1,32 @@
+.loadingPage{
+  height: 100%;
+  background-color: rgba(204, 204, 204, 0.59);
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  position: fixed;
+  width: 100%;
+}
+.loadingPage:before {
+content: "";
+background-image: url(http://img01.taobaocdn.com/imgextra/i1/776955218/TB2DcBacXXXXXaiXpXXXXXXXXXX_!!776955218.gif);
+height: 40px;
+width: 40px;
+position: absolute;
+background-size: 100%;
+left: 50%;
+top: 50%;
+margin: -40px -20px;
+}
+.loadingPage:after{
+content: "页面加载中";
+display: block;
+position: absolute;
+left: 50%;
+top: 50%;
+width: 200px;
+text-align: center;
+margin-left: -100px;
+margin-top: 10px;
+text-shadow: none;
+}

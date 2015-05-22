@@ -2,7 +2,7 @@ module.exports = function(grunt){
 
     // TODO config requirejs.config.js
 
-
+    var copyto = 'G:\\svn\\toomao\\branches\\v2.0.0\\toomao-web\\toomao-mobile\\public\\js\\web-modules.min.js';
     var nameList = [
         "alertMsg",                     // 1
         "formValidator",                // 2
@@ -12,16 +12,18 @@ module.exports = function(grunt){
         "pullUp",                       // 6
 
         "swiper",                       // 7
-        "gaodeMap",                     // 8
+        //"gaodeMap",                     // 8
         "jqueryCookie",                 // 9
         "jqueryLazyload",               // 10
 
         "jweixin",                      // 11
         "shareWX",                      // 12
-        "jqueryMobile",                 // 13
+        //"jqueryMobile",                 // 13
         "citySelect",                   // 14
         'popup',                        // 15
-        'tabs'                          // 16
+        'tabs',                         // 16
+        'loadpage',                     // 17
+        'loadingPage',                  // 18
     ];
     var excludeList = [
         ["jquery"],                     // alertMsg             1
@@ -32,16 +34,18 @@ module.exports = function(grunt){
         ["jquery"],                     // pullUp               6
 
         [],                             // swiper               7
-        [],                             // gaodeMap             8
+        //[],                             // gaodeMap             8
         ["jquery"],                     // jqueryCookie         9
         ["jquery"],                     // jqueryLazyload       10
 
         [],                             // jweixin              11
         ["jquery", "jweixin"],          // shareWX              12
-        ["jquery"],                     // JqueryMobile         13
+        //["jquery"],                     // JqueryMobile         13
         ["jquery"],                     // citySelect           14
         ["popup"],                      // popup                15
         ["tabs"],                       // tabs                 16
+        ['jquery'],                     // loadpage             17
+        [''],                           // loadingPage          18
     ];
 
     var uglifyList = new Array();
@@ -87,15 +91,22 @@ module.exports = function(grunt){
                 }
             }
         },
-        requirejs: requireTask
+        requirejs: requireTask,
+        copy: {
+          jscript: {
+            src: "./output/web-modules.min.js",
+            dest: copyto
+          }
+        }
     });
 
     // 加载提供"uglify"任务的插件
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     // 默认任务
-    grunt.registerTask('default', ['requirejs', 'uglify']);
+    grunt.registerTask('default', ['requirejs', 'uglify', 'copy']);
     grunt.registerTask('all', ['uglify']);
     grunt.registerTask('js', ['requirejs']);
 };
