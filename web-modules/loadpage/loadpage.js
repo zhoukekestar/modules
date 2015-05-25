@@ -4,7 +4,6 @@
   } else {
     factory( jQuery );
   }
-  // TODO This plugin has no cache!!
 }(function($, loadingPage){
 
   if(!history.pushState) {
@@ -20,8 +19,11 @@
   $.fn.loadpage.options = {
     pageSelector    : '[data-role="page"]',
     linkSelector    : 'a[data-rel="page"]',
+    backSelector    : 'a[data-rel="back"]',
     activeClass     : 'active',
     pageClass       : 'page',
+    // Cache pages' number.
+    cachePages      : 5,
 
     animationClass  : 'animated',
     animationstart  : "animationstart webkitAnimationStart oanimationstart MSAnimationStart",
@@ -30,6 +32,7 @@
     outAnimation    : 'slideOutLeft'
   };
 
+  var cache = [{url: location.href, doc: $('html').html()}];
   var options = $.fn.loadpage.options;
   var utils   = {
     /**
@@ -90,54 +93,88 @@
 
       outAnimation  = outAnimation === undefined ? options.outAnimation : outAnimation;
       inAnimation   = inAnimation  === undefined ? options.inAnimation  : inAnimation;
+      showAfterHide = !!showAfterHide;
 
       var index   = url.indexOf('#');
       var pageid  = index === -1 ? "" : url.substr(index);
-      showAfterHide = !!showAfterHide;
+      var loaded = false;
+      var afterLoaded = function(d) {
+        // page is loaded.
+        loaded = true;
+        loadingPage.loaded();
+
+        // Remove current pages & append to body. Bind hide animation.
+        $(options.pageSelector)
+          .addClass(options.animationClass + ' ' + outAnimation)
+          .on(options.animationend, function(){
+
+            // Remove old pages.
+            $(this).remove();
+
+            // Some hide element will not animate so that it can't be selected by $(this).
+            // Remove it by outAnimation Class.
+            $('.' + outAnimation).remove();
+
+            // Show page after hide is enabled
+            if (showAfterHide) {
+              utils.showPage(d, pageid, url, inAnimation, isPoped)
+            }
+          });
+
+        if (!showAfterHide) {
+          utils.showPage(d, pageid, url, inAnimation, isPoped);
+        }
+
+        // Change URL
+        if (!isPoped)
+          history.pushState({inAnimation: inAnimation, outAnimation: outAnimation, showAfterHide: showAfterHide}, '', url);
+      }
 
       // Show page is loading....
       // Only if the content can't loaded in 1 second will show the loading view.
       // If you show it every time even if it have fast internet, you just break his/her user experience (it feel so terrible).
-      var loaded = false;
+
+
       setTimeout(function(){
         if (loaded === false)
           loadingPage.loading();
       }, 1000);
 
+      // Check cache.
+      cache.forEach(function(obj) {
+        // Change string like './demo1.html' to '/demo1.html'
+        // After this, we can determine whether it's cached by function 'indexOf' simply.
+        var u = url.indexOf('.') === 0 ? url.substr(1) : url;
+        if (obj.url.indexOf(u) !== -1) {
+          afterLoaded(obj.doc);
+          return;
+        }
+      });
+      // After loaded, variable loaded will be true.
+      if (loaded === true)
+        return;
+
       // Load page.
       $.ajax({
         url: url,
         success: function(d) {
-
-          // page is loaded.
-          loaded = true;
-          loadingPage.loaded();
-
-          // Remove current pages & append to body. Bind hide animation.
-          $(options.pageSelector)
-            .addClass(options.animationClass + ' ' + outAnimation)
-            .on(options.animationend, function(){
-
-              // Remove old pages.
-              $(this).remove();
-
-              // Some hide element will not animate so that it can't be selected by $(this).
-              // Remove it by outAnimation Class.
-              $('.' + outAnimation).remove();
-
-              // Show page after hide is enabled
-              if (showAfterHide) {
-                utils.showPage(d, pageid, url, inAnimation, isPoped)
-              }
-            });
-
-          if (!showAfterHide) {
-            utils.showPage(d, pageid, url, inAnimation, isPoped);
+          afterLoaded(d);
+          var cached = false;
+          cache.forEach(function(obj) {
+            if (location.href === obj.url) {
+              cached = true;
+              return;
+            }
+          });
+          if (cached === false) {
+            cache.push({url: location.href, doc: d});
           }
 
-          // Change URL
-          if (!isPoped)
-            history.pushState({inAnimation: inAnimation, outAnimation: outAnimation, showAfterHide: showAfterHide}, '', url);
+          // If it greater than cache's size, remove the first page.
+          if (cache.length > options.cachePages) {
+            cache.shift();
+          }
+
         },
         timeout: 20000,
         error: function(){
@@ -199,8 +236,16 @@
 
   });
 
+  // Bind back button's click.
+  $('body').delegate(options.backSelector, 'click', function() {
+    history.back();
+  });
+
+  // Popup a history.
   window.onpopstate = function(e) {
       //console.log(e.state);
-      utils.load(location.href, "slideOutRight", "slideInLeft", false, true);
+    window.scrollTo(0, 0);
+    utils.load(location.href, "slideOutRight", "slideInLeft", false, true);
+    window.scrollTo(0, 0)
   }
 }));

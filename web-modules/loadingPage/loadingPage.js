@@ -16,7 +16,7 @@
 
   document.addEventListener('loadingPageLoaded', function(e){
     var ele = document.getElementsByClassName('loadingPage');
-    if (typeof ele !== undefined) ele[0].remove();
+    if (typeof ele !== undefined && ele[0] !== undefined) ele[0].remove();
   });
 
   document.addEventListener('loadingPageLoading', function(){
