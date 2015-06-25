@@ -11,10 +11,9 @@
 	<div style="margin-top:20px;">
 		<h1>type属性</h1>
 		<form id="form-type" data-role="H5Form">
-			<div class="form-group inline has-success has-feedback">
+			<div class="form-group inline has-success">
 				<label class="control-label">email</label>
-				<input type="email" class="form-control" name="emial" placeholder="email">
-				<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+				<input type="email" class="form-control" name="emial" placeholder="email" data-msg='{"email":"lalal"}'>
 			</div>
 			<div class="form-group inline">
 				<label class="control-label">url</label>
@@ -26,7 +25,7 @@
 			</div>
 			<div class="form-group inline">
 				<label class="control-label">cellphone</label>
-				<input type="cellphone" class="form-control" name="cellphone" placeholder="cellphone">
+				<input type="cellphone" class="form-control" name="cellphone" placeholder="cellphone"  data-msg='{"cellphone":"亲，只支持中国的手机号，别输外星球的"}'>
 			</div>
 			<div class="form-group inline">
 				<label class="control-label">integer</label>
@@ -59,7 +58,7 @@
 			</div>
 			<div class="form-group inline">
 				<label class="control-label">消息</label>
-				<input type="text" class="form-control" name="data-msg" placeholder="错误消息" data-msg-err="请输入正确的手机号" data-msg="{'error':'请输入正确的手机号', 'required': '您没填写，有点粗心'}" pattern="^[1][3,4,5,7,8][0-9]{9}$">
+				<input type="text" class="form-control" name="data-msg" placeholder="错误消息" data-msg='{"pattern":"手机"}' pattern="^[1][3,4,5,7,8][0-9]{9}$">
 			</div>
 
 			<div class="form-group inline">
@@ -75,7 +74,7 @@
 				<label class="control-label">验证码</label>
 				<div class="row">
 					<div class="col-xs-8">
-						<input type="text" class="form-control" name="check" placeholder="自定义 输入123" data-func="checkcode">
+						<input type="text" class="form-control" name="check" placeholder="自定义 输入123" data-func="checkcode" data-msg='{"checkcode":"验证码输123"}'>
 					</div>
 					<div class="col-xs-4">
 						<button type="button" class="form-control">获取</button>
@@ -101,20 +100,27 @@
 		}
 	});
 
-	require(['jquery', 'formValidator', 'formSubmit'], function ($, validator) {
-		validator.extend("checkcode", function(ele){
+	require(['jquery', 'formValidator'], function ($, validator) {
+		validator.extend("checkcode", function(ele, msg){
 			if ($(ele).val() == "123")
-				return true;
-			return false;
+				return "";
+			return msg.checkcode;
 		});
 
-		$("button.submit").click(function(e){
-			$(this).parents("form").formSubmit({
-				success:function(d){
-					console.log(d);
-				}
-			});
-			e.preventDefault();
+		$("form").submit(function(e){
+      e.preventDefault();
+
+      var msg = validator.validForm($('#form-input')[0]);
+      if (msg !== "")
+        $.alertMsg(msg);
+      else
+        $.alertMsg('ok')
+//			$(this).parents("form").formSubmit({
+//				success:function(d){
+//					console.log(d);
+//				}
+//			});
+
 		});
 	});
 
