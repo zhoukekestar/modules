@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>demo</title>
+  <meta charset='utf-8'>
+  <style type="text/css">
+    html, body{
+      margin: 0;
+      padding: 0;
+    }
+    p{
+      color: #999;
+    }
+    span {
+      width: 10em;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+<p>表单的method字段，可设置为POST，GET，PUT，DELETE，其中POST为默认方法，当设置为GET请求时，对象将以键值对的形式添加到请求URL的后端</p>
+<form action="./demo" method="PUT">
+
+  <p>string，默认string类型</p>
+  <span>str</span><input name="str" value="str-abc"/>
+
+  <p>bool，添加类型声明":bool"，可将值变为bool类型，这种比较适合radio控件</p>
+  <span>bool:bool</span><input name="bool:bool" value="false"/><br>
+
+  <span>active:bool</span><input id='r-1' type='radio' name='active:bool' value='true' checked />
+  <label for='r-1'>是</label>
+  <input id='r-2' type='radio' name='active:bool' value='false' />
+  <label for='r-2'>否</label>
+
+  <p>array，数组形式，末尾以点结尾，并填写多个相同name的input即可转换为数组</p>
+  <span>images.</span><input name="images." value="baidu1">
+  <input name="images." value="baidu2">
+
+  <p>number，数字形式，添加声明”:number“，可将值变为number类型</p>
+  <span>num:number</span><input name="num:number" value="123"/>
+
+  <p>object，对象形式，添加声明”:object“，可将值解析为json对象，并赋值</p>
+  <span>obj1:object</span><input name="obj1:object" value='{"a":"aa", "b":{"bb":"cc"}}'/><br>
+  <span>obj2:object</span><input name="obj2:object" value='["a", "b"]'/>
+
+  <p>deep set，对象的深层赋值，将name字段设置为以点为间隔的字符串</p>
+  <span>deep.a.b.c</span><input name="deep.a.b.c" value="ccc"><br>
+  <span> deep2.a.b.</span><input name="deep2.a.b." value="bb">
+  <input name="deep2.a.b." value="cc"><br>
+  <span>deep2.a.c:number</span><input name="deep2.a.c:number" value="123654">
+  <p></p>
+  <input type="submit" value="submit it">
+
+  <p>多个formaction, 通过设置formaction属性，可动态修改表单的提交属性</p>
+  <input type="submit" formaction="./a" value="submit a"/>
+  <input type="submit" formaction="./b" value="submit b"/>
+</form>
+<p>表单提交结果：</p>
+<p id="result">...</p>
+<p>动态绑定表单提交：</p>
+<div id="dynamic"></div>
+<script type="text/javascript" src="../_lib/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.formJSON.js"></script>
+<script type="text/html" id="tmpl">
+  <form action="./d">
+    <input name="key" value="value">
+    <input type="submit" />
+  </form>
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('form').formJSON({
+      debug: function (d) {
+        console.log(d);
+        $('#result').html(JSON.stringify(d));
+      },
+      error: function(e) {
+        console.log(e)
+      }
+    })
+
+    $('#dynamic').formJSON({
+      delegate: 'form',
+      success: function(){
+
+      }
+    })
+    $('#dynamic').append($('#tmpl').html())
+    $('#dynamic').append($('#tmpl').html())
+    $('#dynamic').append($('#tmpl').html())
+  });
+</script>
+</body>
+</html>

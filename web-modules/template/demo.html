@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>demo</title>
+  <meta charset='utf-8'>
+  <style type="text/css">
+    html, body{
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+<p>简单模板解析，支持js执行，使用updateBy更新holder，使用appendBy添加至holder后面，设置data-holder来确定模板的位置</p>
+<div id="t1"></div>
+
+<p>内置的根对象为obj，当数据为一个对象时，可省略obj</p>
+<div id="t2"></div>
+<script type="text/javascript" src="../_lib/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.template.js"></script>
+<script type="text/html" id="tmpl" data-holder="#t1">
+  <% obj.forEach(function(d){ %>
+    <p><%=d%></p>
+  <% }) %>
+</script>
+
+<script type="text/html" id="tmpl2">
+
+  <p>省略根对象引用:<%=name%>____<small>强制根引用:<%=obj.a%></small></p>
+
+</script>
+
+<script type="text/html" id="tmpl3" data-model='{"name":"data-model~~"}'>
+  <p>使用data-model属性定义数据源，name:<%=name%></p>
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    var t1 = $('#tmpl').template();
+    var t2 = $('#tmpl2').template();
+    var t3 = $('#tmpl3').template();
+    t1.updateBy(["a", "b", "c"]);
+
+
+      t2.updateBy({name:'name-a', a:'aa'});
+      t2.appendBy({name:'name-b', a:'bb'})
+
+
+  });
+</script>
+</body>
+</html>

@@ -14,7 +14,8 @@
     "grunt-contrib-nodeunit": "^0.3.3",
     "grunt-contrib-requirejs": "~0.4.0",
     "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-copy": "~0.8.0"
+    "grunt-contrib-copy": "~0.8.0",
+    "grunt-contrib-concat": "^0.5.1"
   },
   "license": "ISC"
 }

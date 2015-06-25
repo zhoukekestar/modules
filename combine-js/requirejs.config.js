@@ -25,6 +25,9 @@ require.config({
     tabs: 'tabs/tabs',
     loadpage: 'loadpage/loadpage',
     loadingPage: 'loadingPage/loadingPage',
+    formJSON: 'formJSON/jquery.formJSON',
+    template: 'template/jquery.template',
+    ajaxUpload: 'upload/jquery.ajaxUpload'
   },
   shim: {
     swiper: {

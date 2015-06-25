@@ -6,29 +6,23 @@
 
 
 ;define(["alertMsg"], function($){
-	var validFunc = {
+	var validator = {
+
 		// Form validation: type=[email,number,cellphone]
 		type: function(ele){
-			if ($(ele).attr("type") == undefined)
-				return true;
-			var t = $(ele).attr("type");
-			var reg;
-			if (t === "email")
-				reg = /((([a-zA-Z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-zA-Z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?/;
-			else if (t === "number")
-			{
-				if ($(ele).val() === "") return false;
-				reg = /-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?/;
-			}
-			else if (t === "cellphone")
-				reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-			else if (t === "integer")
-				reg = /^\d+$/;
-			else if (t === "url")
-				reg = /(https?|ftp):\/\/(((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?/;
-			else
-				reg = /^.*$/;
-			return reg.test($(ele).val());
+
+      var value = $(ele).val();
+      var msg = validator.msg;
+      switch ($(ele).attr("type")){
+        case undefined    : return "";
+        case "email"      : return /email/.test(value) ? "" : msg.email;
+        case "number"     : return /-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?/.test(value) ? "" : msg.number;
+        case "cellphone"  : return /^[1][3,4,5,7,8][0-9]{9}$/.test(value) ? "" : msg.cellphone;
+        case "integer"    : return /^\d+$/.test(value) ? "" : msg.integer;
+        case "url"        : return /url/.test(value) ? "" : msg.url;
+        default           : return "";
+      }
+
 		},
 		// Form validation: required.
 		required: function(ele){
@@ -36,99 +30,87 @@
 				($(ele).attr("required") !== undefined) &&
 				($(ele).val() === null || $(ele).val() === undefined || $(ele).val() === "")
 			   )
-				return false;
-			return true;
+				return validator.msg.required;
+			return "";
 		},
 		// Form validation: pattern.
 		pattern: function(ele){
 			if ($(ele).attr("pattern") === undefined)
-				return true;
+				return "";
 			var reg = new RegExp($(ele).attr("pattern"));
-			return reg.test($(ele).val());
+			return reg.test($(ele).val()) ? "" : validator.msg.pattern;
 		},
 		// Form validation: data-equalto=[selector].
 		equalto: function(ele){
 			if ($(ele).data("equalto") === undefined)
-				return true;
+				return "";
 			if ($($(ele).data("equalto")).val() === $(ele).val())
-				return true;
-			return false;
+				return "";
+			return validator.msg.equalto;
 		},
 		// Form validation: data-func=[func].
 		func: function(ele){
 			if ($(ele).data("func") === undefined)
-				return true;
+				return "";
 			else
 			{
-				var func = validFunc[$(ele).data("func")];
+				var func = validator[$(ele).data("func")];
 				return func(ele);
 			}
 		},
-		// Show Error message
-		error: function(ele, msg){
+    msg: {
+      email: "邮箱地址错误",
+      number: "数字格式错误",
+      cellphone: "手机号错误",
+      integer: "请输入整数",
+      url: "请输入正确的网址",
+      required: "必须填写",
+      pattern: "请输入正确的值",
+      equalto: "输入值不同",
+      fun: "请输入正确的值"
+    },
+    error: function(){
 
-			$(ele).removeClass("has-success").addClass("has-error").find(".input-tooltip").html(msg).show();
-		},
-		// Show Success message
-		success: function(ele){
-			$(ele).removeClass("has-error").addClass("has-success").find(".input-tooltip").hide();
-		}
-	};
-	$.formValidator = {};
-	$.formValidator.addMethod = function(name, func)
-	{
-		validFunc[name] = func;
-	};
+    },
+    success: function() {
 
-	// Form validation.
-	function validInput(ele){
-		var group = $(ele).parents(".form-group")[0];
-		// required
-		if (!validFunc.required(ele))
-		{
-			validFunc.error(group, "必须填写");
-			return false;
-		}
+    },
+    validForm: function(ele) {
+      var msg = "";
+      $(ele).find("input[type!='hidden']").each(function(){
+        var tempMsg;
+        var ele = $(this)[0];
 
-		// type
-		// pattern
-		// equalto
-		// func
-		if (!validFunc.type(ele) ||
-			!validFunc.pattern(ele) ||
-			!validFunc.equalto(ele) ||
-			!validFunc.func(ele))
-		{
-			var msg = $(ele).data("msg-err");
-			if (msg === undefined)
-				validFunc.error(group, "请输入正确的值");
-			else
-				validFunc.error(group, msg);
-			return false;
-		}
+        if (msg !== "") return;
 
-		validFunc.success(group);
-		return true;
-	}
+        // check type
+        tempMsg = validator.type(ele);
+        tempMsg !== "" ? (msg = tempMsg) : "";
 
-	// Form validation init.
-    $.formValidator.init = function() {
-        $("form[data-role='H5Form']").find("input[type!='hidden']").each(function () {
-            // Get group
-            var group = $(this).parents(".form-group")[0];
+        // check required
+        tempMsg = validator.required(ele);
+        tempMsg !== "" ? (msg = tempMsg) : "";
 
-            //Add input-tooltip
-            $(group).append("<span class='input-tooltip'></span>");
+        // check equalto
+        tempMsg = validator.equalto(ele);
+        tempMsg !== "" ? (msg = tempMsg) : "";
 
-            // hide
-            $(group).find(".input-tooltip").hide();
+        // check pattern
+        tempMsg = validator.pattern(ele);
+        tempMsg !== "" ? (msg = tempMsg) : "";
 
-            // valid
-            $(this).blur(function () {
-                validInput(this);
-            });
-        });
+        // check custom function
+        tempMsg = validator.func(ele);
+        tempMsg !== "" ? (msg = tempMsg) : "";
+
+      })
+
+      return msg;
+    },
+    extend: function(name, func) {
+      validator[name] = func;
     }
+	};
 
-	return validInput;
+	return validator;
 });

@@ -2,7 +2,7 @@ module.exports = function(grunt){
 
     // TODO config requirejs.config.js
 
-    var copyto = 'G:\\svn\\toomao\\branches\\v2.0.0\\toomao-web\\toomao-mobile\\public\\js\\web-modules.min.js';
+    var copyto = 'G:\\svn\\m.toomao.com\\public\\js\\web-modules.min.js';
     var nameList = [
         "alertMsg",                     // 1
         "formValidator",                // 2
@@ -24,6 +24,9 @@ module.exports = function(grunt){
         'tabs',                         // 16
         'loadpage',                     // 17
         'loadingPage',                  // 18
+        'formJSON',                     // 19
+        'template',                     // 20
+        'ajaxUpload',                   // 21
     ];
     var excludeList = [
         ["jquery"],                     // alertMsg             1
@@ -44,8 +47,11 @@ module.exports = function(grunt){
         ["jquery"],                     // citySelect           14
         ["popup"],                      // popup                15
         ["tabs"],                       // tabs                 16
-        ['jquery'],                     // loadpage             17
-        [''],                           // loadingPage          18
+        ['jquery', 'alertMsg', 'loadingPage'], // loadpage             17
+        [],                             // loadingPage          18
+        ['jquery'],                     // formJSON             19
+        ['jquery'],                     // template             20
+        ['jquery'],                     // ajaxUpload           21
     ];
 
     var uglifyList = new Array();
@@ -62,7 +68,8 @@ module.exports = function(grunt){
                     name: nameList[i],
                     mainConfigFile: "./requirejs.config.js",
                     "out": uglifyList[i],
-                    exclude: excludeList[i]
+                    exclude: excludeList[i],
+                    optimize: "none"
                 }
         };
 
@@ -91,6 +98,13 @@ module.exports = function(grunt){
                 }
             }
         },
+        concat: {
+          debug: {
+            files: {
+              "./output/web-modules.min.js": uglifyList
+            }
+          }
+        },
         requirejs: requireTask,
         copy: {
           jscript: {
@@ -104,9 +118,11 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     // 默认任务
     grunt.registerTask('default', ['requirejs', 'uglify', 'copy']);
+    grunt.registerTask('debug', ['requirejs', 'concat', 'copy']);
     grunt.registerTask('all', ['uglify']);
     grunt.registerTask('js', ['requirejs']);
 };

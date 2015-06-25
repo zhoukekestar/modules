@@ -91,6 +91,11 @@
      */
     load: function(url, outAnimation, inAnimation, showAfterHide, isPoped) {
 
+      // Change URL first, then you can get absolute url by location.href
+      if (!isPoped)
+        history.pushState({inAnimation: inAnimation, outAnimation: outAnimation, showAfterHide: showAfterHide}, '', url);
+      url = location.href;
+
       outAnimation  = outAnimation === undefined ? options.outAnimation : outAnimation;
       inAnimation   = inAnimation  === undefined ? options.inAnimation  : inAnimation;
       showAfterHide = !!showAfterHide;
@@ -125,9 +130,7 @@
           utils.showPage(d, pageid, url, inAnimation, isPoped);
         }
 
-        // Change URL
-        if (!isPoped)
-          history.pushState({inAnimation: inAnimation, outAnimation: outAnimation, showAfterHide: showAfterHide}, '', url);
+
       }
 
       // Show page is loading....
@@ -144,8 +147,9 @@
       cache.forEach(function(obj) {
         // Change string like './demo1.html' to '/demo1.html'
         // After this, we can determine whether it's cached by function 'indexOf' simply.
-        var u = url.indexOf('.') === 0 ? url.substr(1) : url;
-        if (obj.url.indexOf(u) !== -1) {
+        // var u = url.indexOf('.') === 0 ? url.substr(1) : url;
+        // if (obj.url.indexOf(u) !== -1 && obj.url === u) {
+        if (obj.url === url) {
           afterLoaded(obj.doc);
           return;
         }
@@ -237,7 +241,8 @@
   });
 
   // Bind back button's click.
-  $('body').delegate(options.backSelector, 'click', function() {
+  $('body').delegate(options.backSelector, 'click', function(e) {
+    e.preventDefault()
     history.back();
   });
 

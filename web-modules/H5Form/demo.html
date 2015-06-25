@@ -36,7 +36,7 @@
 				<button class="submit">提交</button>
 			</div>
 		</form>
-	
+
 		<h1>Form属性</h1>
 		<form id="form-attr" data-role="H5Form" method="POST" action="http://192.168.0.199:8866/toomao_api/shop/20" data-proxy="http://localhost:8080/abc">
 			<div class="form-group inline">
@@ -61,12 +61,12 @@
 				<label class="control-label">消息</label>
 				<input type="text" class="form-control" name="data-msg" placeholder="错误消息" data-msg-err="请输入正确的手机号" data-msg="{'error':'请输入正确的手机号', 'required': '您没填写，有点粗心'}" pattern="^[1][3,4,5,7,8][0-9]{9}$">
 			</div>
-			
+
 			<div class="form-group inline">
 				<label class="control-label">密码</label>
 				<input id="len-1" type="text" class="form-control" name="pwd-1" >
 			</div>
-			
+
 			<div class="form-group inline">
 				<label class="control-label">密码2</label>
 				<input id="len-2" type="text" class="form-control" name="pwd-2" data-msg-err="请输入与密码相同" data-equalto="#len-1">
@@ -86,9 +86,9 @@
 				<button class="submit">提交</button>
 			</div>
 		</form>
-		
+
 	</div>
-	
+
 	<script src="http://cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
 	<script>
 	require.config({
@@ -101,13 +101,13 @@
 		}
 	});
 
-	require(['jquery', 'formValidator', 'formSubmit'], function ($) {
-		$.formValidator.addMethod("checkcode", function(ele){
+	require(['jquery', 'formValidator', 'formSubmit'], function ($, validator) {
+		validator.extend("checkcode", function(ele){
 			if ($(ele).val() == "123")
 				return true;
 			return false;
 		});
-		
+
 		$("button.submit").click(function(e){
 			$(this).parents("form").formSubmit({
 				success:function(d){
