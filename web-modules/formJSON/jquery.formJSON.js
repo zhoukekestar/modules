@@ -1,14 +1,38 @@
 !( function( factory ) {
   if ( typeof define === "function" && define.amd ) {
-    define([ "jquery" ], factory );
+    define([ "alertMsg", "formValidator" ], factory );
   } else {
     var init = factory( jQuery );
     init();
   }
-}(function($){
+}(function($, validator){
+  // keys: ["a", ""]
+  // ["a", "b", "c"], ["a", "b", "d"]
+  // types: "string", "array", "number", "bool", "object"
+  //
+  // TEST
+  // form.json
+  // input(name='a')
+  // input(name='images.')
+  // input(name='images.')
+  // input(name='b.b')
+  // input(name='c.c.:number')
+  // input(name='c.c.')
+  // input(type='submit')
 
   var submitHandler = function(e, $this, options, action) {
     e.preventDefault();
+
+    // If this module imported by amd, you can use validator to valid submit form
+    // If not, ignore validator.
+    if ( typeof define === "function" && define.amd ) {
+      var msg = validator.validForm($this[0]);
+      if (msg !== "") {
+        $.alertMsg(msg);
+        return;
+      }
+    }
+
 
     // Default method is POST
     var method = $this.attr('method');
@@ -46,7 +70,7 @@
           if (value === 'false')
             value = false
           else
-          value = !!value;
+            value = !!value;
 
         }
 
@@ -66,7 +90,7 @@
      * and you have to response #options request# like:
      * "Access-Control-Allow-Headers: X-AVOSCloud-Session-Token"
      * before you send it.
-    * */
+     * */
     var session = document.cookie.match(/sessionToken=([^;]*)(;|$)/);
     if (session) {
       session = {
@@ -85,19 +109,6 @@
       error: options.error
     });
   }
-  // keys: ["a", ""]
-  // ["a", "b", "c"], ["a", "b", "d"]
-  // types: "string", "array", "number", "bool", "object"
-  //
-  // TEST
-  // form.json
-  // input(name='a')
-  // input(name='images.')
-  // input(name='images.')
-  // input(name='b.b')
-  // input(name='c.c.:number')
-  // input(name='c.c.')
-  // input(type='submit')
   var deepSet = function(obj, keys, value) {
 
     var curKey = keys[0];

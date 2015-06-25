@@ -88,7 +88,7 @@ module.exports = function(grunt){
                         ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
                         ' * Licensed under <%= pkg.license %>\n' +
                         ' * Include ' + nameList.toString() + ' \n' +
-                        ' * Update on <%= grunt.template.today("yyyy-mm-dd hh:MM;ss") %> \n' +
+                        ' * Update on <%= grunt.template.today("yyyy-mm-dd HH:MM;ss") %> \n' +
                         ' */\n',
                 footer: "\n/*! @zkk */"
             },
@@ -99,6 +99,7 @@ module.exports = function(grunt){
             }
         },
         concat: {
+
           debug: {
             files: {
               "./output/web-modules.min.js": uglifyList
@@ -121,8 +122,8 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-concat');
 
     // 默认任务
-    grunt.registerTask('default', ['requirejs', 'uglify', 'copy']);
-    grunt.registerTask('debug', ['requirejs', 'concat', 'copy']);
+    grunt.registerTask('release', ['requirejs', 'uglify', 'copy']);
+    grunt.registerTask('default', ['requirejs', 'concat', 'copy']);
     grunt.registerTask('all', ['uglify']);
     grunt.registerTask('js', ['requirejs']);
 };

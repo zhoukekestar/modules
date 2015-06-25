@@ -49,6 +49,28 @@
 				return "";
 			return msg.equalto;
 		},
+    minlength: function(ele, msg){
+      var l = $(ele).attr('minlength');
+      if (l === undefined)
+        return "";
+      l = Number(l);
+      if ($(ele).val().length >= l) {
+        return "";
+      } else {
+        return msg.minlength.replace("{1}", l);
+      }
+    },
+    maxlength: function(ele, msg){
+      var l = $(ele).attr('maxlength');
+      if (l === undefined)
+        return "";
+      l = Number(l);
+      if ($(ele).val().length <= l) {
+        return "";
+      } else {
+        return msg.maxlength.replace("{1}", l)
+      }
+    },
 		// Form validation: data-func=[func].
 		func: function(ele, msg){
 			if ($(ele).data("func") === undefined)
@@ -68,13 +90,23 @@
       required: "必须填写",
       pattern: "请输入正确的值",
       equalto: "输入值不同",
-      fun: "请输入正确的值"
+      fun: "请输入正确的值",
+      minlength: "最小长度为{1}",
+      maxlength: "最大长度为{1}"
     },
     error: function(ele){
-      $(ele).parents('.form-group').removeClass('has-success').addClass('has-error');
+      if ($(ele).parents('.form-group').length === 0) {
+        $(ele).removeClass('has-success').addClass('has-error');
+      } else {
+        $(ele).parents('.form-group').removeClass('has-success').addClass('has-error');
+      }
     },
     success: function(ele) {
-      $(ele).parents('.form-group').removeClass('has-error').addClass('has-success');
+      if ($(ele).parents('.form-group').length === 0) {
+        $(ele).removeClass('has-error').addClass('has-success');
+      } else {
+        $(ele).parents('.form-group').removeClass('has-error').addClass('has-success');
+      }
     },
     validForm: function(ele) {
       var returnMsg = "";
@@ -120,6 +152,22 @@
 
         // check custom function
         tempMsg = validator.func(ele, msg);
+        if (tempMsg !== "") {
+          returnMsg = tempMsg;
+          validator.error(ele)
+          return;
+        }
+
+        // check custom function
+        tempMsg = validator.minlength(ele, msg);
+        if (tempMsg !== "") {
+          returnMsg = tempMsg;
+          validator.error(ele)
+          return;
+        }
+
+        // check custom function
+        tempMsg = validator.maxlength(ele, msg);
         if (tempMsg !== "") {
           returnMsg = tempMsg;
           validator.error(ele)

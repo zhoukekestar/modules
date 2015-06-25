@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>demo</title>
+  <meta charset='utf-8'>
+  <style type="text/css">
+    html, body{
+      margin: 0;
+      padding: 0;
+    }
+    p{
+      color: #999;
+    }
+    span {
+      width: 10em;
+      display: inline-block;
+    }
+    .has-error {
+      border: solid 1px red;
+    }
+    .has-success {
+      border: solid 1px green;
+    }
+  </style>
+</head>
+<body>
+
+<form action="./demo" method="PUT">
+
+  <p>string，默认string类型</p>
+  <span>str</span><input type="cellphone" name="str" value="" required data-msg='{"cellphone":"说好的手机号呢？"}'/>
+
+  <p>bool，添加类型声明":bool"，可将值变为bool类型，这种比较适合radio控件</p>
+  <span>bool:bool</span><input name="bool:bool" value="false"/><br>
+
+  <p>array，数组形式，末尾以点结尾，并填写多个相同name的input即可转换为数组</p>
+  <span>images.</span><input name="images." value="baidu1" minlength="7">
+  <input name="images." value="baidu2">
+
+  <input type="submit" value="submit it">
+
+</form>
+<p>表单提交结果：</p>
+<p id="result">...</p>
+<script src="http://cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
+<script>
+  require.config({
+    baseUrl: '../',
+    paths: {
+      jquery: 'http://cdn.bootcss.com/jquery/2.1.3/jquery.min',
+      alertMsg: 'alertMsg/alertMsg',
+      formValidator: 'H5Form/formValidator',
+      formJSON: "formJSON/jquery.formJSON"
+    }
+  });
+
+  require(['formValidator', 'formJSON'], function (validator, $) {
+    $('form').formJSON({
+
+    })
+  });
+</script>
+</body>
+</html>
