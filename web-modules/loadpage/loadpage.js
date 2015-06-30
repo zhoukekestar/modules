@@ -22,6 +22,7 @@
     backSelector    : 'a[data-rel="back"]',
     activeClass     : 'active',
     pageClass       : 'page',
+
     // Cache pages' number.
     cachePages      : 5,
 
@@ -29,7 +30,11 @@
     animationstart  : "animationstart webkitAnimationStart oanimationstart MSAnimationStart",
     animationend    : "animationend webkitAnimationEnd oanimationend MSAnimationEnd",
     inAnimation     : 'slideInRight',
-    outAnimation    : 'slideOutLeft'
+    outAnimation    : 'slideOutLeft',
+
+    // Before/After load page, it will excute.
+    beforeLoadPage  : function(){return true},
+    afterLoadPage   : function(){return true}
   };
 
   var cache = [{url: location.href, doc: $('html').html()}];
@@ -91,10 +96,19 @@
      */
     load: function(url, outAnimation, inAnimation, showAfterHide, isPoped) {
 
-      // Change URL first, then you can get absolute url by location.href
-      if (!isPoped)
-        history.pushState({inAnimation: inAnimation, outAnimation: outAnimation, showAfterHide: showAfterHide}, '', url);
-      url = location.href;
+      if (options.beforeLoadPage() === false) return;
+      try {
+        // Change URL first, then you can get absolute url by location.href
+        if (!isPoped)
+          history.pushState({
+            inAnimation: inAnimation,
+            outAnimation: outAnimation,
+            showAfterHide: showAfterHide
+          }, '', url);
+        url = location.href;
+      } catch (e) {
+
+      }
 
       outAnimation  = outAnimation === undefined ? options.outAnimation : outAnimation;
       inAnimation   = inAnimation  === undefined ? options.inAnimation  : inAnimation;
@@ -111,7 +125,7 @@
         // Remove current pages & append to body. Bind hide animation.
         $(options.pageSelector)
           .addClass(options.animationClass + ' ' + outAnimation)
-          .on(options.animationend, function(){
+          .one(options.animationend, function(){
 
             // Remove old pages.
             $(this).remove();
@@ -205,18 +219,20 @@
         .hide()
         .addClass(options.pageClass)
 
+      // TODO: append a single page is better???
+      $('body').append(pages);
 
       // Show first page OR the special page
       page
         .show()
         .addClass(options.activeClass)
         .addClass(options.animationClass + ' ' + inAnimation)
-        .on(options.animationend, function(){
+        .one(options.animationend, function(a, b, c, d){
           $(this).removeClass(options.animationClass + ' ' + inAnimation);
+          options.afterLoadPage();
         });
 
-      // TODO: append a single page is better???
-      $('body').append(pages);
+
     }
   };
 
@@ -253,4 +269,6 @@
     utils.load(location.href, "slideOutRight", "slideInLeft", false, true);
     window.scrollTo(0, 0)
   }
+
+  return $.fn.loadpage.options;
 }));

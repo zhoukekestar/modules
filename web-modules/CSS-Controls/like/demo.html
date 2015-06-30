@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      @-webkit-keyframes circle {
+        0% {
+          height:1px;
+          width:1px;
+          opacity: 0;
+        }
+        50%{
+          height:100px;
+          width:100px;
+          opacity: .5;
+        }
+        100% {
+          height:200px;
+          width:200px;
+          opacity: 0;
+        }
+      }
+      @-webkit-keyframes pulse {
+        0% {
+          -webkit-transform: scale3d(1, 1, 1);
+          opacity: 1;
+        }
+
+        50% {
+          -webkit-transform: scale3d(1.2, 1.2, 1.2);
+          opacity: .5;
+        }
+
+        100% {
+          -webkit-transform: scale3d(1, 1, 1);
+          opacity: 1;
+        }
+      }
+
+
+      .pulse {
+        -webkit-animation-name: pulse;
+      }
+
+      .animated {
+        -webkit-animation-duration: .5s;
+        -webkit-animation-fill-mode: both;
+      }
+
+      .animate2 {
+        outline: none;
+        height: 50px;
+        width: 50px;
+        background-color: #ccc;
+        border: none;
+        border-radius: .5em;
+        position: relative;
+        left: 200px;
+        top: 200px;
+        -webkit-animation-timing-function: linear;
+      }
+      .circle:after {
+        content: "";
+        display: block;
+        height: 0;
+        width: 0;
+        background-color: #f00;
+        position: absolute;
+        left: 25px;
+        top: 26px;
+        border-radius: 50%;
+        -webkit-animation-name: circle;
+        -webkit-animation-duration: .5s;
+        -webkit-animation-fill-mode: both;
+        -webkit-animation-timing-function: linear;
+        -webkit-transform: translateY(-50%) translateX(-50%);
+      }
+    </style>
+</head>
+<body>
+  <img class="animated" src="http://gtms04.alicdn.com/tps/i4/TB1ha1LIpXXXXaPXFXXvKyzTVXX-520-280.jpg_.webp"/>
+  <button class="animate1">animate it</button>
+  <button class="animate2">circle</button>
+
+  <input id="like-it" class='animate2' type="checkbox">
+  <label for='like-it'>nihao</label>
+  <script src="../../_lib/jquery.min.js"></script>
+  <script>
+    $(function(){
+      $('.animate1').click(function(){
+        $('img').addClass('pulse')
+      })
+      $('img').on('webkitAnimationEnd', function(){
+        $(this).removeClass('pulse');
+      })
+
+      $('.animate2').click(function(){
+        $(this).addClass('circle')
+      })
+      $('.animate2').on('webkitAnimationEnd', function(){
+        $(this).removeClass('circle');
+      })
+    })
+  </script>
+</body>
+</html>

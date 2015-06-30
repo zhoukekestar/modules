@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      @-webkit-keyframes animation {
+        0% {
+          -webkit-perspective: -45;
+          -webkit-perspective-origin: -100px -150px;
+        }
+        30% {
+          -webkit-perspective: -45;
+          -webkit-perspective-origin: 200px -150px;
+        }
+        60% {
+          -webkit-perspective: -45;
+          -webkit-perspective-origin: 200px 350px;
+        }
+        100% {
+          -webkit-perspective: 150;
+          -webkit-perspective-origin: 200px 350px;
+        }
+      }
+      .main{
+        position: relative;
+        height: 100px;
+        width: 100px;
+        left: 200px;
+        top: 200px;
+        outline: solid 1px;
+        -webkit-perspective: 45;
+        -webkit-perspective-origin: 0px 150px;
+        -webkit-animation-name: animation;
+        -webkit-animation-duration: 20s;
+      }
+
+      .obj {
+        height: 50px;
+        width: 50px;
+        background-color: #f00;
+        left: 40px;
+        position: absolute;
+        top: 40px;
+        -webkit-transform: rotateX(52deg);
+        -webkit-transform-origin: 0 0;
+      }
+
+    </style>
+</head>
+<body>
+  <div class="main">
+    <div class="obj">hello</div>
+  </div>
+</body>
+</html>

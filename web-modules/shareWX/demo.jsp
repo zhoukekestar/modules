@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script type="text/javascript" src="/web-modules/module/shareWX/shareWX.js"></script>
 	<script>
-	alert("hi")
+	/*alert("hi")
 	var o = $.extend($.parseJSON('${share}'), {
 		success: function(){
 			wx.getLocation({
@@ -25,9 +25,11 @@
 	    	    }
 	    	});
 		}
-	});
-	
-	$.shareWXConfig(o);
+	});*/
+
+	$.shareWXConfig().then(function(){
+
+  });
 
 	</script>
 </body>

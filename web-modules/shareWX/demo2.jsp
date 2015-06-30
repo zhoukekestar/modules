@@ -34,15 +34,15 @@
 			jweixin: {
 				exports: "wx"
 			}
-			
+
 		},
 		waitSeconds: 15
 	});
 
 	require(["shareWX"], function(shareWX){
-		var $ = shareWX.$;
+		/*var $ = shareWX.$;
 		var wx = shareWX.wx;
-		
+
 		var o = $.extend($.parseJSON('${share}'), {
 			success: function(){
 				wx.getLocation({
@@ -57,9 +57,13 @@
 		    	});
 			}
 		});
-		
+
 		$.shareWXConfig(o);
-		
+		*/
+
+    $.shareWXConfig().then(function(){
+
+    });
 	});
 	</script>
 </body>
