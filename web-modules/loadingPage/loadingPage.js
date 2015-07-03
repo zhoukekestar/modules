@@ -16,7 +16,13 @@
 
   document.addEventListener('loadingPageLoaded', function(e){
     var ele = document.getElementsByClassName('loadingPage');
-    if (typeof ele !== undefined && ele[0] !== undefined) ele[0].remove();
+    if (typeof ele !== undefined && ele[0] !== undefined) {
+      try{
+        ele[0].remove();
+      } catch (e) {
+        ele[0].parentNode.removeChild(ele[0])
+      }
+    }
   });
 
   document.addEventListener('loadingPageLoading', function(){
@@ -25,10 +31,24 @@
 
   window.loadingPage = {
     loading: function() {
-      document.dispatchEvent(new Event('loadingPageLoading'));
+      var eve;
+      try {
+        eve = new Event('loadingPageLoading');
+      } catch (e) {
+        eve = document.createEvent("HTMLEvents");
+        eve.initEvent("loadingPageLoading", false, false);
+      }
+      document.dispatchEvent(eve);
     },
     loaded: function() {
-      document.dispatchEvent(new Event('loadingPageLoaded'));
+      var eve;
+      try {
+        eve = new Event('loadingPageLoaded');
+      } catch (e) {
+        eve = document.createEvent("HTMLEvents");
+        eve.initEvent("loadingPageLoaded", false, false);
+      }
+      document.dispatchEvent(eve);
     }
   };
 

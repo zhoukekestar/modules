@@ -7,6 +7,8 @@
 }( function( $ ) {
 	$.alertMsg = function( options ) {
 
+    var callback;
+
 		if ( typeof( options ) == "string" ) {
 
 			// If options is string, set default value and overwrite options's content.
@@ -46,14 +48,22 @@
 		// Show & Hide.
 		$( ".alert-msg-content" ).animate( { opacity: 1 }, "slow" );
 		if ( options.autohide ) {
-			
+
 			setTimeout( function() {
 				$( ".alert-msg-content" ).animate( { opacity: 0 }, "slow", function() {
 					$( ".alert-msg-content" ).remove();
 					typeof(options.done) == "function" ? options.done() : "";
+          typeof(callback) == "function" ? callback() : "";
+
 				});
 			}, options.time );
 		}
+
+    return {
+      then: function(cb){
+        callback = cb;
+      }
+    };
 	};
 
 	$.alertMsg.defaults = {
@@ -72,6 +82,6 @@
 			done === null ? "" : done();
 		} );
 	};
-	
+
 	return $;
 }));
