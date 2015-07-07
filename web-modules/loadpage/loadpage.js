@@ -6,17 +6,13 @@
   }
 }(function($, loadingPage){
 
-  if(!history.pushState) {
 
-    $.fn.loadpage = function() { return this; };
-    $.fn.loadpage.options = {};
-    return;
-  }
 
   if($.fn.loadpage) { return; }
 
   $.fn.loadpage = {};
   $.fn.loadpage.options = {
+    debug           : false,
     pageSelector    : '[data-role="page"]',
     linkSelector    : 'a[data-rel="page"]',
     backSelector    : 'a[data-rel="back"]',
@@ -37,8 +33,21 @@
     afterLoadPage   : function(){return true}
   };
 
+
+
+
   var cache = [{url: location.href, doc: $('html').html()}];
   var options = $.fn.loadpage.options;
+  if(!history || !history.pushState) {
+    if (options.debug) {
+      alert('history.pushState')
+    }
+    $.fn.loadpage = function() { return this; };
+    $.fn.loadpage.options = {};
+    return;
+  } else {
+    history.pushState('', '', location.href);
+  }
   var utils   = {
 
     /**
@@ -276,38 +285,68 @@
   };
 
   // Show the first page. Hide others.
-  $(options.pageSelector)
-    .addClass(options.pageClass)
-    .hide()
-    .first().show().addClass(options.activeClass);
-
+  try {
+    var firstPage = $(options.pageSelector).addClass(options.pageClass).first();
+    $(options.pageSelector).not(firstPage).hide();
+    firstPage.show().addClass(options.activeClass);
+  } catch (e) {
+    if (options.debug) {
+      alert(e.message)
+    }
+  }
   // Dynamic bind a element's link click.
   $('body').delegate(options.linkSelector, 'click', function(e) {
     e.preventDefault();
+    try {
+      var url = $(this).attr('href');
+      var inAnimation = $(this).data('transition-in');
+      var outAnimation = $(this).data('transition-out');
+      var showAfterHide = $(this).data('show-after-hide');
 
-    var url           = $(this).attr('href');
-    var inAnimation   = $(this).data('transition-in');
-    var outAnimation  = $(this).data('transition-out');
-    var showAfterHide = $(this).data('show-after-hide');
-
-    showAfterHide = showAfterHide === undefined ? false : true;
-    utils.load(url, outAnimation, inAnimation, showAfterHide, false);
+      showAfterHide = showAfterHide === undefined ? false : true;
+      utils.load(url, outAnimation, inAnimation, showAfterHide, false);
+    } catch (e) {
+      if (options.debug) {
+        alert(e.message);
+      }
+    }
 
   });
 
   // Bind back button's click.
   $('body').delegate(options.backSelector, 'click', function(e) {
     e.preventDefault()
+    if (options.debug) {
+      alert('back click.')
+    }
     history.back();
+
   });
+
 
   // Popup a history.
   window.onpopstate = function(e) {
-      //console.log(e.state);
-    window.scrollTo(0, 0);
-    utils.load(location.href, "slideOutRight", "slideInLeft", false, true);
-    window.scrollTo(0, 0)
+
+    if (options.debug) {
+      alert(JSON.stringify(e.state))
+      alert('back active.')
+    }
+
+    if (e.state === null || e.state === undefined) {
+      return;
+    }
+
+    try {
+      window.scrollTo(0, 0);
+      utils.load(location.href, "slideOutRight", "slideInLeft", false, true);
+      window.scrollTo(0, 0)
+    } catch (e) {
+      if (options.debug) {
+        alert(e.message)
+      }
+    }
   }
+  pop = 1;
 
   return $.fn.loadpage.options;
 }));

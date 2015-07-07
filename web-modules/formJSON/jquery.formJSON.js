@@ -66,6 +66,9 @@
         } else if (type === 'number') {
           value = Number.parseFloat(value)
 
+        } else if (type === 'time') {
+          value = new Date(value).getTime();
+
         } else if (type === 'bool') {
           if (value === 'false')
             value = false
@@ -156,7 +159,7 @@
         });
       }
 
-      $(this).find('input[type="submit"]').click(function (e) {
+      $(this).delegate('input[type="submit"]', 'click', function (e) {
         submitHandler(e, $(this).parents('form'), options, $(this).attr('formaction'));
       })
 
