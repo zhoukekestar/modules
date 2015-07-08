@@ -2,7 +2,7 @@ module.exports = function(grunt){
 
     // TODO config requirejs.config.js
 
-    var copyto = 'G:\\svn\\m.toomao.com\\public\\js\\src.min.js';
+    var copyto = 'G:\\svn\\m.toomao.com\\public\\js\\modules.min.js';
     var nameList = [
         "alertMsg",                     // 1
         "formValidator",                // 2
@@ -94,7 +94,7 @@ module.exports = function(grunt){
             },
             release: {
                 files: {
-                    "./output/web-modules.min.js": uglifyList
+                    "./output/modules.min.js": uglifyList
                 }
             }
         },
@@ -102,14 +102,14 @@ module.exports = function(grunt){
 
           debug: {
             files: {
-              "./output/web-modules.min.js": uglifyList
+              "./output/modules.min.js": uglifyList
             }
           }
         },
         requirejs: requireTask,
         copy: {
           jscript: {
-            src: "./output/src.min.js",
+            src: "./output/modules.min.js",
             dest: copyto
           }
         }

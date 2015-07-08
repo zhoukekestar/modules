@@ -20,8 +20,8 @@ module.exports = function (grunt) {
                     base + 'loadingPage/loadingPage.css',
                     base + 'loadpage/loadpage.css'
     ];
-    var finalName = "dist/src.min.css";
-    var copyto = 'G:\\svn\\toomao\\branches\\v2.0.0\\toomao-web\\toomao-mobile\\public\\css\\src.min.css';
+    var finalName = "dist/modules.min.css";
+    var copyto = 'G:\\svn\\m.toomao.com\\public\\css\\modules.min.css';
     grunt.initConfig({
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
@@ -46,7 +46,7 @@ module.exports = function (grunt) {
             },
             minifyCore: {
                 files:{
-                    "dist/web-modules.min.css": nameList
+                    "dist/modules.min.css": nameList
                 }
             }
         },
@@ -61,12 +61,12 @@ module.exports = function (grunt) {
                 }
             }
         },
-      copy: {
-        css: {
-          src: finalName,
-          dest: copyto
+        copy: {
+          css: {
+            src: finalName,
+            dest: copyto
+          }
         }
-      }
     });
 
   grunt.loadNpmTasks('grunt-contrib-cssmin');
