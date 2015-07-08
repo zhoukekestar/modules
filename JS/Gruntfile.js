@@ -2,7 +2,7 @@ module.exports = function(grunt){
 
     // TODO config requirejs.config.js
 
-    var copyto = 'G:\\svn\\m.toomao.com\\public\\js\\web-modules.min.js';
+    var copyto = 'G:\\svn\\m.toomao.com\\public\\js\\src.min.js';
     var nameList = [
         "alertMsg",                     // 1
         "formValidator",                // 2
@@ -109,7 +109,7 @@ module.exports = function(grunt){
         requirejs: requireTask,
         copy: {
           jscript: {
-            src: "./output/web-modules.min.js",
+            src: "./output/src.min.js",
             dest: copyto
           }
         }

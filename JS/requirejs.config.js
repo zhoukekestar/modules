@@ -1,5 +1,5 @@
 require.config({
-  baseUrl: "../web-modules/",
+  baseUrl: "../src/",
   paths: {
     jquery: "_lib/jquery.min",
 

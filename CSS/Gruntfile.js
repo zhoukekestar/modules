@@ -7,7 +7,7 @@
 
 module.exports = function (grunt) {
     'use strict';
-    var base = "../web-modules/";
+    var base = "../src/";
     var nameList = ["dist/bootstrap-core.css",
                     base + "_lib/swiper/swiper.min.css",
                     base + "pull-v2/pull.css",
@@ -20,8 +20,8 @@ module.exports = function (grunt) {
                     base + 'loadingPage/loadingPage.css',
                     base + 'loadpage/loadpage.css'
     ];
-    var finalName = "dist/web-modules.min.css";
-    var copyto = 'G:\\svn\\toomao\\branches\\v2.0.0\\toomao-web\\toomao-mobile\\public\\css\\web-modules.min.css';
+    var finalName = "dist/src.min.css";
+    var copyto = 'G:\\svn\\toomao\\branches\\v2.0.0\\toomao-web\\toomao-mobile\\public\\css\\src.min.css';
     grunt.initConfig({
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                     banner: '<%= banner %>'
                 },
                 files: {
-                    src: [ "dist/web-modules.min.css"]
+                    src: [ "dist/src.min.css"]
                 }
             }
         },

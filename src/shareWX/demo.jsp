@@ -9,7 +9,7 @@
 	<w:shareWX url="" save="share"></w:shareWX>
 	<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-	<script type="text/javascript" src="/web-modules/module/shareWX/shareWX.js"></script>
+	<script type="text/javascript" src="/src/module/shareWX/shareWX.js"></script>
 	<script>
 	/*alert("hi")
 	var o = $.extend($.parseJSON('${share}'), {
