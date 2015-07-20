@@ -68,6 +68,8 @@ console.log = function(msg) {
     console._log('[' + format(new Date()) + '] ' + msg);
   else
     console._log('[' + format(new Date()) + '] (' + getCurrentLine() + ') ' + msg);
+
+  // TODO 使用http Post将当前msg输出到日志系统
 }
 
 console.info = function(msg) {
