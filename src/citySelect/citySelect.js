@@ -6,7 +6,7 @@
 	}
 }( function($){
 	var citySelect = function( options ){
-		options = $.extend( {    
+		options = $.extend( {
 			$this: null,
 			data: [],
 			selected:[],
@@ -14,7 +14,7 @@
 			showname: "n",
 			arrname: "s"
 		}, options );
-		
+
 		function nextSelect($ele, data, arr, count)
 		{
 			if (data == undefined || data == null || data.length == 0)
@@ -27,7 +27,7 @@
 			}
 			$( $ele[count] ).append(html).show();;
 			$( $ele[count] ).change(function(){
-				
+
 				for (var i = count + 1, max = $ele.length; i < max; i++)
 				{
 					$( $ele[i] ).find("option").unbind("change").remove();
@@ -39,7 +39,7 @@
 				var curCount = count;
 				curArr.push($(this).val());
 				curCount++;
-				
+
 				for (var i = 0, max = data.length; i < max; i++)
 				{
 					if (data[i][options.valname] == $(this).val())
@@ -50,7 +50,7 @@
 				}
 			});
 		}
-		
+
 		options.$this.hide();
 		nextSelect(options.$this, options.data, [], 0);
 		for (var i = 0; i < options.selected.length; i++)
@@ -58,7 +58,7 @@
 			$( options.$this[i] ).find("option[value="+ options.selected[i]+"]").attr("selected", true).trigger("change");
 	    }
 	};
-	
+
 	$.fn.citySelect = function(selected){
 		var $this = $(this);
 		$.getJSON("city.min.json", function(json){
@@ -69,5 +69,5 @@
 			});
 		});
 	};
-    return $;
+  return $;
 }));

@@ -14,11 +14,11 @@
 			baseUrl: './',
 			paths: {
 				jquery: 'http://cdn.bootcss.com/jquery/2.1.3/jquery.min',
-				citySelect: 'web-modules.min',
+				citySelect: 'citySelect',
 			}
 		});
-		
-		require(["citySelect"], function(){			
+
+		require(["citySelect"], function(){
 			$("select").citySelect([121,908,1210606]);
 		})
 		</script>
