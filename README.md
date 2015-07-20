@@ -1,14 +1,18 @@
-nodejs project.
-## 1、MongoDb log system
-* 基于mongodb的日志系统
+## CSS
+* 用于整合输出src下的各个模块的CSS样式
 
-## 2、bootstrap-core
-* bootstrap-core 使用bootstrap的核心样式，以便与其他框架结合
+## JS
+* 用于整合输入src下的各个模块的js
 
-## 3、压缩js
-* 使用grunt-contrib-uglify和grunt-contrib-requirejs压缩js的样例
 
-## 4、模块化js
-* 1) alertMsg
-* 2) formValidator
-* 3) formSubmit
+## mongoDB
+* 基于mongodb、nodejs的简单日志系统
+
+## nodejs
+* nodejs中需要用到的模块
+
+## src
+* 模块源码
+
+## Attention！！Before your committing.
+* 请确保编辑器能识别.editorconfig 和 .jshintrc 文件以确保代码风格一致
