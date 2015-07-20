@@ -111,7 +111,7 @@
     validForm: function(ele) {
       var returnMsg = "";
 
-      $(ele).find("input[type!='hidden']").each(function(){
+      $(ele).find("input[type!='hidden'], textarea").each(function(){
         var msg = $.extend({}, validator.defaultMsg, $(this).data('msg'));
         var tempMsg;
         var ele = $(this)[0];

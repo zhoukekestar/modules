@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+  <form>
+    <input type='file' id='file' multiple>
+    <input type='file' id='file2' multiple>
+  </form>
+  <button id='view'>view</button>
+
+  <script src="../_lib/jquery.min.js"></script>
+  <script src="./preview.js"></script>
+  <script>
+    $(function(){
+      $('#view').click(function(){
+        $('#file,#file2').preview().then(function(d){
+          console.log(d);
+
+          var html = '', i, max;
+          for (i = 0, max = d.length; i < max; i ++) {
+            html += '<img src="' + d[i] + '" />'
+          }
+
+          $('body').append(html)
+
+        })
+      })
+
+    })
+  </script>
+</body>
+</html>

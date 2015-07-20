@@ -82,6 +82,7 @@
 
       // Debug the result
       options.debug(res);
+      res = options.data(res);
       res = JSON.stringify(res);
     }
 
@@ -137,6 +138,8 @@
       delegate: false,
       debug: function(){},
       success: function(){},
+      // to change data
+      data: function(d){return d},
       error: function(){}
     }, o);
 

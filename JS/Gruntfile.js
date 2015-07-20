@@ -27,6 +27,7 @@ module.exports = function(grunt){
         'formJSON',                     // 19
         'template',                     // 20
         'ajaxUpload',                   // 21
+        'preview',                      // 22
     ];
     var excludeList = [
         ["jquery"],                     // alertMsg             1
@@ -52,6 +53,7 @@ module.exports = function(grunt){
         ['jquery'],                     // formJSON             19
         ['jquery'],                     // template             20
         ['jquery'],                     // ajaxUpload           21
+        ['jquery'],                     // preview              22
     ];
 
     var uglifyList = new Array();

@@ -49,8 +49,21 @@ function getCurrentLine() {
   return str;
 }
 
+var toString = function(msg) {
+  if (typeof msg === "object") {
+    try {
+      return JSON.stringify(msg)
+    } catch (e) {
+      return ""
+    }
+  }
+
+  return msg;
+}
+
 console.log = function(msg) {
 
+  msg = toString(msg)
   if (!showLine)
     console._log('[' + format(new Date()) + '] ' + msg);
   else
@@ -58,6 +71,8 @@ console.log = function(msg) {
 }
 
 console.info = function(msg) {
+
+  msg = toString(msg)
   if (!showLine)
     console._info('[' + format(new Date()) + '] ' + msg);
   else
@@ -65,6 +80,8 @@ console.info = function(msg) {
 }
 
 console.warn = function(msg) {
+
+  msg = toString(msg)
   if (!showLine)
     console._warn('[' + format(new Date()) + '] ' + msg);
   else
@@ -72,6 +89,8 @@ console.warn = function(msg) {
 }
 
 console.error = function(msg, note) {
+
+  msg = toString(msg)
   if (!showLine)
     console._error('[' + format(new Date()) + '] ' + msg);
   else

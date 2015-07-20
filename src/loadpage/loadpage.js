@@ -259,7 +259,15 @@
      * Only execute by load function.
      */
     showPage: function (html, id, url, inAnimation, isPoped) {
-      var pages = $(options.pageSelector, $(utils.htmlDoc(html)));
+      var $html = $(utils.htmlDoc(html));
+      var pages;
+
+      // Fix bug if html's root element is #data-role='page'#
+      if ($html.data('role') === 'page') {
+        pages = $html;
+      } else {
+        pages = $(options.pageSelector, $html);
+      }
       var page = id === "" ? pages.first() : pages.filter(id);
 
       // Hide all pages before append to body.

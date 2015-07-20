@@ -35,7 +35,7 @@ module.exports = function(app) {
     options.baseApi   = apiConfig.baseApi;
     options.imageApi  = apiConfig.imageApi;
 
-    var fn    = jade.compileFile(filePath, {pretty: '\t'});
+    var fn    = jade.compileFile(filePath);
     var html;
     try {
       html = fn(options);

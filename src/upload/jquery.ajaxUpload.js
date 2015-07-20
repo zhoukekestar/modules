@@ -8,14 +8,16 @@
 }(function($){
   $.fn.ajaxUpload = function(options) {
 
-    var $this = $(this);
+    var $this;
     options = $.extend({
+      delegate: "",
       success: function(){},
       error: function(){},
       progress: function(){}
     }, options);
 
-    $(this).submit(function(e){
+
+    var submitHandler = function(e){
       e.preventDefault()
 
       if (window.FormData === undefined)
@@ -29,10 +31,10 @@
         xhr: function() {  // custom xhr
           var myXhr = $.ajaxSettings.xhr();
           if(myXhr.upload){ // if upload property exists
-              myXhr.upload.addEventListener('progress', function(e) {
-                var percent = (e.loaded / e.total * 100).toFixed(0);
-                options.progress(percent, e);
-              }, false); // progressbar
+            myXhr.upload.addEventListener('progress', function(e) {
+              var percent = (e.loaded / e.total * 100).toFixed(0);
+              options.progress(percent, e);
+            }, false); // progressbar
           }
           return myXhr;
         },
@@ -47,8 +49,20 @@
         processData: false
       }, 'json');
 
-    });
-  }
+    };
 
+    if (options.delegate === "") {
+      $(this).submit(function(e){
+        $this = $(this);
+        submitHandler(e);
+      })
+    } else {
+      $(this).delegate(options.delegate, 'submit', function (e) {
+        $this = $(this);
+        submitHandler(e);
+      });
+    }
+
+  }
   return $;
 }));

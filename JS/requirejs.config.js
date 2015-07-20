@@ -11,7 +11,7 @@ require.config({
     jweixin: "_lib/jweixin-1.0.0",
 
     // AMD
-    alertMsg: "alertMsg/alertMsg",
+    alertMsg: "alertMsg/alertMsg.jquery",
     baseUtils: "baseUtils/baseUtils",
 
     pullDown: 'pull-v2/pullDown',
@@ -27,7 +27,8 @@ require.config({
     loadingPage: 'loadingPage/loadingPage',
     formJSON: 'formJSON/jquery.formJSON',
     template: 'template/jquery.template',
-    ajaxUpload: 'upload/jquery.ajaxUpload'
+    ajaxUpload: 'upload/jquery.ajaxUpload',
+    preview: 'preview/preview'
   },
   shim: {
     swiper: {
