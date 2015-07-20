@@ -10,7 +10,7 @@
   /**
    * alertMsg
    * @param  {[string, object]} options
-   * @return {[object]}         [callback function & remove function]
+   * @return {[object]}         [callback function]
    */
 	var alertMsg = function( options ) {
 
