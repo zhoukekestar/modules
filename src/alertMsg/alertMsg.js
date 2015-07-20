@@ -1,63 +1,107 @@
 !( function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-		define([ "jquery" ], factory );
+		define(factory );
 	} else {
-		factory( jQuery );
+		factory();
 	}
-}( function( $ ) {
-	$.alertMsg = function( options ) {
+}( function() {
 
-    var callback;
 
-		if ( typeof( options ) == "string" ) {
+  /**
+   * alertMsg
+   * @param  {[string, object]} options
+   * @return {[object]}         [callback function & remove function]
+   */
+	var alertMsg = function( options ) {
 
-			// If options is string, set default value and overwrite options's content.
-			options = $.extend( {}, $.alertMsg.defaults, { content:options } );
-		} else {
+    var defaults = {
+      width     : 160,
+      content   : "?",
+      done      : null,
+      time      : 1200,
+      autohide  : true
+    };
 
-			// Mix defaults and options
-			options = $.extend( {}, $.alertMsg.defaults, options );
-		}
+    // Build options
+    if ( typeof( options ) === "string" ) {
 
-		var alertMsgCSS = {
-			"color": "#FFF",
-			"font-size": "18px",
-			"background-color": "rgba(0, 0, 0, 0.8)",
-			"border-radius": "10px",
-			"box-sizing": "border-box",
-			"text-align": "center",
-			"z-index": "99999",
-			"word-break": "break-word",
-			"padding": "12px",
-			"position": "fixed",
-			"left": "50%",
-			"top": "50%",
-			"text-shadow": "none",
-			"width": options.width,
-		    "margin-left": ( -options.width / 2 ),
-		    "opacity": 0
-		};
+      defaults.content = options;
+      options = defaults;
 
-		// Add html to body, then show it.
-		$( options.body ).append( '<div class="alert-msg-content" style="display:none">' + options.content + '</div>' );
-		$( ".alert-msg-content" ).css( alertMsgCSS ).show();
+    } else {
 
-		// middle height
-		$( ".alert-msg-content" ).css( {"margin-top": ( -$(".alert-msg-content").outerHeight() / 2) } );
+      for (var o in options) {
+        defaults[o] = options[o]
+      }
+      options = defaults;
+    }
 
-		// Show & Hide.
-		$( ".alert-msg-content" ).animate( { opacity: 1 }, "slow" );
+    var
+      // callback function
+      callback,
+
+      alertMsgCSS = {
+        "color": "#FFF",
+        "font-size": "18px",
+        "background-color": "rgba(0, 0, 0, 0.8)",
+        "border-radius": "10px",
+        "box-sizing": "border-box",
+        "text-align": "center",
+        "z-index": "99999",
+        "word-break": "break-word",
+        "padding": "12px",
+        "position": "fixed",
+        "left": "50%",
+        "top": "50%",
+        "text-shadow": "none",
+        "width": options.width + 'px',
+        "margin-left": '-' + ( options.width / 2 ) + 'px',
+        "opacity": 0,
+        "-webkit-transition": "all 1s",
+        "transition": "all 1s"
+      },
+
+      div = document.createElement('div'),
+
+      css,
+
+      needRemove = false;
+
+
+
+    // Build alertMsg's Div element.
+    div.innerHTML = options.content;
+    for (css in alertMsgCSS) {
+      div.style[css] = alertMsgCSS[css];
+    }
+
+    // Before compute div's height, you should put it into current document.
+    document.body.appendChild(div);
+    div.style.marginTop = '-' + (window.getComputedStyle(div).height.replace(/px/, '') / 2) + 'px';
+
+
+    div.style.opacity = "1";
 		if ( options.autohide ) {
 
 			setTimeout( function() {
-				$( ".alert-msg-content" ).animate( { opacity: 0 }, "slow", function() {
-					$( ".alert-msg-content" ).remove();
-					typeof(options.done) == "function" ? options.done() : "";
-          typeof(callback) == "function" ? callback() : "";
-
-				});
+        div.style.opacity = "0";
+        needRemove = true;
 			}, options.time );
+
 		}
+
+    // Listen transition
+    div.addEventListener((div.style.transition === undefined ? 'webkitTransitionEnd' : 'transitionend'), function(){
+      if (needRemove === true) {
+        div.remove();
+        if (typeof callback === 'function') {
+         callback();
+        }
+        if (typeof options.done === 'function') {
+          options.done();
+        }
+      }
+    });
 
     return {
       then: function(cb){
@@ -66,22 +110,5 @@
     };
 	};
 
-	$.alertMsg.defaults = {
-        width: 160,
-        content: "?",
-        done: null,
-        time:1200,
-        autohide: true,
-        body: "body",
-        debug: false
-    };
-
-	$.alertMsg.remove = function( done ) {
-		$( ".alert-msg-content" ).animate( { opacity: 0 }, "slow", function() {
-			$( ".alert-msg-content" ).remove();
-			done === null ? "" : done();
-		} );
-	};
-
-	return $;
+	return alertMsg;
 }));

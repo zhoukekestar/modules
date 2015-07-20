@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+<button id="btn1">显示提示（不自动移除）</button>
+<button id="btn2">移除当前提示</button>
+<button id="btn3">显示提示（自动移除）</button>
+<button id="btn4">显示提示（指定宽度）</button>
+<button id="btn5">消失后执行</button>
+<button id="btn6">消失后执行2</button>
+
+
+<script src="http://cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
+<script>
+  require.config({
+    baseUrl: './',
+    paths: {
+      jquery: 'http://cdn.bootcss.com/jquery/2.1.3/jquery.min',
+      alertMsg: 'alertMsg',
+    }
+  });
+
+  require(["alertMsg"], function(){
+    $("#btn1").click(function(){
+      $.alertMsg({
+        content:"提示，不会自动消失",
+        autohide:false
+      });
+    });
+    $("#btn2").click(function(){
+      $.alertMsg.remove();
+    });
+    $("#btn3").click(function(){
+      $.alertMsg("提示，将会自动消失");
+    });
+    $("#btn4").click(function(){
+      $.alertMsg({
+        content:"提示，将会自动消失~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+        width:250
+      });
+    });
+    $("#btn5").click(function(){
+      $.alertMsg({
+        content:"消失后执行1",
+        done: function(){
+          alert('执行')
+        }
+      });
+    });
+    $("#btn6").click(function(){
+      $.alertMsg("消失后执行2").then(function(){
+        alert('执行2')
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
