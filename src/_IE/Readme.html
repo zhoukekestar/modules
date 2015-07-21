@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+      h1 {
+        color: red;
+        color: yellow\0; /* IE 8,9,10,11 */
+        color: orange\9; /* IE 5,7,8,9,10 识别    IE 11 不识别*/
+
+        *color: blue; /* IE 5,7 */
+        /*+color: orange;*/ /* IE 5,7 */
+         _color: green; /* IE 5 */
+      }
+
+    </style>
+</head>
+<body>
+  <h1> 在含有IE 5, 7, 8, 9, 10, 11下的测试结果，游览器内核为 IE 11</h1>
+  <h2>css hacker:</h2>
+  <ul>
+    <li>"\9" &nbsp;IE 5,7,8,9,10 识别 &nbsp;&nbsp;&nbsp;IE 11 不识别</li>
+    <li>"\0" &nbsp;IE 5,7,8,9,10,11 识别</li>
+    <li>"*" &nbsp;IE 5,7 识别（推荐）</li>
+    <li>"+" &nbsp;IE 5,7 识别</li>
+    <li>"_" &nbsp;IE 5 识别</li>
+  </ul>
+  <h2>background-size:</h2>
+  <p>filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='/images/home/down.png', sizingMethod='scale');</p>
+</body>
+</html>
