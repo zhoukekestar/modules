@@ -9,6 +9,9 @@
 ## jquery-core
 * jquery的核心代码，直接引用即可
 
+## render
+* 重写express的render方法，并重新设置options。该模块适合设置项目的公共参数。如后台api接口参数等。
+
 ## reqFilter（请求过滤判断）
 * 判断是否为ajax请求
 * 判断是否是手机访问
