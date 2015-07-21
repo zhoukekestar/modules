@@ -9,6 +9,3 @@
 
 ## src
 * 模块源码
-
-## Attention. Before your committing.
-* 请确保编辑器能识别.editorconfig 和 .jshintrc 文件以确保代码风格一致
