@@ -1,0 +1,29 @@
+.ui-radio{
+  height: 1em;
+  width: 1em;
+  background-image: none;
+  display: inline-block;
+  background-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  border: solid .2em #ccc;
+  border-radius: 50%;
+  outline: none !important;
+  position: relative;
+  box-sizing: border-box;
+  margin: 3px;
+}
+.ui-radio:checked{
+  border: solid .2em #34b93d;
+}
+.ui-radio:checked:before{
+  content: "";
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  background-color: #34b93d;
+  display: block;
+  border-radius: 100%;
+  left: 25%;
+  top: 25%;
+}
