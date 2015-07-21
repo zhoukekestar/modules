@@ -1,6 +1,9 @@
 ## console
 * 使用方法：使用require引用后即可
-* 解决nodejs中无法输出行号的无奈，输出样例为：[16:40:59] (g:\svn\www.toomao.com\app.js:52:11) Local. Listen 3000.
+* 解决nodejs中无法输出行号的无奈，输出样例为：
+```js
+[16:40:59] (g:\svn\www.toomao.com\app.js:52:11) Local. Listen 3000.
+```
 * 可重定向日志输出到日志系统进行统一管理（未实现）
 
 ## jquery-core
