@@ -25,7 +25,7 @@
 
     // If this module imported by amd, you can use validator to valid submit form
     // If not, ignore validator.
-    if ( typeof define === "function" && define.amd ) {
+    if ( typeof define === "function" && define.amd && options.valid) {
       var msg = validator.validForm($this[0]);
       if (msg !== "") {
         $.alertMsg(msg);
@@ -136,6 +136,7 @@
 
     var options = $.extend({
       delegate: false,
+      valid: true,
       debug: function(){},
       success: function(){},
       // to change data

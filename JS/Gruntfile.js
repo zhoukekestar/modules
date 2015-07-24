@@ -2,7 +2,7 @@ module.exports = function(grunt){
 
     // TODO config requirejs.config.js
 
-    var copyto = 'G:\\svn\\m.toomao.com\\public\\js\\modules.min.js';
+    var copyto = 'G:\\svn\\www.toomao.com\\public\\js\\modules.min.js';
     var nameList = [
         "alertMsg",                     // 1
         "formValidator",                // 2
@@ -28,6 +28,7 @@ module.exports = function(grunt){
         'template',                     // 20
         'ajaxUpload',                   // 21
         'preview',                      // 22
+        'paging',                       // 23
     ];
     var excludeList = [
         ["jquery"],                     // alertMsg             1
@@ -54,6 +55,7 @@ module.exports = function(grunt){
         ['jquery'],                     // template             20
         ['jquery'],                     // ajaxUpload           21
         ['jquery'],                     // preview              22
+        ['jquery'],                     // paging               23
     ];
 
     var uglifyList = new Array();

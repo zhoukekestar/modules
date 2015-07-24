@@ -28,7 +28,8 @@ require.config({
     formJSON: 'formJSON/jquery.formJSON',
     template: 'template/jquery.template',
     ajaxUpload: 'upload/jquery.ajaxUpload',
-    preview: 'preview/preview'
+    preview: 'preview/preview',
+    paging: 'paging/paging'
   },
   shim: {
     swiper: {

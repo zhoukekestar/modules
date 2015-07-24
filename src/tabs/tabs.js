@@ -9,6 +9,9 @@
 
     var init = function() {
         $("[data-role='tabs']").each(function () {
+            var witdh = 100 / $(this).find('.tabs-list li').length;
+          $(this).find('.tabs-list li').css('width', witdh + '%');
+
             var $this = $(this);
             var active_tab = $this.find(".tabs-list li.active").data("href");
 

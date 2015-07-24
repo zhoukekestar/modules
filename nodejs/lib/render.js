@@ -1,6 +1,6 @@
-module.exports = function(req, res, next) {
+var apiConfig= require('../config/api');
 
-  // Save original render function to _render.
+module.exports = function(req, res, next) {
   res._render = res.render;
 
   res.render = function(name, options, fn) {
@@ -8,8 +8,13 @@ module.exports = function(req, res, next) {
       options = {};
     }
 
-    // Before rendering, set your own options here.
+    // Set global parameters.
+    options.baseApi   = apiConfig.baseApi;
+    options.imageApi  = apiConfig.imageApi;
+
+    // Make #request# accessible for template engine like jade.
     options._req = req;
+
     res._render(name, options, fn)
   }
   next();

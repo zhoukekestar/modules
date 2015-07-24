@@ -37,7 +37,7 @@ margin-left: -5px;
 left: 50%;
 bottom: -9px;
 border: solid 5px;
-border-color: #FFFFFF transparent transparent;
+border-color: #fff transparent transparent !important;
 z-index: 3;
 }
 
