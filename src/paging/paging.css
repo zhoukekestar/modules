@@ -1,12 +1,21 @@
 @CHARSET "UTF-8";
 
+.paging {
+  display: inline-block;
+}
+.paging ul {
+  margin: 0;
+  padding: 0;
+  display: block;
+  list-style: none;
+}
 .paging li {
 	display: block;
 	background-color: rgba(255, 255, 255, 1);
 	padding: 3px;
 	width: 25px;
 	text-align: center;
-	color: #26a3b7;
+	color: #337ab7;
 	text-decoration: none;
 	float: left;
 	border-right: solid #A2A2A2 1px;
@@ -14,6 +23,7 @@
 	border-bottom: solid #A2A2A2 1px;
 	cursor: pointer;
 	font-weight: bolder;
+  box-sizing: content-box;
 }
 .paging li.first-child{
 	border-left: solid #A2A2A2 1px;
@@ -24,16 +34,15 @@
 }
 .paging li:hover {
 	color: #fff;
-	background-color: #80D6E4;
+	background-color: #539ad7;
 }
 .paging li.disabled:hover{
 	cursor: no-drop;
-	color: #26a3b7;
-	background-color: rgba(255, 255, 255, 1);
+	background-color: #539ad7;
 }
 .paging li.active,.paging li.active:hover{
 	color: #FFF;
-	background-color: #26a3b7;
+	background-color: #337ab7;
 }
 /*clearfix*/
 .paging:after {
