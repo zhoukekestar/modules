@@ -59,13 +59,28 @@
 	    }
 	};
 
-	$.fn.citySelect = function(selected){
+	$.fn.citySelect = function(options){
+
+    options = options === undefined ? {} : options;
+
+
+    if (options instanceof Array) {
+      var selected = options;
+      options = {};
+      options.selected = selected;
+    }
+
+    if (options.url === undefined) {
+      options.url = './city.min.json'
+    }
+
+
 		var $this = $(this);
-		$.getJSON("city.min.json", function(json){
+		$.getJSON(options.url, function(json){
 			citySelect({
 				$this: $this,
 				data: json,
-				selected:selected
+				selected: options.selected
 			});
 		});
 	};
