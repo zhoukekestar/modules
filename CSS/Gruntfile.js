@@ -13,6 +13,7 @@ module.exports = function (grunt) {
                     base + "_lib/swiper/css/swiper.min.css",
                     base + "pull-v2/pull.css",
                     base + "baseCSS/base.css",
+                    base + "baseCSS/bootstrap-extend.css",
                     //base + "_lib/jquery-mobile/jquery.mobile.custom.structure.css",
                     base + "loadingPage/loadingPage.css",
                     base + "popup/popup.css",
