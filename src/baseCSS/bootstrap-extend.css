@@ -1,4 +1,5 @@
 /*input success&error css for toomao*/
+
 .has-success.form-control{
     border-color: #3c763d;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
@@ -19,18 +20,4 @@
     border-color: #843534;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
-}
-span.has-error
-{
-    color: #a94442;
-    font-size: 12px;
-}
-
-.controls span.has-error
-{
-    line-height:40px;
-}
-
-span.badge{
-    margin-left: 10px;
 }
