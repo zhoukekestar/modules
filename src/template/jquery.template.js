@@ -25,19 +25,19 @@
         // Fix bug
       "return p.join('').replace(/\t/g, \"'\");";
     var fn = new Function('obj', code);
-    var html;
-    try {
-      html = fn(data);
-    } catch (e) {
-      console.log(e.message);
-      window.T = {};
-      window.T.code = code
-      window.T.fn = fn;
-      window.T.data = data;
 
-      html = ""
-    }
-    return html;
+    // try {
+    //   html = fn(data);
+    // } catch (e) {
+    //   console.log(e.message);
+      // window.T = {};
+      // window.T.code = code
+      // window.T.fn = fn;
+      // window.T.data = data;
+
+    //   html = ""
+    // }
+    return fn;
   }
 
   $.fn.template = function(options){
@@ -52,17 +52,32 @@
     }
     options = $.extend({
       holder: $this.data('holder') === undefined ? '#' + id : $this.data('holder'),
-      model: $this.data('model') === undefined ? {} : $this.data('model')
+      model: $this.data('model')
     }, options);
 
-    $(options.holder).html(tmpl($this.html(), options.model));
+    if (options.model !== undefined) {
+
+      try {
+        $(options.holder).html(tmpl($this.html())(options.model));
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
 
     return {
       updateBy: function(d) {
-        $(options.holder).html(tmpl($this.html(), d));
+        try {
+          $(options.holder).html(tmpl($this.html())(d));
+        } catch (e) {
+          console.log(e.message)
+        }
       },
       appendBy: function(d) {
-        $(options.holder).append(tmpl($this.html(), d));
+        try {
+          $(options.holder).append(tmpl($this.html())(d));
+        } catch (e) {
+          console.log(e.message)
+        }
       }
     }
   }
