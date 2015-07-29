@@ -58,6 +58,41 @@
         "return p.join('').replace(/\t/g, \"'\");";
       var fn = new Function('obj', code);
       return fn(data);
+    },
+    /**
+     * @see https://github.com/jquery/jquery-mobile/blob/master/js/navigation/path.js
+     * */
+    // a-z 0-9 : / @ . ? = & #
+    //                   http:             //        jblas           : password       @    mycompany.com                      : 8080             /mail/inbox                        ?msg=1234&type=unread
+    //                                                                                                                                                                                         #msg-content
+    //                  (http:      )?(  (//  )     (jblas      )    :(password   )   @   (mycompany.com                 )    :(8080  )         (/mail/inbox                    )  (?msg...)  (#..)
+    urlParseRE: /^\s*(((([^:\/#\?]+:)?(?:(\/\/)((?:(([^:@\/#\?]+)(?:\:([^:@\/#\?]+))?)@)?(([^:\/#\?\]\[]+|\[[^\/\]@#?]+\])(?:\:([0-9]+))?))?)?)?((\/?(?:[^\/\?#]+\/+)*)([^\?#]*)))?(\?[^#]+)?)(#.*)?/,
+    parseUrl: function(url) {
+      var matches = utils.urlParseRE.exec( url || "" ) || [];
+
+      // Create an object that allows the caller to access the sub-matches
+      // by name. Note that IE returns an empty string instead of undefined,
+      // like all other browsers do, so we normalize everything so its consistent
+      // no matter what browser we're running on.
+      return {
+        href:         matches[  0 ] || "",
+        hrefNoHash:   matches[  1 ] || "",
+        hrefNoSearch: matches[  2 ] || "",
+        domain:       matches[  3 ] || "",
+        protocol:     matches[  4 ] || "",
+        doubleSlash:  matches[  5 ] || "",
+        authority:    matches[  6 ] || "",
+        username:     matches[  8 ] || "",
+        password:     matches[  9 ] || "",
+        host:         matches[ 10 ] || "",
+        hostname:     matches[ 11 ] || "",
+        port:         matches[ 12 ] || "",
+        pathname:     matches[ 13 ] || "",
+        directory:    matches[ 14 ] || "",
+        filename:     matches[ 15 ] || "",
+        search:       matches[ 16 ] || "",
+        hash:         matches[ 17 ] || ""
+      };
     }
 	};
 }));
