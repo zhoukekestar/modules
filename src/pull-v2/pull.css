@@ -33,7 +33,7 @@ z-index: -1;
 }
 .pull-down-fresher:before{
 	margin-left: -60px;
-	background-image: url(http://img02.taobaocdn.com/imgextra/i2/776955218/TB2el1gcXXXXXa_XpXXXXXXXXXX_!!776955218.png);
+	background-image: url(../pull/scroll-down.png);
 	background-size: 100%;
 	transition: transform 1s;
 	-webkit-transition: -webkit-transform 1s;
