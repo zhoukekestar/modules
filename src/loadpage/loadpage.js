@@ -1,12 +1,10 @@
 !(function( factory ) {
   if ( typeof define === "function" && define.amd ) {
-    define(["alertMsg", "loadingPage" ], factory );
+    define(["jquery", "loadingPage", "alertMsg" ], factory );
   } else {
     factory( jQuery );
   }
 }(function($, loadingPage){
-
-
 
   if($.fn.loadpage) { return; }
 
@@ -34,10 +32,11 @@
   };
 
 
-
-
   var cache = [{url: location.href, doc: $('html').html()}];
   var options = $.fn.loadpage.options;
+
+  // Make url to absolute url by <a> element's attribute 'href'.
+  var linkEle;
   if(!history || !history.pushState) {
     if (options.debug) {
       alert('history.pushState')
@@ -50,41 +49,6 @@
   }
   var utils   = {
 
-    /**
-     * @see https://github.com/jquery/jquery-mobile/blob/master/js/navigation/path.js
-     * */
-    // a-z 0-9 : / @ . ? = & #
-    //                   http:             //        jblas           : password       @    mycompany.com                      : 8080             /mail/inbox                        ?msg=1234&type=unread
-    //                                                                                                                                                                                         #msg-content
-    //                  (http:      )?(  (//  )     (jblas      )    :(password   )   @   (mycompany.com                 )    :(8080  )         (/mail/inbox                    )  (?msg...)  (#..)
-    urlParseRE: /^\s*(((([^:\/#\?]+:)?(?:(\/\/)((?:(([^:@\/#\?]+)(?:\:([^:@\/#\?]+))?)@)?(([^:\/#\?\]\[]+|\[[^\/\]@#?]+\])(?:\:([0-9]+))?))?)?)?((\/?(?:[^\/\?#]+\/+)*)([^\?#]*)))?(\?[^#]+)?)(#.*)?/,
-    parseUrl: function(url) {
-      var matches = utils.urlParseRE.exec( url || "" ) || [];
-
-      // Create an object that allows the caller to access the sub-matches
-      // by name. Note that IE returns an empty string instead of undefined,
-      // like all other browsers do, so we normalize everything so its consistent
-      // no matter what browser we're running on.
-      return {
-        href:         matches[  0 ] || "",
-        hrefNoHash:   matches[  1 ] || "",
-        hrefNoSearch: matches[  2 ] || "",
-        domain:       matches[  3 ] || "",
-        protocol:     matches[  4 ] || "",
-        doubleSlash:  matches[  5 ] || "",
-        authority:    matches[  6 ] || "",
-        username:     matches[  8 ] || "",
-        password:     matches[  9 ] || "",
-        host:         matches[ 10 ] || "",
-        hostname:     matches[ 11 ] || "",
-        port:         matches[ 12 ] || "",
-        pathname:     matches[ 13 ] || "",
-        directory:    matches[ 14 ] || "",
-        filename:     matches[ 15 ] || "",
-        search:       matches[ 16 ] || "",
-        hash:         matches[ 17 ] || ""
-      };
-    },
     /**
      * Prevents jQuery from stripping elements from $(html)
      * @param   {string}    url - url being evaluated
@@ -142,21 +106,14 @@
     load: function(url, outAnimation, inAnimation, showAfterHide, isPoped) {
 
       if (options.beforeLoadPage() === false) return;
-      try {
-        // Change URL first, then you can get absolute url by location.href
 
-        // TODO make url absolute by js
-        // TODO parseUrl(url)
-        if (!isPoped)
-          history.pushState({
-            inAnimation: inAnimation,
-            outAnimation: outAnimation,
-            showAfterHide: showAfterHide
-          }, '', url);
-        url = location.href;
-      } catch (e) {
-
+      // Change URL to absolute URL.
+      if (linkEle === undefined) {
+        linkEle = document.createElement('a');
       }
+      linkEle.href = url;
+      url = linkEle.href;
+
 
       outAnimation  = outAnimation === undefined ? options.outAnimation : outAnimation;
       inAnimation   = inAnimation  === undefined ? options.inAnimation  : inAnimation;
@@ -192,39 +149,43 @@
           utils.showPage(d, pageid, url, inAnimation, isPoped);
         }
 
+        if (!isPoped) {
+          history.pushState({
+            inAnimation: inAnimation,
+            outAnimation: outAnimation,
+            showAfterHide: showAfterHide
+          }, '', url);
+        }
 
       }
 
-      // Show page is loading....
+      // Show msg that page is loading.... please waiting...
       // Only if the content can't loaded in 1 second will show the loading view.
-      // If you show it every time even if it have fast internet, you just break his/her user experience (it feel so terrible).
-
-
+      // If you show it every time even if it have fast internet, you just break user experience (it will feels so terrible).
       setTimeout(function(){
         if (loaded === false)
           loadingPage.loading();
       }, 1000);
 
+
       // Check cache.
-      cache.forEach(function(obj) {
-        // Change string like './demo1.html' to '/demo1.html'
-        // After this, we can determine whether it's cached by function 'indexOf' simply.
-        // var u = url.indexOf('.') === 0 ? url.substr(1) : url;
-        // if (obj.url.indexOf(u) !== -1 && obj.url === u) {
+      for (var i = 0, max = cache.length; i < max; i++) {
+        var obj = cache[i];
         if (obj.url === url) {
           afterLoaded(obj.doc);
           return;
         }
-      });
-      // After loaded, variable loaded will be true.
-      if (loaded === true)
-        return;
+      }
 
       // Load page.
       $.ajax({
         url: url,
         success: function(d) {
+
+          // Call loaded function
           afterLoaded(d);
+
+          // Cache it.
           var cached = false;
           cache.forEach(function(obj) {
             if (location.href === obj.url) {
