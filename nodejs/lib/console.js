@@ -1,9 +1,7 @@
 
 
 var showLine = true,
-    // TODO block list.
-    // If
-    // Like log4j.
+    // Block list.
     bLog    = [],
     bInfo   = [],
     bWarn   = [],
