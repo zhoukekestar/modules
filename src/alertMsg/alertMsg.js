@@ -2,10 +2,9 @@
 	if ( typeof define === "function" && define.amd ) {
 		define(factory );
 	} else {
-		factory();
+		window.alertMsg = factory();
 	}
 }( function() {
-
 
   /**
    * alertMsg

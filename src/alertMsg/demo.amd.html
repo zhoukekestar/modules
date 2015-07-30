@@ -13,11 +13,17 @@
 <button id="btn6">消失后执行2</button>
 
 
-<script src="../_lib/jquery.min.js"></script>
-<script src="alertMsg.jquery.js"></script>
+<script src="../_lib/require.min.js"></script>
 <script>
+  require.config({
+    baseUrl: './',
+    paths: {
+      jquery: '../_lib/jquery.min',
+      alertMsg: 'alertMsg.jquery',
+    }
+  });
 
-
+  require(["alertMsg"], function(){
     $("#btn1").click(function(){
       $.alertMsg({
         content:"提示，不会自动消失",
@@ -49,6 +55,7 @@
         alert('执行2')
       });
     });
+  });
 </script>
 
 </body>
