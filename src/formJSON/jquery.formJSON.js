@@ -64,7 +64,11 @@
           value  = JSON.parse(value);
 
         } else if (type === 'number') {
-          value = Number.parseFloat(value)
+
+          // Safari No parseFloat method
+          // value = Number.parseFloat(value)
+          value = Number(value);
+
 
         } else if (type === 'time') {
           value = new Date(value).getTime();
