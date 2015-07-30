@@ -1,11 +1,20 @@
 
 
-var showLine = true;
+var showLine = true,
+    // TODO block list.
+    // If
+    // Like log4j.
+    bLog    = [],
+    bInfo   = [],
+    bWarn   = [],
+    bErr    = [],
+    bList   = [],
+    lineMsg;
 
-console._log = console.log;
-console._info = console.info;
-console._warn = console.warn;
-console._error = console.error;
+console._log    = console.log;
+console._info   = console.info;
+console._warn   = console.warn;
+console._error  = console.error;
 
 function format(d) {
   return d.getHours() + ':' + d.getMinutes() + ":" + d.getSeconds();
@@ -22,17 +31,17 @@ function getCurrentLine() {
 
   /*
    Example 1:
-   at getCurrentLine (g:\svn\m.toomao.com\lib\console.js:21:13)
-   at Console.console.log (g:\svn\m.toomao.com\lib\console.js:31:53)
-   at Object.<anonymous> (g:\svn\m.toomao.com\app.js:68:11)
+   at getCurrentLine (***\lib\console.js:21:13)
+   at Console.console.log (***\lib\console.js:31:53)
+   at Object.<anonymous> (***\app.js:68:11)
    at Module._compile (module.js:460:26)
 
 
    Example 2:
-   at getCurrentLine (g:\svn\m.toomao.com\lib\console.js:21:13)
-   at Console.console.log (g:\svn\m.toomao.com\lib\console.js:31:53)
-   at g:\svn\m.toomao.com\routes\shop.js:44:11
-   at Layer.handle [as handle_request] (g:\svn\m.toomao.com\node_modules\express\lib\router\layer.js:82:5)
+   at getCurrentLine (***\lib\console.js:21:13)
+   at Console.console.log (***\lib\console.js:31:53)
+   at ***\routes\shop.js:44:11
+   at Layer.handle [as handle_request] (***\node_modules\express\lib\router\layer.js:82:5)
    */
   var str = getStackTrace();
 
@@ -49,7 +58,7 @@ function getCurrentLine() {
   return str;
 }
 
-var toString = function(msg) {
+function toString(msg) {
   if (typeof msg === "object") {
     try {
       return JSON.stringify(msg)
@@ -61,13 +70,39 @@ var toString = function(msg) {
   return msg;
 }
 
+
+function isInBlockList(msg, level) {
+
+  if (level === 1) {
+    bList = bLog;
+  } else if (level === 2) {
+    bList = bInfo
+  } else if (level === 3) {
+    bList = bWarn
+  } else {
+    bList = bErr;
+  }
+
+  for (var i = 0, max = bList.length; i < max; i++) {
+    if (msg.indexOf(bList[i]) !== -1) {
+      return true
+    }
+  }
+  return false;
+}
+
+
 console.log = function(msg) {
 
   msg = toString(msg)
+  lineMsg = getCurrentLine();
+
+  if (isInBlockList(lineMsg, 1)) return;
+
   if (!showLine)
     console._log('[' + format(new Date()) + '] ' + msg);
   else
-    console._log('[' + format(new Date()) + '] (' + getCurrentLine() + ') ' + msg);
+    console._log('[' + format(new Date()) + '] (' + lineMsg + ') ' + msg);
 
   // TODO 使用http Post将当前msg输出到日志系统
 }
@@ -75,28 +110,48 @@ console.log = function(msg) {
 console.info = function(msg) {
 
   msg = toString(msg)
+  lineMsg = getCurrentLine();
+
+  if (isInBlockList(lineMsg, 2)) return;
+
   if (!showLine)
     console._info('[' + format(new Date()) + '] ' + msg);
   else
-    console._info('[' + format(new Date()) + '] (' + getCurrentLine() + ') ' + msg);
+    console._info('[' + format(new Date()) + '] (' + lineMsg + ') ' + msg);
 }
 
 console.warn = function(msg) {
 
   msg = toString(msg)
+  lineMsg = getCurrentLine();
+
+  if (isInBlockList(lineMsg, 3)) return;
+
   if (!showLine)
     console._warn('[' + format(new Date()) + '] ' + msg);
   else
-    console._warn('[' + format(new Date()) + '] (' + getCurrentLine() + ') ' + msg);
+    console._warn('[' + format(new Date()) + '] (' + lineMsg + ') ' + msg);
 }
 
-console.error = function(msg, note) {
+console.error = function(msg) {
 
   msg = toString(msg)
+
+  lineMsg = getCurrentLine();
+
+  if (isInBlockList(lineMsg, 4)) return;
+
   if (!showLine)
     console._error('[' + format(new Date()) + '] ' + msg);
   else
-    console._error('[' + format(new Date()) + '] (' + getCurrentLine() + ') ' + msg);
+    console._error('[' + format(new Date()) + '] (' + lineMsg + ') ' + msg);
 }
 
-module.exports = console;
+module.exports = function(log, info, warn, err) {
+  log   !== undefined && (bLog  = log);
+  info  !== undefined && (bInfo = info);
+  warn  !== undefined && (bWarn = warn);
+  err   !== undefined && (bErr  = err);
+
+  return console;
+};
