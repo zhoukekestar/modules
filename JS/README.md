@@ -1,17 +1,17 @@
 If you do not know how to start. See demo at first.<br>
-如果怎么操作，先看一下demo样例。
+如果不清楚怎么操作，先看一下demo样例。
 
 ## Edit requirejs.config.js File.
 
 #### CASE 1. AMD module.
 * step 1. Just add it to "paths" like:
-```json
+```js
 paths: {
   citySelect : 'citySelect/citySelect'
 }
 ```
 * Step 2. Add your exclude list (maybe `jquery`)
-```json
+```js
 _exclude: {
     alertMsg : ['jquery']
 }
@@ -19,25 +19,25 @@ _exclude: {
 
 #### CASE 2. NO AMD module.
 * Step 1. Add it to "paths" like:
-```json
+```js
 paths: {
   jweixin : "_lib/jweixin-1.0.0"
 }
 ```
 * Step 2. Edit `shim` node to add its exports OR dependencies like:
-```json
+```js
 jweixin: {
   exports: "wx"
 }
 ```
 OR
-```json
+```js
 jqueryCookie: {
   deps: ["jquery"]
 }
 ```
 * Step 3. Add your exclude list (maybe `jquery`)
-```json
+```js
 _exclude: {
     jqueryCookie : ['jquery']
 }
