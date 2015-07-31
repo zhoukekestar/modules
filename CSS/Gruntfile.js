@@ -35,7 +35,6 @@ module.exports = function (grunt) {
             ' * Include ' + nameList.toString() + ' \n' +
             ' * Update on <%= grunt.template.today("yyyy-mm-dd hh:MM;ss") %> \n' +
             ' */\n',
-        footer: "\n/*! include:" + nameList.toString() + "*/",
         less: {
             compileCore: {
                 src: "bootstrap-core.less",
@@ -57,10 +56,16 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     position: 'top',
-                    banner: '<%= banner %>'
+                    banner: '/*!\n' +
+                            ' * web-moduels v<%= pkg.version %>\n' +
+                            ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+                            ' * Licensed under <%= pkg.license %>\n' +
+                            ' * Include ' + nameList.toString() + ' \n' +
+                            ' * Update on <%= grunt.template.today("yyyy-mm-dd hh:MM;ss") %> \n' +
+                            ' */\n'
                 },
                 files: {
-                    src: [ "dist/src.min.css"]
+                    src: [ "dist/modules.min.css"]
                 }
             }
         },
@@ -78,6 +83,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
 
 
-  grunt.registerTask('default', ["cssmin:minifyCore", "usebanner:dist", "copy:css"]);
+  grunt.registerTask('default', ["cssmin", "usebanner", "copy"]);
   grunt.registerTask('bootstrap', ['less:compileCore', "cssmin:minifyCore", "usebanner:dist", "copy:css"]);
 };
