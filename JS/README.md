@@ -1,4 +1,4 @@
-If you do not know how to start. See demo at first.
+If you do not know how to start. See demo at first.<br>
 如果怎么操作，先看一下demo样例。
 
 ## Edit requirejs.config.js File.
