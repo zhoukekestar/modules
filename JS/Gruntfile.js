@@ -2,83 +2,71 @@ module.exports = function(grunt){
 
     // TODO config requirejs.config.js
 
-    var copyto = 'G:\\svn\\www.toomao.com\\public\\js\\modules.min.js';
-    var nameList = [
-        "alertMsg",                     // 1
-        "formValidator",                // 2
-        "formSubmit",                   // 3
-        "baseUtils",                    // 4
-        "pullDown",                     // 5
-        "pullUp",                       // 6
+    // Your Project's directory.
+    var
+      copyto = 'G:\\svn\\www.toomao.com\\public\\js\\',
+      nameList = {
+        // NO AMD RULES
+        swiper: true,
+        gaodeMap: false,
+        jqueryCookie: false,
+        jqueryLazyload: false,
+        jweixin: false,
 
-        "swiper",                       // 7
-        //"gaodeMap",                     // 8
-        "jqueryCookie",                 // 9
-        "jqueryLazyload",               // 10
+        // AMD
+        alertMsg: true,
+        baseUtils: true,
 
-        "jweixin",                      // 11
-        "shareWX",                      // 12
-        //"jqueryMobile",                 // 13
-        "citySelect",                   // 14
-        'popup',                        // 15
-        'tabs',                         // 16
-        'loadpage',                     // 17
-        'loadingPage',                  // 18
-        'formJSON',                     // 19
-        'template',                     // 20
-        'ajaxUpload',                   // 21
-        'preview',                      // 22
-        'paging',                       // 23
-    ];
-    var excludeList = [
-        ["jquery"],                     // alertMsg             1
-        ["jquery", "alertMsg"],         // formValidator        2
-        ["formValidator"],              // formSubmit           3
-        ["jquery"],                     // baseUtils            4
-        ["jquery"],                     // pullDown             5
-        ["jquery"],                     // pullUp               6
+        pullDown: false,
+        pullUp: false,
+        formValidator: true,
+        formSubmit: false,
+        shareWX: false,
+        citySelect: true,
+        popup: false,
+        tabs: true,
+        loadpage: true,
+        loadingPage: true,
+        formJSON: true,
+        template: true,
+        ajaxUpload: true,
+        preview: true,
+        paging: true
+      },
+      nameListString = '',
+      uglifyList = [],
+      requireTask = {},
+      requireConfig = grunt.file.read('./requirejs.config.js', {encoding: 'utf8'});
 
-        [],                             // swiper               7
-        //[],                             // gaodeMap             8
-        ["jquery"],                     // jqueryCookie         9
-        ["jquery"],                     // jqueryLazyload       10
+    // Read requestjs's config and parse it.
+    requireConfig = requireConfig.substring(requireConfig.indexOf('{'), requireConfig.lastIndexOf('}') + 1);
+    requireConfig = eval('(' + requireConfig + ')');
 
-        [],                             // jweixin              11
-        ["jquery", "jweixin"],          // shareWX              12
-        //["jquery"],                     // JqueryMobile         13
-        ["jquery"],                     // citySelect           14
-        ["popup"],                      // popup                15
-        ["tabs"],                       // tabs                 16
-        ['jquery', 'alertMsg', 'loadingPage'], // loadpage             17
-        [],                             // loadingPage          18
-        ['jquery'],                     // formJSON             19
-        ['jquery'],                     // template             20
-        ['jquery'],                     // ajaxUpload           21
-        ['jquery'],                     // preview              22
-        ['jquery'],                     // paging               23
-    ];
+    for (var name in nameList) {
 
-    var uglifyList = new Array();
-    var requireTask = {};
+        var outputName,
+            temp;
 
+        if (nameList[name]) {
 
-    for (var i = 0, len = nameList.length; i < len; i++) {
+          nameListString += name +',';
+          outputName = "./output/" + name + ".min.js";
 
-        // after requirejs handler's file name
-        uglifyList[i] = "./output/" + nameList[i] + ".min.js";
+          uglifyList.push(outputName);
 
-        var t =  {
-                options: {
-                    name: nameList[i],
-                    mainConfigFile: "./requirejs.config.js",
-                    "out": uglifyList[i],
-                    exclude: excludeList[i],
-                    optimize: "none"
-                }
-        };
+          temp = {
+            options: {
+              name: name,
+              mainConfigFile: "./requirejs.config.js",
+              "out": outputName,
+              exclude: requireConfig._exclude[name],
+              optimize: "none"
+            }
+          };
 
-        // require task list
-        requireTask["compile-" + nameList[i]] = t;
+          // require task list
+          requireTask["compile-" + name] = temp;
+        }
 
     }
 
@@ -87,14 +75,8 @@ module.exports = function(grunt){
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
             options: {
-               banner: '/*!\n' +
-                        ' * web-moduels v<%= pkg.version %>\n' +
-                        ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-                        ' * Licensed under <%= pkg.license %>\n' +
-                        ' * Include ' + nameList.toString() + ' \n' +
-                        ' * Update on <%= grunt.template.today("yyyy-mm-dd HH:MM;ss") %> \n' +
-                        ' */\n',
-                footer: "\n/*! @zkk */"
+                sourceMap: true,
+                sourceMapName: './output/modules.min.map'
             },
             release: {
                 files: {
@@ -112,9 +94,31 @@ module.exports = function(grunt){
         },
         requirejs: requireTask,
         copy: {
-          jscript: {
+          js: {
             src: "./output/modules.min.js",
-            dest: copyto
+            dest: copyto + "modules.min.js"
+          },
+          map: {
+            src: "./output/modules.min.map",
+            dest: copyto + "modules.min.map"
+          }
+        },
+        clean: uglifyList,
+        usebanner: {
+          dist: {
+            options: {
+              position: 'top',
+              banner: '/*!\n' +
+                        ' * web-moduels v<%= pkg.version %>\n' +
+                        ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+                        ' * Licensed under <%= pkg.license %>\n' +
+                        ' * Include ' + nameListString + ' \n' +
+                        ' * Update on <%= grunt.template.today("yyyy-mm-dd HH:MM;ss") %> \n' +
+                        ' */\n'
+            },
+            files: {
+              src: [ './output/modules.min.js' ]
+            }
           }
         }
     });
@@ -124,10 +128,10 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-banner');
 
     // 默认任务
-    grunt.registerTask('release', ['requirejs', 'uglify', 'copy']);
-    grunt.registerTask('default', ['requirejs', 'concat', 'copy']);
-    grunt.registerTask('all', ['uglify']);
-    grunt.registerTask('js', ['requirejs']);
+    grunt.registerTask('release', ['requirejs', 'uglify', 'clean', 'usebanner', 'copy']);
+    grunt.registerTask('default', ['requirejs', 'concat', 'clean', 'usebanner', 'copy']);
 };

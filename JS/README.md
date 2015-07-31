@@ -1,15 +1,31 @@
-## Edit requirejs.config.js File.
-### If your module is AMD module, just add it to "paths" like:
-```json
-citySelect: 'citySelect/citySelect'
-```
-then ...over!
+## If you do not know how to start. See `demo` at first.
+## 如果怎么操作，先看一下demo样例。
 
-### If your module is not AMD module, add it to "paths" like:
+
+## Edit requirejs.config.js File.
+
+### CASE 1. AMD module.
+* step 1. Just add it to "paths" like:
 ```json
-jweixin: "_lib/jweixin-1.0.0"
+paths: {
+  citySelect : 'citySelect/citySelect'
+}
 ```
- then you should edit "shim" node to add its exports & dependencies like:
+* Step 2. Add your exclude list (maybe `jquery`)
+```json
+_exclude: {
+    alertMsg : ['jquery']
+}
+```
+
+### CASE 2. NO AMD module.
+* Step 1. Add it to "paths" like:
+```json
+paths: {
+  jweixin : "_lib/jweixin-1.0.0"
+}
+```
+* Step 2. Edit `shim` node to add its exports OR dependencies like:
 ```json
 jweixin: {
   exports: "wx"
@@ -21,30 +37,37 @@ jqueryCookie: {
   deps: ["jquery"]
 }
 ```
+* Step 3. Add your exclude list (maybe `jquery`)
+```json
+_exclude: {
+    jqueryCookie : ['jquery']
+}
+```
 
 
 ##　Edit Gruntfile.js
-* Add your module name (Defined on requirejs.config.js) to namelist.
+* Step 1. Add your module name (Defined on requirejs.config.js) to namelist & set it true.
 ```js
-var namelist =
-[
-  "jqueryCookie"
-];
-```
-* Add your module's dependencies to excludeList to min module.
-```js
-var excludeList =
-[
-  ["jquery"] // jqueryCookie
-];
+var namelist = {
+  jqueryCookie: true
+};
 ```
 
-## Export your js
+## Export your js.
 ```bash
 > grunt release
 ```
+OR
+```bash
+> npm run grunt
+```
+
+### Export instruction.
+* Need node & npm environment at first.
+* Method 1: Install npm, then use `grunt` to export.
+* Method 2: Use `npm run grunt` to export.
 
 ### 输出说明
 * 需要至少安装node, npm.
-* 方法1：安装Grunt，直接使用grunt命令进行输出
-* 方法2：使用npm run grunt 命令进行输出
+* 方法1：安装Grunt，直接使用`grunt`命令进行输出
+* 方法2：使用`npm run grunt`命令进行输出
