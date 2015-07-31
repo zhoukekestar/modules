@@ -1,10 +1,9 @@
-## If you do not know how to start. See `demo` at first.
-## 如果怎么操作，先看一下demo样例。
-
+If you do not know how to start. See demo at first.
+如果怎么操作，先看一下demo样例。
 
 ## Edit requirejs.config.js File.
 
-### CASE 1. AMD module.
+#### CASE 1. AMD module.
 * step 1. Just add it to "paths" like:
 ```json
 paths: {
@@ -18,7 +17,7 @@ _exclude: {
 }
 ```
 
-### CASE 2. NO AMD module.
+#### CASE 2. NO AMD module.
 * Step 1. Add it to "paths" like:
 ```json
 paths: {
@@ -45,7 +44,7 @@ _exclude: {
 ```
 
 
-##　Edit Gruntfile.js
+## Edit Gruntfile.js
 * Step 1. Add your module name (Defined on requirejs.config.js) to namelist & set it true.
 ```js
 var namelist = {
