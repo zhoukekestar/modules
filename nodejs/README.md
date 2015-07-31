@@ -12,9 +12,10 @@ console.error('hello err')
 [16:40:59] (g:\svn\www.toomao.com\app.js:52:11) Local. Listen 3000.
 ```
 * 可重定向日志输出到日志系统进行统一管理（使用http方法post到指定接口即可）
-* 可屏蔽指定文件的输出，类似于log4j中的功能，以下代码会输出所有文件的log信息，但会屏蔽`console.js`的info信息
+* 可屏蔽指定文件的输出，类似于log4j中的功能，以下代码会输出所有文件的log信息，但会屏蔽`consoleTest.js`的info信息
 ```js
-require('../lib/console.js')([], ['console.js'])
+// Run test/consoleTest.js
+require('../lib/console.js')([], ['consoleTest.js'])
 console.log('hello log') // It will show in console.
 console.info('hello info') // It will be blocked.
 ```
