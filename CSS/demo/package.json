@@ -2,6 +2,9 @@
   "name": "css",
   "version": "1.0.0",
   "license": "MIT",
+  "scripts": {
+    "grunt": "node -e \"require('grunt').tasks(['default']);\""
+  },
   "devDependencies": {
     "grunt": "~0.4.5",
 	  "grunt-contrib-cssmin": "~0.12.2"
