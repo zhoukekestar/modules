@@ -6,6 +6,13 @@
 </head>
 <body>
   <button id="button">send</button>
+
+  <form action="http://api.toomao.com:9000/1.1/images" method="POST" enctype="multipart/form-data" target="zkk-iframe">
+    <input type="file">
+    <input type="submit">
+
+  </form>
+  <iframe id="zkk-iframe" name="zkk-iframe"></iframe>
   <script>
     var ele = document.getElementById('button');
 

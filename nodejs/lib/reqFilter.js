@@ -11,6 +11,8 @@ module.exports = function(o) {
     req._req = {};
 
     // check ajax
+    // Use req.xhr to replace it.
+    // @see http://expressjs.com/4x/api.html#req.xhr
     if (option.ajax) {
       req._req.ajax = req.headers['x-requested-with'] === 'XMLHttpRequest' ? true : false;
 

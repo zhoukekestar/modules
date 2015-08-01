@@ -28,13 +28,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
-        banner: '/*!\n' +
-            ' * web-moduels v<%= pkg.version %>\n' +
-            ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-            ' * Licensed under <%= pkg.license %>\n' +
-            ' * Include ' + nameList.toString() + ' \n' +
-            ' * Update on <%= grunt.template.today("yyyy-mm-dd hh:MM;ss") %> \n' +
-            ' */\n',
         less: {
             compileCore: {
                 src: "bootstrap-core.less",
