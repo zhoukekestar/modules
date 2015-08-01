@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<title>Rich Text Editor Example</title>
+<script type="text/javascript" src="rich-text-editor.js"></script>
+<link rel="stylesheet" type="text/css" href="rich-text-editor.css" />
+<style type="text/css">
+.rich-text-editor, input[type=text] {
+	border: 1px #aaaaaa dashed;
+}
+
+#newcomment {
+	width: 550px;
+	height: auto;
+}
+</style>
+</head>
+
+<body>
+<h1>Rich Text Editor Example</h1>
+<form action="addcomment.php" method="get">
+  <fieldset>
+    <legend><span style="font-size: 16px; font-weight: bold">Add a comment</span></legend>
+	<p>Write your name: <input type="text" name="name" /><br />
+	<p>Write your email: <input type="text" name="email" /><br /><br />
+	Write a comment:<br />
+	<textarea name="comment" id="newcomment" class="rich-text-editor"></textarea><br />
+    Did you like this article? <input type="radio" checked name="ilike" value="yes" id="ilike" /> <label for="ilike">yes</label>
+    <input type="radio" name="ilike" value="no" id="idontlike" /> <label for="idontlike">no</label><br /><br />
+	<input type="submit" value="Send comment" />
+  </fieldset>
+</form>
+</body>
+</html>

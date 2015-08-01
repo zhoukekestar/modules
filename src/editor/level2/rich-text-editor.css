@@ -1,0 +1,38 @@
+img.rte-button {
+	cursor: pointer;
+	border: 0;
+}
+
+div.rich-text-editor {
+	display: inline-block;
+	padding: 3px;
+}
+
+div.rte-menus select { font-size:10px; }
+
+div.rte-editbox {
+	min-height: 100px;
+	max-height: 200px;
+	border: 1px #aaaaaa solid;
+	padding: 6px;
+	overflow: scroll;
+}
+
+div.rte-editbox p {
+	margin: 0;
+}
+
+div.rte-editbox > pre.rte-sourcetext {
+	padding: 0;
+	margin: 0;
+}
+
+div.rte-switchmode {
+	font-size: 12px;
+	text-align: right;
+	padding: 2px 0 0 2px;
+}
+
+div.rte-switchmode > label {
+	cursor: pointer;
+}
