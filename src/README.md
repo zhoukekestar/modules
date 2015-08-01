@@ -38,8 +38,10 @@ Select city for China.<br>
 * Pull to refresh `version 2`. <br> ![pull-v2](./pull-v2/demo.gif)
 
 
-### edirot -> ueditor
+### edirot -> ueditor for nodejs
 
 * Step 1: `npm install`
 * Step 2: `node app.js` <br> ![ueditor](./editor/ueditor/demo.gif)
+* ueditor-local 用于本地测试使用，图片将保存在本地。确保UEditor能够使用。
+* ueditor-proxy 用于项目实践使用，使用nodejs作为代理，将上传的图片转发到统一的图片服务器上传接口，并解析对应的结果，返回统一的格式给UEditor。
 

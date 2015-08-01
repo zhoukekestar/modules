@@ -5,7 +5,6 @@ var app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 require('./ueditor-local.js')(app);
 //require('./ueditor-proxy.js')(app);
 
