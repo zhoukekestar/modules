@@ -4,6 +4,13 @@
 ## JS
 * 用于整合输出src下的各个模块的js
 
+## nodejs keywords
+* nodejs, console, output, log, linenumber, 终端输出, 日志管理, 显示行号
+* render, 重定向, 全局变量
+* custom view engine, 自定义模板引擎
+* wechat tool, 微信工具类
+* hmacSha1, 腾讯云
+
 ## nodejs
 * nodejs常用模块
 
