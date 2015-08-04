@@ -1,6 +1,7 @@
 
 module.exports = function(app) {
 
+  // "connect-multiparty": "2.0.0",
   var multipart = require('connect-multiparty');
   var multipartMiddleware = multipart();
 

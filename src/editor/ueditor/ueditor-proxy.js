@@ -1,7 +1,9 @@
 
 module.exports = function(app) {
 
+  // "request" : "^2.60.0"
   var request = require('request');
+  // "connect-multiparty": "2.0.0",
   var multipart = require('connect-multiparty');
   var multipartMiddleware = multipart();
   var fs = require('fs');
