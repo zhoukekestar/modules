@@ -1,0 +1,57 @@
+#fileupload-progressall {
+  position: fixed;
+  height: 10px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.24);
+  left: 0;
+  top: 0;
+  font-size: 10px;
+  line-height: 10px;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.12);
+  z-index: 999;
+}
+#fileupload-progressall span {
+  transition: all 1s;
+  background-color: #5cb85c;
+  height: 100%;
+  width: 0;
+  display: block;
+  font-size: inherit;
+  text-align: right;
+  line-height: inherit;
+  color: #fff;
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  -webkit-background-size: 40px 40px;
+  background-size: 40px 40px
+
+  -webkit-animation:progress-bar-stripes 2s linear infinite;
+  -o-animation: progress-bar-stripes 2s linear infinite;
+  animation: progress-bar-stripes 2s linear infinite;
+  padding-right: 3px;
+}
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0
+  }
+  to {
+    background-position: 0 0
+  }
+}
+@-o-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0
+  }
+  to {
+    background-position: 0 0
+  }
+}
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0
+  }
+  to {
+    background-position: 0 0
+  }
+}

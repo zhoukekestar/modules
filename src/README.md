@@ -45,3 +45,9 @@ Select city for China.<br>
 * ueditor-local 用于本地测试使用，图片将保存在本地。确保UEditor能够使用。
 * ueditor-proxy 用于项目实践使用，使用nodejs作为代理，将上传的图片转发到统一的图片服务器上传接口，并解析对应的结果，返回统一的格式给UEditor。
 
+
+### upload
+* Run command `node app.js`
+* Open browser & visit `localhost:3000`
+* Demo is in `public` directory
+* Preview <br> ![upload](./upload/demo.gif)

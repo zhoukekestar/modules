@@ -1,0 +1,9 @@
+{
+  "name": "zhoukekestar",
+  "decription": "nodejs upload",
+  "version": "0.1.0",
+  "dependencies": {
+    "express" : "^4.12.2",
+    "connect-multiparty": "2.0.0"
+  }
+}
