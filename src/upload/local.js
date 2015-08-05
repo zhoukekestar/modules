@@ -7,7 +7,7 @@ module.exports = function(app) {
   var fs = require('fs');
 
   // Images' temp dirctory. (Example: C:\Users\zhou\AppData\Local\Temp\)
-  var dir = 'C:\\Users\\zhou\\AppData\\Local\\Temp';
+  var dir = require('os').tmpdir();
 
   app.get('/', function(req, res) {
 
@@ -17,7 +17,9 @@ module.exports = function(app) {
 
   // Image request.
   app.get('/upload/:id', function(req, res) {
-    res.sendFile(dir + '/' + req.params.id);
+
+    // Test ok on winodws. Not sure that linux will be work ok.
+    res.sendFile((dir + '/' + req.params.id).replace(/\//g, '\\\\'));
   });
 
   // Upload server.
@@ -47,6 +49,7 @@ module.exports = function(app) {
       } else {
 
         file = req.files[key];
+        console.log(file)
         path = file.path;
         results.push({
           url: '/upload/' + path.substring(path.lastIndexOf('\\') + 1),
