@@ -106,8 +106,6 @@ var _wechat = {
     var random = Math.ceil(Math.random() * 10000) + '';
     var time = new Date().getTime();
 
-    var t = this;
-
     this.getJSAPITicket(function(js){
 
       var arr = [
@@ -147,7 +145,6 @@ var _wechat = {
     })
     .on('error', function(e){
         console.log("Client request ERROR! " + e);
-        res.end(e);
     })
     .end();
 
