@@ -1,5 +1,7 @@
 /**
- * Wechat utils.
+ * Wechat JS-SDK
+ *
+ * Need appID & appsecret
  *
  */
 
