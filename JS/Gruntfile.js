@@ -4,34 +4,34 @@ module.exports = function(grunt){
 
     // Your Project's directory.
     var
-      copyto = 'G:\\svn\\www.toomao.com\\public\\js\\',
+      copyto = 'G:\\svn\\m.toomao.com\\public\\js\\',
       nameList = {
         // NO AMD RULES
-        swiper: true,
-        gaodeMap: false,
-        jqueryCookie: false,
+        swiper        : true,
+        gaodeMap      : false,
+        jqueryCookie  : false,
         jqueryLazyload: false,
-        jweixin: false,
+        jweixin       : true,
 
         // AMD
-        alertMsg: true,
-        baseUtils: true,
+        alertMsg      : true,
+        baseUtils     : true,
 
-        pullDown: false,
-        pullUp: false,
-        formValidator: true,
-        formSubmit: false,
-        shareWX: false,
-        citySelect: true,
-        popup: false,
-        tabs: true,
-        loadpage: true,
-        loadingPage: true,
-        formJSON: true,
-        template: true,
-        ajaxUpload: true,
-        preview: true,
-        paging: true
+        pullDown      : false,
+        pullUp        : false,
+        formValidator : true,
+        formSubmit    : false,
+        shareWX       : false,
+        citySelect    : true,
+        popup         : false,
+        tabs          : true,
+        loadpage      : true,
+        loadingPage   : true,
+        formJSON      : true,
+        template      : true,
+        ajaxUpload    : true,
+        preview       : true,
+        paging        : true
       },
       nameListString = '',
       uglifyList = [],

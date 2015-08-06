@@ -26,7 +26,7 @@ require.config({
     loadingPage   : 'loadingPage/loadingPage',
     formJSON      : 'formJSON/jquery.formJSON',
     template      : 'template/jquery.template',
-    ajaxUpload    : 'upload/jquery.ajaxUpload',
+    ajaxUpload    : 'upload/public/jquery.ajaxUpload',
     preview       : 'preview/preview',
     paging        : 'paging/paging'
   },
