@@ -4,7 +4,7 @@ module.exports = function(req, res, next) {
   res._render = res.render;
 
   res.render = function(name, options, fn) {
-    if (options == undefined) {
+    if (options === undefined) {
       options = {};
     }
 
@@ -17,5 +17,6 @@ module.exports = function(req, res, next) {
 
     res._render(name, options, fn)
   }
+
   next();
 }
