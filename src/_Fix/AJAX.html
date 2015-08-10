@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJAX</title>
+</head>
+<body>
+  <button id='btn'>AJAX</button>
+
+  <script src='./Event.js'></script>
+  <script src='./AJAX.js'></script>
+  <script>
+
+    document.getElementById('btn').addEventListener('click', function(){
+
+      var url = './AJAX.json';
+      var xmlHttp = new XMLHttpRequest()
+
+      xmlHttp.open("GET", url, true);
+      xmlHttp.onreadystatechange = function(){
+        if (xmlHttp.readyState == 4) {
+          var response = xmlHttp.responseText;
+          alert(response)
+        }
+      }
+
+      xmlHttp.send(null);
+    })
+  </script>
+</body>
+</html>
