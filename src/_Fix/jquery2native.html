@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jquery to native</title>
+  <style type="text/css">
+  li {
+    margin-top: 10px;
+        border-top: solid 1px rgba(204, 204, 204, 0.35);
+        padding-top: 10px;
+  }
+  code {
+    background-color: rgba(0, 0, 0, 0.11);
+       padding: .1em .5em;
+       border-radius: .3em;
+  }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>
+      <code>$('xx')[0]</code> to
+      <code>document.querySelector('xx')</code>
+    </li>
+    <li>
+      <code>$('xx')</code> to
+      <code>document.querySelectorAll('xx')</code>
+    </li>
+    <li>
+      <code>$ele.attr('key'[, 'value'])</code> to
+      <code>ele.setAttribute('key', 'value')/ele.getAttribute('key')</code>
+    </li>
+    <li>
+      <code>$ele.addClass('class')</code> to
+      <code>ele.className = ele.className + ' class'</code>
+    </li>
+    <li>
+      <code>$ele.removeClass('class')</code> to
+      <code>ele.className = ele.className.replace(new RegExp('\\bclass\\b', 'g'), '')</code>
+      <p>
+        RegExp Example:
+        <code>"zkk zkka bzkk azkkb".replace(new RegExp('\\bzkk\\b', 'g'), '')</code>
+      </p>
+    </li>
+    <li>
+      <code>$ele.val([, 'hello'])</code> to
+      <code>ele.value / ele.value = 'hello'</code>
+    </li>
+    <li>
+      <code>$ele.html([, '&#60;input&#62;'])</code> to
+      <code>ele.innerHTML / ele.innerHTML = '&#60;input&#62;'</code>
+    </li>
+    <li>
+      <code>$ele.parent()</code> to
+      <code>ele.parentNode</code>
+    </li>
+    <li>
+      <code>$ele.next()</code> to
+      <code>ele.nextElementSibling</code>
+    </li>
+  </ul>
+</body>
+</html>
