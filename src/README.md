@@ -1,6 +1,11 @@
 
+### _Fix
+Fix browser's compatibility.
+修复游览器兼容性
+
 ### _IE
 Hacks for IE.
+IE游览器CSS的hack.
 
 ### _lib
 Base libraries for modules like: jQuery.
@@ -51,3 +56,11 @@ Select city for China.<br>
 * Open browser & visit `localhost:3000`
 * Demo is in `public` directory
 * Preview <br> ![upload](./upload/demo.gif)
+
+
+### jquery2navtive.html
+* jQuery to navtive list.
+* TODO: remove jquery denpency on modules.
+
+* 将jQuery转换成native的javascript的参考列表
+* 需要做：将模块中的jQery依赖移除
