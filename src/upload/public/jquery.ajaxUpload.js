@@ -2,8 +2,7 @@
   if ( typeof define === "function" && define.amd ) {
     define([ "jquery" ], factory );
   } else {
-    var init = factory( jQuery );
-    init();
+    factory( jQuery );
   }
 }(function($){
   $.fn.ajaxUpload = function(options) {

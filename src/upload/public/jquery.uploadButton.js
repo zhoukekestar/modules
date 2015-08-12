@@ -1,12 +1,11 @@
 
 !( function( factory ) {
   if ( typeof define === "function" && define.amd ) {
-    define([ "jquery" ], factory );
+    define(['jquery', 'jquery.fileupload'], factory );
   } else {
     factory( jQuery );
   }
 }( function( $ ) {
-
 
   $.fn.uploadButton = function(callback) {
 

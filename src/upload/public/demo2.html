@@ -27,14 +27,21 @@
     </style>
 </head>
 <body>
-  <h1>demo2  <a href="demo.html">demo1</a></h1>
+  <h1>demo2
+    <br>
+    <a href="demo.html">demo1</a><br>
+    <a href='/demo2.amd.html'>/demo2.amd.html</a>
+  </h1>
+  <p>FOR IE. MY GOD!</p>
   <div id="add-goods-fileupload" data-url="/upload">+</div>
 
   <script src="jquery.uploadButton.js"></script>
   <script>
     $('#add-goods-fileupload').uploadButton(function(e, data){
-      console.log('res:');
+      alert(JSON.stringify(data.result))
+      console.log('res:')
       console.log(data);
+
     })
   </script>
 </body>
