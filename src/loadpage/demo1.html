@@ -28,29 +28,31 @@
 
         @-webkit-keyframes zkkOut {
           0% {
-            transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+            transform: perspective(1000px) rotateY(0);
           }
           100% {
 
-            transform: perspective(400px) rotate3d(0, 1, 0, 180deg);
+            transform: perspective(1000px) rotateY(90deg) scale(.9);
           }
         }
         @-webkit-keyframes zkkIn {
           0% {
-            transform: perspective(400px) rotate3d(0, 1, 0, 180deg);
+            transform: perspective(1000px) rotateY(-90deg) scale(.9);
           }
           100% {
-            transform: perspective(400px) rotate3d(0, 1, 0, 360deg);
+            transform: perspective(1000px) rotateY(0deg);
           }
         }
         .zkkIn {
-          -webkit-animation-timing-function: cubic-bezier(0.79, 0.1, 0.94, 0.63);
+          /*-webkit-animation-timing-function: cubic-bezier(0.79, 0.1, 0.94, 0.63);*/
+          /*-webkit-animation-timing-function: ease-in;*/
           -webkit-animation-name: zkkIn;
           -webkit-backface-visibility: hidden;
           -webkit-animation-duration: .3s !important;
         }
         .zkkOut {
-          -webkit-animation-timing-function: cubic-bezier(0.79, 0.1, 0.94, 0.63);
+          /*-webkit-animation-timing-function: cubic-bezier(0.79, 0.1, 0.94, 0.63);*/
+          /*-webkit-animation-timing-function: ease-out;*/
           -webkit-animation-name: zkkOut;
           -webkit-backface-visibility: hidden;
           -webkit-animation-duration: .3s !important;
@@ -97,7 +99,7 @@
         <hr>
         <a href="http://www.google.com" data-rel="page">demo2-error-google</a>
         <hr>
-        <a href="./demo2.html" data-rel="page" data-transition-out="zkkOut" data-transition-in="zkkIn">demo2-zkk</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="zkkOut" data-transition-in="zkkIn" data-show-after-hide="true">demo2-zkk</a>
         <hr>
         <a href="./demo2.html" data-rel="page" data-transition-out="flipOutX" data-transition-in="flipInX">demo2-flip-x</a>
         <hr>
