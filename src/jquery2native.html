@@ -8,7 +8,7 @@
     border-top: solid 1px rgba(204, 204, 204, 0.35);
     padding-top: 10px;
   }
-  code {
+  code,pre {
     background-color: rgba(0, 0, 0, 0.11);
     padding: .1em .5em;
     border-radius: .3em;
@@ -56,6 +56,55 @@
     <li>
       <code>$ele.next()</code> to
       <code>ele.nextElementSibling</code>
+    </li>
+    <li>
+      <code>$ele.append('&lt;div&gt;&lt;/div&gt;')</code> to
+      <code>ele.appendChild((new DOMParser()).parseFromString('&lt;div&gt;&lt;/div&gt;', "text/xml").firstChild)</code>
+    </li>
+    <li>
+      <code>$.extend({a:"a", b:"b"}, {b:"bb"})</code> to
+      <code>var a = {a:"a", b:"b"}, b = {b:"bb"} &nbsp; &nbsp;for (var key in b) { a[key] = b[key] }</code>
+      <p>
+        OR You can do like this:
+        <pre>
+          var a = {a:"a", b:"b"}, b = {b:"bb"}
+          var extend = function() {
+            var target = {};
+            var sources = [].slice.call(arguments);
+            for (var i = 0, imax = sources.length; i < imax; i++) {
+              for (var key in sources[i]) {
+                target[key] = sources[i][key];
+              }
+            }
+            return target;
+          }
+          extend(a, b);
+        </pre>
+      </p>
+    </li>
+    <li>
+      <code>$ele.remove()</code> to
+      <code>ele.remove()</code>
+    </li>
+    <li>
+      <code>$ele.show()</code> to
+      <code>ele.style.display = 'block'</code>
+    </li>
+    <li>
+      <code>$ele.hide()</code> to
+      <code>ele.style.display = 'none'</code>
+    </li>
+    <li>
+      <code>$ele.trigger('click')</code> to
+      <code>ele.click() / var event = document.createEvent('HTMLEvents'); event.initEvent('click', true, true); ele.dispatchEvent(event)</code>
+    </li>
+    <li>
+      <code>$ele.data('msg')</code> to
+      <code>ele.getAttribute('data-msg')</code>
+    </li>
+    <li>
+      <code>$ele.on('customEvent', function(){})</code> to
+      <code>ele.addEventListener('customEvent', function(){})</code>
     </li>
   </ul>
 </body>
