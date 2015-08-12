@@ -1,11 +1,14 @@
 
 ### _Fix
-Fix browser's compatibility.
-修复游览器兼容性
+* Fix browser's compatibility.
+* Code your js as no IE exist. Code once by W3C api, run everywhere (include IE).
+* 修复游览器兼容性
+* 按照W3C标准编写一次，到处运行（包括IE）
+* “正常编码”，IE不支持addEventListener，只支持attachEvent？就用addEventListener就行，按照W3C的标准写一套代码就行，其他就交给兼容代码去解决就行了。
 
 ### _IE
-Hacks for IE.
-IE游览器CSS的hack.
+* CSS hacks for IE.
+* IE游览器CSS的hack.
 
 ### _lib
 Base libraries for modules like: jQuery.
