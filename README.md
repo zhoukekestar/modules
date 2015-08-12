@@ -29,3 +29,6 @@
 * 一个一个看就行，会比较轻松，不需要一下全看懂。
 * 看懂了怎么用后，有空写点说明？写个demo？补充一下？
 * 发现bug，提交一下，讨论一下？
+
+## 留言
+* 建议看一下[这篇文章](http://isux.tencent.com/half-package-web-components-for-design.html)，非常好
