@@ -1,10 +1,8 @@
-## CSS
-* 用于整合输出src下的各个模块的CSS样式
-
-## JS
-* 用于整合输出src下的各个模块的js
+## How-to export my moduels
+* cmd & run `> grunt `
 
 ## src keywords
+* alert confirm prompt, 增强游览器原生显示
 * alert message, 显示消息
 * city select, 城市选择, 多级联动
 * checkbox, like, radio, 选择框, 赞, iOS开关
