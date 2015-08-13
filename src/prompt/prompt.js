@@ -50,4 +50,6 @@
     }
   }
 
+  return window.prompt;
+
 }));
