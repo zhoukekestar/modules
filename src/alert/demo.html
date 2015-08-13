@@ -4,15 +4,14 @@
   <meta charset='utf-8'>
   <title></title>
   <link rel="stylesheet" type="text/css" href="./alert.css">
-  <style>
-    .system-alert {
-
-    }
-  </style>
 </head>
 <body>
+  <ul>
+    <li>使用alert('your message')函数直接调用即可</li>
+    <li>如需设置为游览器默认的弹出框，执行alert(true)即可</li>
+  </ul>
   <button onclick="alert('hello world')">alert</button>
-  <button onclick="alert('hello world', true)">alert use system</button>
+  <button onclick="alert(true), alert('hello world')">use system alert</button>
   <script src='./alert.js'></script>
 </body>
 </html>
