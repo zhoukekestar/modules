@@ -59,13 +59,18 @@
     </li>
     <li>
       <code>$ele.append('&lt;div&gt;&lt;/div&gt;')</code> to
-      <code>ele.appendChild((new DOMParser()).parseFromString('&lt;div&gt;&lt;/div&gt;', "text/xml").firstChild)</code>
+      <code>var temp = document.createElement("div"); temp.innerHTML = '&lt;div&gt;&lt;/div&gt;'; ele.appendChild(temp.firstChild)</code>
+      <p>Bad example (CSS styling won't apply to the node as it's a xml document.):</p>
+      <pre>
+        var parser = new DOMParser();
+        ele.appendChild(parser.parseFromString('&lt;div&gt;&lt;/div&gt;', "text/xml").firstChild)
+      </pre>
     </li>
     <li>
       <code>$.extend({a:"a", b:"b"}, {b:"bb"})</code> to
       <code>var a = {a:"a", b:"b"}, b = {b:"bb"} &nbsp; &nbsp;for (var key in b) { a[key] = b[key] }</code>
       <p>
-        OR You can do like this:
+        OR You can do it like this:
         <pre>
           var a = {a:"a", b:"b"}, b = {b:"bb"}
           var extend = function() {
