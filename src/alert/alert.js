@@ -7,19 +7,11 @@
 }( function() {
 
   var _alert = window.alert,
-      temp,
-      useSystem = false;
-  window.alert = function(msg) {
+      temp;
+  window.alert = function(msg, option) {
 
-    // Use system alert OR not.
-    if (typeof msg === 'boolean') {
-      useSystem = msg;
-      return;
-    }
-
-    if (useSystem === true) {
-      _alert(msg)
-    } else {
+    // Use custom alert
+    if ((typeof option === 'boolean' && option === false) || typeof option === 'function') {
 
       var dialog = '<div class="system-alert-wrapper"><div class="system-alert"><div class="content">' + msg + '</div><button class="close" onclick="">确定</button></div></div>';
       //dialog = (new DOMParser()).parseFromString(dialog, "text/xml").firstChild;
@@ -35,8 +27,14 @@
       dialog.addEventListener('click', function(e) {
         if (e.target.className === 'close') {
           this.remove();
+
+          typeof option === 'function' && option();
         }
       });
+
+    // Use system alert
+    } else {
+      _alert(msg);
     }
   }
 

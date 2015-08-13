@@ -23,7 +23,7 @@
   margin-top: -100px;
   border-radius: 10px;
   transition: all 1s;
-  background-color: rgba(53, 51, 51, 0.77);
+  background-color: rgba(0, 0, 0, 0.85);
   color: #fff;
   text-align: right;
   animation: system-alert .5s;

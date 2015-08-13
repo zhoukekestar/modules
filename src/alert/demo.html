@@ -6,12 +6,22 @@
   <link rel="stylesheet" type="text/css" href="./alert.css">
 </head>
 <body>
+  <p>由于：</p>
   <ul>
-    <li>使用alert('your message')函数直接调用即可</li>
-    <li>如需设置为游览器默认的弹出框，执行alert(true)即可</li>
+    <li>需要兼容游览器本身的alert方法</li>
+    <li>能使原有alert能够正常同步执行(即在开发者不知情的情况下，引用该js不会破坏原有的代码逻辑)</li>
+    <li>原生alert是同步执行的，而js无法实现同步执行，只能使用callback</li>
   </ul>
-  <button onclick="alert('hello world')">alert</button>
-  <button onclick="alert(true), alert('hello world')">use system alert</button>
+  <p>所以：</p>
+  <ul>
+    <li>简单调用，没有额外的代码块需要执行的情况下。调用alert('your message', false)函数直接调用即可，后面的false参数表示不使用系统原生的弹出框</li>
+    <li>alert后还有代码块需要执行，使用alert('your message', callback-function)，在callback-function中加入需要执行的代码</li>
+  </ul>
+
+  <button onclick="alert('hello world'); console.log('点击后才会执行')">use system alert</button>
+  <button onclick="alert('hello world', false);">simple alert</button>
+  <button onclick="alert('hello world', function(){console.log('用户点击后的回调')}); console.log('直接执行，不管用户是否点击')">alert callback</button>
+
   <script src='./alert.js'></script>
 </body>
 </html>
