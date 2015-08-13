@@ -13,6 +13,9 @@
 ### _lib
 Base libraries for modules like: jQuery.
 
+### alert
+![alert](./alert/demo.gif)
+
 ### alertMsg
 Alert message.<br>
 ![alertMsg](./alertMsg/demo.gif)
@@ -27,6 +30,9 @@ Base utils.
 Select city for China.<br>
 ![citySelect](./citySelect/demo.gif)
 
+### confirm
+![confirm](./confirm/demo.gif)
+
 ### CSS-Controls
 * checkbox <br> ![checkbox](./CSS-Controls/checkbox/demo.gif)
 * like <br> ![like](./CSS-Controls/like/demo.gif)
@@ -38,6 +44,9 @@ Select city for China.<br>
 
 ### paging
 * ![paging](./paging/demo.gif)
+
+### prompt
+![prompt](./prompt/demo.gif)
 
 ### pull
 * Pull to refresh. <br> ![pull](./pull/demo.gif)

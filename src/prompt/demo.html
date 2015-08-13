@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="./prompt.css">
+</head>
+<body>
+  <p>API这样设计的原因，请查看alert模块</p>
+  <ul>
+    <li>prompt('your title', 'your default text', callback)</li>
+  </ul>
+
+  <button onclick="console.log(prompt('title', 'default'))">use system prompt</button>
+  <button onclick="prompt('title', 'default', function(o){console.log(o)})">custom prompt</button>
+
+  <script src='./prompt.js'></script>
+</body>
+</html>

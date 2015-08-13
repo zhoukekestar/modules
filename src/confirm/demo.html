@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="./confirm.css">
+</head>
+<body>
+  <p>API这样设计的原因，请查看alert模块</p>
+  <ul>
+    <li>confirm('your message', callback)</li>
+  </ul>
+
+  <button onclick="console.log(confirm('hello world'))">use system confirm</button>
+  <button onclick="confirm('hello world', function(o){console.log(o)})">custom confirm</button>
+
+  <script src='./confirm.js'></script>
+</body>
+</html>
