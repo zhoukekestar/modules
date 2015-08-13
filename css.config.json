@@ -1,0 +1,43 @@
+{
+  "_bootstrap"    : "baseCSS/bootstrap-extend.css",
+  "_base"         : "baseCSS/base.css",
+
+
+  "jquery"        : null,
+
+  "swiper"        : "_lib/swiper/css/swiper.min.css",
+  "gaodeMap"      : null,
+  "jqueryCookie"  : null,
+  "jqueryLazyload": null,
+  "jweixin"       : null,
+
+
+  "alert"         : "alert/alert.css",
+  "alertMsg"      : null,
+
+  "baseUtils"     : null,
+
+  "citySelect"    : null,
+  "confirm"       : "confirm/confirm.css",
+
+  "formJSON"      : null,
+  "formValidator" : null,
+  "formSubmit"    : null,
+
+  "loadpage"      : "loadpage/loadpage.css",
+  "loadingPage"   : "loadingPage/loadingPage.css",
+
+  "paging"        : "paging/paging.css",
+  "popup"         : "popup/popup.css",
+  "preview"       : null,
+  "prompt"        : "prompt/prompt.css",
+  "pullDown"      : "pull-v2/pull.css",
+  "pullUp"        : null,
+
+  "shareWX"       : null,
+
+  "tabs"          : "tabs/tabs.css",
+  "template"      : null,
+
+  "ajaxUpload"    : null
+}
