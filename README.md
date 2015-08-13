@@ -1,4 +1,7 @@
 ## How-to export my moduels
+* Edit `css.config.json`
+* Edit `require.config.js`
+* cmd & run `> npm install `
 * cmd & run `> grunt `
 
 ## src keywords
