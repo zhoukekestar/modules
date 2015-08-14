@@ -46,7 +46,7 @@
   }
   ```
   
-  去兼容IE8，然后其他地方，我就“正常”地编码了，直接写addEvnetListener就行，不用考虑兼容。而不是像其他人一样，写一个addEvent方法，然后其他模块都调用addEvent方法，不用标准的addEventListener方法，我总感觉addEvent方法是多余的，感觉有点“污染环境”。
+  去兼容IE8，然后其他地方，我就“正常”地编码了，直接写`addEvnetListener`就行，不用考虑兼容。而不是像其他人一样，写一个addEvent方法，然后其他模块都调用addEvent方法，不用标准的`addEventListener`方法，我总感觉addEvent方法是多余的，感觉有点“污染环境”。
 
   再比如，相对ajax方法，我会写一个
   
@@ -58,7 +58,7 @@
   }
   ```
   
-  而其他人会去写一个ajax方法，然后其他模块都调用ajax方法去使用ajax，不用W3C的标准方法new XMLHttpRequest().
+  而其他人会去写一个ajax方法，然后其他模块都调用ajax方法去使用ajax，不用W3C的标准方法`new XMLHttpRequest()`.
   
   我希望能正常编写，而不正常的游览器加载一些脚本，把不正常磨平就行了。
   
@@ -68,15 +68,15 @@
 
   我希望我编写css的时候，我也能正常编码，而不靠各种兼容，这跟js的思想是一样的
   
-  比如我会写formValidator.js，去支持各种其他游览器不支持的属性，然后我就可以这样写了
+  比如我会写`formValidator.js`，去支持各种其他游览器不支持的属性，然后我就可以这样写了
   
-  &lt;input name="abc" placeholder="6个字符" value="123456" pattern="^[0-9]{6}$"&gt;
+  `<input name="abc" placeholder="6个字符" value="123456" pattern="^[0-9]{6}$">`
   
-  &lt;input name="abc" value="123456" required minlength="6" maxlength="10"&gt;
+  `<input name="abc" value="123456" required minlength="6" maxlength="10">`
   
   有些情况，我甚至会增强一些属性（这和标准有些出入，但也无奈之举，有些时候W3C的标准跟不上需求的变化，所以就。。。。）
   
-  &lt;input type="email" name="emial" placeholder="email" data-msg='{"email":"emial格式错了啦"}'&gt;
+  `<input type="email" name="emial" placeholder="email" data-msg='{"email":"emial格式错了啦"}'>`
   
 
 4、对标准增强的看法：
