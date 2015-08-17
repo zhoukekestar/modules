@@ -31,11 +31,11 @@
     </li>
     <li>
       <code>$ele.addClass('class')</code> to
-      <code>ele.className = ele.className + ' class'</code>
+      <code>ele.classList.add('class') / ele.className = ele.className + ' class'</code>
     </li>
     <li>
       <code>$ele.removeClass('class')</code> to
-      <code>ele.className = ele.className.replace(new RegExp('\\bclass\\b', 'g'), '')</code>
+      <code>ele.classList.remove('class') / ele.className = ele.className.replace(new RegExp('\\bclass\\b', 'g'), '')</code>
       <p>
         RegExp Example:
         <code>"zkk zkka bzkk azkkb".replace(new RegExp('\\bzkk\\b', 'g'), '')</code>
