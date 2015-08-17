@@ -244,12 +244,10 @@
         .show()
         .addClass(options.activeClass)
         .addClass(options.animationClass + ' ' + inAnimation)
-        .one(options.animationend, function(a, b, c, d){
+        .one(options.animationend, function(){
           $(this).removeClass(options.animationClass + ' ' + inAnimation);
           options.afterLoadPage();
         });
-
-
     }
   };
 

@@ -1,7 +1,5 @@
 module.exports = function(grunt){
 
-    // TODO config requirejs.config.js
-
     // Your Project's directory.
     var
       copyto = 'G:\\svn\\m.toomao.com\\public\\js\\',
