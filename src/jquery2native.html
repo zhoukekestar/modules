@@ -16,6 +16,7 @@
   </style>
 </head>
 <body>
+  <h1>jQuery</h1>
   <ul>
     <li>
       <code>$('xx')[0]</code> to
@@ -110,6 +111,72 @@
     <li>
       <code>$ele.on('customEvent', function(){})</code> to
       <code>ele.addEventListener('customEvent', function(){})</code>
+    </li>
+    <li>
+      <code>$.ajax()</code> to
+      <p>
+      <pre>
+      var xmlHttp = new XMLHttpRequest()
+      xmlHttp.open("GET", options.api + '?url=' + encodeURIComponent(location.href.split('#')[0]), true);
+      xmlHttp.onreadystatechange = function(){
+        if (xmlHttp.readyState === 4) {
+          var d = JSON.parse(xmlHttp.responseText);
+
+          for (var key in d) { options[key] = d[key] }
+
+          wx.config(options);
+
+          wx.ready(function(){
+            share(wx, options);
+          })
+        }
+      }
+      xmlHttp.send(null);
+      </pre>
+      </p>
+    </li>
+  </ul>
+  <h1>jQuery cookie</h1>
+  <ul>
+    <li>
+      <code>$.cookie('name', 'value');</code> to
+      <code>document.cookie = "name=value";</code>
+      <p>OR</p>
+      <code>$.cookie('name', 'value', { path: '/' });</code> to
+      <code>document.cookie = "name=value; path=/";</code>
+    </li>
+    <li>
+      <code>$.cookie('name');</code> to
+      <code>var value = (value = (' ' + document.cookie).match(/[; ]name=([^\s;]*)/)) && value[1];</code>
+      <p>
+        @see http://www.javascripter.net/faq/readingacookie.htm
+        <pre>
+          function readCookie(cookieName) {
+           var re = new RegExp('[; ]'+cookieName+'=([^\\s;]*)');
+           var sMatch = (' '+document.cookie).match(re);
+           if (cookieName && sMatch) return unescape(sMatch[1]);
+           return '';
+          }
+        </pre>
+      </p>
+    </li>
+    <li>
+      <code>$.removeCookie('name');</code> to
+      <code>document.cookie = "name=; path=/; Expires=" + (new Date(0)).toUTCString();</code>
+    </li>
+  </ul>
+  <h1>Tips</h1>
+  <ul>
+    <li>
+      <p>Convert a relative url to an absolute url.</p>
+      <pre>
+        var linkEle;
+        if (linkEle === undefined) {
+          linkEle = document.createElement('a');
+        }
+        linkEle.href = url;
+        url = linkEle.href;
+      </pre>
     </li>
   </ul>
 </body>
