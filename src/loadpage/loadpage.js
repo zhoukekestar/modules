@@ -313,7 +313,6 @@
       }
     }
   }
-  pop = 1;
 
   return $.fn.loadpage.options;
 }));
