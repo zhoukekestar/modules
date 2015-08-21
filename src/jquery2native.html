@@ -117,18 +117,10 @@
       <p>
       <pre>
       var xmlHttp = new XMLHttpRequest()
-      xmlHttp.open("GET", options.api + '?url=' + encodeURIComponent(location.href.split('#')[0]), true);
+      xmlHttp.open("GET", url, true);
       xmlHttp.onreadystatechange = function(){
         if (xmlHttp.readyState === 4) {
-          var d = JSON.parse(xmlHttp.responseText);
-
-          for (var key in d) { options[key] = d[key] }
-
-          wx.config(options);
-
-          wx.ready(function(){
-            share(wx, options);
-          })
+          alert(xmlHttp.responseText);
         }
       }
       xmlHttp.send(null);
