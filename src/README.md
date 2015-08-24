@@ -1,5 +1,5 @@
 
-### _Fix
+### _Fix( _fixDesktop & _fixMobile & _fixCSS)
 * Fix browser's compatibility.
 * Code your js as no IE exist. Code once by W3C api, run everywhere (include IE).
 * You can also see [This project](https://github.com/zhoukekestar/ieBetter.js).
@@ -7,10 +7,6 @@
 * 按照W3C标准编写一次，到处运行（包括IE）
 * “正常编码”，IE不支持addEventListener，只支持attachEvent？就用addEventListener就行，按照W3C的标准写一套代码就行，其他就交给兼容代码去解决就行了。
 * 你也可以查看[这个项目](https://github.com/zhoukekestar/ieBetter.js) .
-
-### _IE
-* CSS hacks for IE.
-* IE游览器CSS的hack.
 
 ### _lib
 Base libraries for modules like: jQuery.
