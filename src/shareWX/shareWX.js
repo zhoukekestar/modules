@@ -1,10 +1,10 @@
 ;( function( factory ) {
   if ( typeof define === "function" && define.amd ) {
-    define([ "jquery", "jweixin" ], factory );
+    define(["jweixin" ], factory );
   } else {
-    factory( jQuery, wx );
+    factory( wx );
   }
-}( function($, wx){
+}( function(wx){
 
   var options = {
 
@@ -73,21 +73,26 @@
   }
 
 
-  $.shareWX= function(o) {
+  var shareWX= function(o) {
 
-    options = $.extend(options, o);
+    for (var key in o) { options[key] = o[key] }
 
-    // Get url's signature.
-    $.getJSON(options.api + '?url=' + encodeURIComponent(location.href.split('#')[0]), function(d) {
+    var xmlHttp = new XMLHttpRequest()
+    xmlHttp.open("GET", options.api + '?url=' + encodeURIComponent(location.href.split('#')[0]), true);
+    xmlHttp.onreadystatechange = function(){
+      if (xmlHttp.readyState === 4) {
+        var d = JSON.parse(xmlHttp.responseText);
 
-      options = $.extend(options, d);
-      wx.config(options);
+        for (var key in d) { options[key] = d[key] }
 
-      wx.ready(function(){
-        share(wx, options);
-      })
+        wx.config(options);
 
-    })
+        wx.ready(function(){
+          share(wx, options);
+        })
+      }
+    }
+    xmlHttp.send(null);
   };
 
 
@@ -127,6 +132,6 @@
     });
   }
 
-  return $;
+  return shareWX;
 
 }));
