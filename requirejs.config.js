@@ -87,7 +87,7 @@ require.config({
     pullDown      : ['jquery'],
     pullUp        : ['jquery'],
 
-    shareWX       : ['jquery', 'jweixin'],
+    shareWX       : ['jweixin'],
 
     tabs          : ['jquery'],
     template      : ['jquery'],
