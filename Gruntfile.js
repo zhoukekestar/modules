@@ -2,7 +2,8 @@ module.exports = function(grunt){
 
     // Your Project's directory.
     var
-      copyto = 'G:\\svn\\m.toomao.com\\public\\js\\',
+
+      copyto = 'G:\\svn\\m.toomao.com\\public\\',
       modulesConfig = {
         // NO AMD RULES
         swiper        : true,
@@ -34,7 +35,7 @@ module.exports = function(grunt){
         pullDown      : false,
         pullUp        : false,
 
-        shareWX       : false,
+        shareWX       : true,
 
         tabs          : true,
         template      : true,
@@ -52,7 +53,10 @@ module.exports = function(grunt){
       modulesCSS = [],
       cssBase = './src/',
       cssConfig = grunt.file.readJSON('css.config.json'),
-      cssTaskList = [];
+      cssTaskList = [
+        cssBase + 'loadpage/animate.css',
+        cssBase + 'baseCSS/base.css'
+      ];
 
 
     // Read requestjs's config and parse it.
@@ -124,7 +128,7 @@ module.exports = function(grunt){
                         ' * web-moduels v<%= pkg.version %>\n' +
                         ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
                         ' * Licensed under <%= pkg.license %>\n' +
-                        ' * Include ' + modulesCSS.toString() + ' \n' +
+                        ' * Include base.css, animate.css, ' + modulesCSS.toString() + ' \n' +
                         ' * Update on <%= grunt.template.today("yyyy-mm-dd HH:MM;ss") %> \n' +
                         ' */\n'
             },
@@ -137,11 +141,15 @@ module.exports = function(grunt){
         copy: {
           js: {
             src: "./dist/modules.min.js",
-            dest: copyto + "modules.min.js"
+            dest: copyto + "/js/modules.min.js"
           },
           map: {
             src: "./dist/modules.min.map",
-            dest: copyto + "modules.min.map"
+            dest: copyto + "/js/modules.min.map"
+          },
+          css: {
+            src: "./dist/modules.min.css",
+            dest: copyto + "/css/modules.min.css"
           }
         },
 
@@ -171,15 +179,13 @@ module.exports = function(grunt){
 
         clean: uglifyJSTask,
 
-        // stylesheet
-        //
-        //
-        // less: {
-        //     compileCore: {
-        //         src: "bootstrap-core.less",
-        //         dest: nameList[0]
-        //     }
-        // },
+        // bootstrap-core task
+        less: {
+            compileCore: {
+                src: "./src/baseCSS/bootstrap/bootstrap-core.less",
+                dest: './dist/bootstrap-core.css'
+            }
+        },
 
         cssmin: {
             minifyCore: {
@@ -205,6 +211,6 @@ module.exports = function(grunt){
 
 
     // 默认任务
-    grunt.registerTask('release', ['requirejs', 'uglify', 'clean', 'cssmin', 'usebanner']);
-    grunt.registerTask('default', ['requirejs', 'concat', 'clean', 'cssmin', 'usebanner']);
+    grunt.registerTask('release', ['less', 'requirejs', 'uglify', 'clean', 'cssmin', 'usebanner', 'copy']);
+    grunt.registerTask('default', ['less', 'requirejs', 'concat', 'clean', 'cssmin', 'usebanner', 'copy']);
 };
