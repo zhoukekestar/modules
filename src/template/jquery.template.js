@@ -78,6 +78,13 @@
         } catch (e) {
           console.log(e.message)
         }
+      },
+      htmlBy: function(d) {
+        try {
+          return tmpl($this.html())(d);
+        } catch (e) {
+          console.log(e.message)
+        }
       }
     }
   }
