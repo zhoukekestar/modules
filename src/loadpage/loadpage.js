@@ -44,8 +44,10 @@
     $.fn.loadpage = function() { return this; };
     $.fn.loadpage.options = {};
     return;
+
   } else {
-    history.pushState('', '', location.href);
+
+    history.replaceState('', '', location.href);
   }
   var utils   = {
 
