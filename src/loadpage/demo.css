@@ -1,0 +1,107 @@
+.page {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100vh;
+      overflow-y: scroll;
+}
+
+#demo1 {
+  background-image: url(http://gd2.alicdn.com/bao/uploaded/i2/TB1n89VFVXXXXasXFXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg_.webp);
+  background-size: cover;
+}
+
+#demo2 {
+  background-image: url(https://img.alicdn.com/imgextra/i4/2555122951/TB2Z.tTdVXXXXXZXpXXXXXXXXXX_!!2555122951.jpg);
+  background-size: cover;
+}
+
+a {
+  width: 12em;
+  background-color: rgb(103, 161, 222);
+  padding: .4em;
+  color: #fff;
+  text-decoration: none;
+  border-radius: .2em;
+  display: inline-block;
+  text-align: center;
+  margin: .2em;
+}
+
+@-webkit-keyframes flipOutDown {
+  0% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+  }
+
+  100% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -90deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, -90deg);
+  }
+}
+@-webkit-keyframes flipOutUp {
+  0% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+  }
+
+  100% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+  }
+}
+
+@-webkit-keyframes flipInDown {
+  0% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+  }
+
+  100% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+  }
+}
+@-webkit-keyframes flipInUp {
+  0% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -90deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, -90deg);
+  }
+
+  100% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+  }
+}
+
+.animated.flipOutDown,
+.animated.flipOutUp,
+.animated.flipInDown,
+.animated.flipInUp {
+  animation-duration: .25s;
+  backface-visibility: hidden;
+  animation-timing-function: linear;
+}
+
+.animated.flipOutDown {
+  -webkit-animation-name: flipOutDown;
+  animation-name: flipOutDown;
+}
+
+.animated.flipOutUp {
+  -webkit-animation-name: flipOutUp;
+  animation-name: flipOutUp;
+}
+
+.animated.flipInDown {
+  animation-delay: .25s;
+  -webkit-animation-name: flipInDown;
+  animation-name: flipInDown;
+}
+
+.animated.flipInUp {
+  animation-delay: .25s;
+  -webkit-animation-name: flipInUp;
+  animation-name: flipInUp;
+}

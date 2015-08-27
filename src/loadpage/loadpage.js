@@ -32,14 +32,15 @@
   };
 
 
-  var cache = [{url: location.href, doc: $('html').html()}];
-  var options = $.fn.loadpage.options;
+  var cache                 = [{url: location.href, doc: $('html').html()}],
+      options               = $.fn.loadpage.options,
+      sessionStorage        = {},//window.sessionStorage ? window.sessionStorage : {},
+      previousHistoryState  = null;
 
-  // Make url to absolute url by <a> element's attribute 'href'.
-  var linkEle;
+
   if(!history || !history.pushState) {
     if (options.debug) {
-      alert('history.pushState')
+      alert('History.pushState is not supported on your browser. 您的游览器不支持history技术.')
     }
     $.fn.loadpage = function() { return this; };
     $.fn.loadpage.options = {};
@@ -49,6 +50,14 @@
 
     history.replaceState('', '', location.href);
   }
+
+
+  /**
+   * htmlDoc Covert html to document
+   * load    Load page by given url.
+   * showPage Show html in current document, by givent animation.
+   *
+   */
   var utils   = {
 
     /**
@@ -99,35 +108,94 @@
       return parent.children().unwrap();
     },
 
+
     /**
-     * Load html by AJAX
+     * Convert a relative url to absolute url by `<a>` element (_linkEle).
+     */
+    _linkEle: null,
+    toAbsoluteURL: function(url) {
+
+      if (utils._linkEle === null) {
+        utils._linkEle = document.createElement('a');
+      }
+      utils._linkEle.href = url;
+      return utils._linkEle.href;
+    },
+
+    /**
+     * @param  {[string]}  url      [The url you want to load]
+     * @param  {Function}  callback [Callback function, it will return `null` when an error reported ]
+     */
+    loadByURL: function(url, callback) {
+
+      url = utils.toAbsoluteURL(url);
+      if (sessionStorage['cache_' + url]) {
+        return callback(JSON.parse(sessionStorage['cache_' + url]));
+      }
+
+      // Show msg that page is loading.... please waiting...
+      // Only if the content can't loaded in 1 second will show the loading view.
+      // If you show it every time even if it have fast internet, you just break user experience (it will feels so terrible).
+      var loaded = false;
+      setTimeout(function(){
+        if (loaded === false)
+          loadingPage.loading();
+      }, 1000);
+
+      // Load page.
+      $.ajax({
+        url: url,
+        success: function(d) {
+
+          // Loaded
+          loaded = true;
+          loadingPage.loaded();
+
+          var data = {
+            doc: d,
+            time: new Date().getTime()
+          }
+          // Cache it.
+          sessionStorage['cache_' + url] = JSON.stringify(data)
+
+
+          callback(data)
+        },
+        timeout: 20000,
+        error: function(){
+
+          // Loaded
+          loaded = true;
+          loadingPage.loaded();
+
+          // Oh, yes!! You can test it by visiting google on China just like this:
+          // <a href="http://www.google.com" data-rel="page">demo2-error-google</a>
+          // You can see it after 20 seconds. ~~~poor man.
+          $.alertMsg('加载失败');
+          callback(null);
+        }
+      });
+
+    },
+    /**
+     * Show page by url
      * @param  {string} url - url string
      * @param  {string} outAnimation - page hide animation
      * @param  {string} inAnimation  - page show animation
+     * @param  {bool}   pushState    - whether need pushState
      */
-    load: function(url, outAnimation, inAnimation, showAfterHide, isPoped) {
+    showPage: function(url, outAnimation, inAnimation, pushState) {
 
       if (options.beforeLoadPage() === false) return;
 
-      // Change URL to absolute URL.
-      if (linkEle === undefined) {
-        linkEle = document.createElement('a');
-      }
-      linkEle.href = url;
-      url = linkEle.href;
+      outAnimation  = !outAnimation ? options.outAnimation : outAnimation;
+      inAnimation   = !inAnimation  ? options.inAnimation  : inAnimation;
 
 
-      outAnimation  = outAnimation === undefined ? options.outAnimation : outAnimation;
-      inAnimation   = inAnimation  === undefined ? options.inAnimation  : inAnimation;
-      showAfterHide = !!showAfterHide;
-
-      var index   = url.indexOf('#');
-      var pageid  = index === -1 ? "" : url.substr(index);
-      var loaded = false;
-      var afterLoaded = function(d) {
-        // page is loaded.
-        loaded = true;
-        loadingPage.loaded();
+      utils.loadByURL(url, function(data) {
+        if (data === null) {
+          return;
+        }
 
         // Remove current pages & append to body. Bind hide animation.
         $(options.pageSelector)
@@ -141,180 +209,152 @@
             // Remove it by outAnimation Class.
             $('.' + outAnimation).remove();
 
-            // Show page after hide is enabled
-            if (showAfterHide) {
-              utils.showPage(d, pageid, url, inAnimation, isPoped)
-            }
           });
 
-        if (!showAfterHide) {
-          utils.showPage(d, pageid, url, inAnimation, isPoped);
+
+        var $html = $(utils.htmlDoc(data.doc));
+        var page;
+
+        // Fix bug if html's root element is #data-role='page'#
+        if ($html.data('role') === 'page') {
+          page = $html;
+        } else {
+          page = $(options.pageSelector, $html).first();
         }
 
-        if (!isPoped) {
-          history.pushState({
+        // Hide page before append to body.
+        page
+          .hide()
+          .addClass(options.pageClass)
+
+
+        $('body').append(page);
+
+        // Show first page OR the special page
+        page
+          .show()
+          .addClass(options.activeClass)
+          .addClass(options.animationClass + ' ' + inAnimation)
+          .one(options.animationend, function(){
+            $(this).removeClass(options.animationClass + ' ' + inAnimation);
+            options.afterLoadPage();
+          });
+
+
+        if (pushState) {
+
+          sessionStorage['animate_' + location.href] = JSON.stringify({
             inAnimation: inAnimation,
-            outAnimation: outAnimation,
-            showAfterHide: showAfterHide
-          }, '', url);
+            outAnimation: outAnimation
+          })
+          history.pushState('', '', url);
         }
 
-      }
-
-      // Show msg that page is loading.... please waiting...
-      // Only if the content can't loaded in 1 second will show the loading view.
-      // If you show it every time even if it have fast internet, you just break user experience (it will feels so terrible).
-      setTimeout(function(){
-        if (loaded === false)
-          loadingPage.loading();
-      }, 1000);
-
-
-      // Check cache.
-      for (var i = 0, max = cache.length; i < max; i++) {
-        var obj = cache[i];
-        if (obj.url === url) {
-          afterLoaded(obj.doc);
-          return;
-        }
-      }
-
-      // Load page.
-      $.ajax({
-        url: url,
-        success: function(d) {
-
-          // Call loaded function
-          afterLoaded(d);
-
-          // Cache it.
-          var cached = false;
-          cache.forEach(function(obj) {
-            if (location.href === obj.url) {
-              cached = true;
-              return;
-            }
-          });
-          if (cached === false) {
-            cache.push({url: location.href, doc: d});
-          }
-
-          // If it greater than cache's size, remove the first page.
-          if (cache.length > options.cachePages) {
-            cache.shift();
-          }
-
-        },
-        timeout: 20000,
-        error: function(){
-
-          // Oh, yes!! You can test it by visiting google on China just like this:
-          // <a href="http://www.google.com" data-rel="page">demo2-error-google</a>
-          // You can see it after 20 seconds. ~~~poor man.
-          loaded = true;
-          loadingPage.loaded();
-          $.alertMsg('加载失败');
-        }
-      });
+      })
     },
 
+
     /**
-     * Only execute by load function.
+     * Reverse animate like:
+     * bounceOutDown --> bounceInUp
+     *
      */
-    showPage: function (html, id, url, inAnimation, isPoped) {
-      var $html = $(utils.htmlDoc(html));
-      var pages;
+    _reverseKey: [
+      ['In', 'Out'],
+      //['Right', 'Left'],
+      //['X', 'Y'],
+      ['Down', 'Up']
+    ],
+    reverseAnimate: function(str) {
 
-      // Fix bug if html's root element is #data-role='page'#
-      if ($html.data('role') === 'page') {
-        pages = $html;
-      } else {
-        pages = $(options.pageSelector, $html);
+      var i = 0, max = utils._reverseKey.length;
+      for(;i < max; i++) {
+        var keys = utils._reverseKey[i];
+        var reg = null;
+
+        if (str.indexOf(keys[0]) !== -1) {
+          reg = new RegExp(keys[0])
+          str = str.replace(reg, keys[1])
+
+        } else if (str.indexOf(keys[1]) !== -1) {
+          reg = new RegExp(keys[1])
+          str = str.replace(reg, keys[0])
+        }
       }
-      var page = id === "" ? pages.first() : pages.filter(id);
 
-      // Hide all pages before append to body.
-      pages
-        .hide()
-        .addClass(options.pageClass)
-
-      // TODO: append a single page is better???
-      $('body').append(pages);
-
-      // Show first page OR the special page
-      page
-        .show()
-        .addClass(options.activeClass)
-        .addClass(options.animationClass + ' ' + inAnimation)
-        .one(options.animationend, function(){
-          $(this).removeClass(options.animationClass + ' ' + inAnimation);
-          options.afterLoadPage();
-        });
+      return str;
     }
   };
 
-  // Show the first page. Hide others.
-  try {
-    var firstPage = $(options.pageSelector).addClass(options.pageClass).first();
-    $(options.pageSelector).not(firstPage).hide();
-    firstPage.show().addClass(options.activeClass);
-  } catch (e) {
-    if (options.debug) {
-      alert(e.message)
-    }
-  }
-  // Dynamic bind a element's link click.
-  $('body').delegate(options.linkSelector, 'click', function(e) {
-    e.preventDefault();
+  // Init function
+  (function() {
+
+    // Show the first page. Hide others.
     try {
-      var url = $(this).attr('href');
-      var inAnimation = $(this).data('transition-in');
-      var outAnimation = $(this).data('transition-out');
-      var showAfterHide = $(this).data('show-after-hide');
-
-      showAfterHide = showAfterHide === undefined ? false : true;
-      utils.load(url, outAnimation, inAnimation, showAfterHide, false);
-    } catch (e) {
-      if (options.debug) {
-        alert(e.message);
-      }
-    }
-
-  });
-
-  // Bind back button's click.
-  $('body').delegate(options.backSelector, 'click', function(e) {
-    e.preventDefault()
-    if (options.debug) {
-      alert('back click.')
-    }
-    history.back();
-
-  });
-
-
-  // Popup a history.
-  window.onpopstate = function(e) {
-
-    if (options.debug) {
-      alert(JSON.stringify(e.state))
-      alert('back active.')
-    }
-
-    if (e.state === null || e.state === undefined) {
-      return;
-    }
-
-    try {
-      window.scrollTo(0, 0);
-      utils.load(location.href, "slideOutRight", "slideInLeft", false, true);
-      window.scrollTo(0, 0)
+      var firstPage = $(options.pageSelector).addClass(options.pageClass).first();
+      $(options.pageSelector).not(firstPage).hide();
+      firstPage.show().addClass(options.activeClass);
     } catch (e) {
       if (options.debug) {
         alert(e.message)
       }
     }
-  }
+    // Dynamic bind a element's link click.
+    $('body').delegate(options.linkSelector, 'click', function(e) {
+      e.preventDefault();
+      try {
+        var url = $(this).attr('href');
+        var inAnimation = $(this).data('transition-in');
+        var outAnimation = $(this).data('transition-out');
+
+        utils.showPage(url, outAnimation, inAnimation, true);
+
+      } catch (e) {
+        if (options.debug) {
+          alert(e.message);
+        }
+      }
+
+    });
+
+    // Bind back button's click.
+    $('body').delegate(options.backSelector, 'click', function(e) {
+      e.preventDefault()
+      history.back();
+    });
+
+
+
+    // Popup a history.
+    window.onpopstate = function(e) {
+
+      if (options.debug) {
+        alert(JSON.stringify(e.state))
+        alert('back active.')
+      }
+
+      if (e.state === null || e.state === undefined) {
+        return;
+      }
+
+      var animate = JSON.parse(sessionStorage['animate_' + location.href])
+
+      // reverse animate
+      animate.outAnimation = utils.reverseAnimate(animate.outAnimation);
+      animate.inAnimation = utils.reverseAnimate(animate.inAnimation);
+
+      try {
+
+        // reverse in & out
+        utils.showPage(location.href, animate.inAnimation, animate.outAnimation, false);
+      } catch (e) {
+        if (options.debug) {
+          alert(e.message)
+        }
+      }
+    }
+
+  })();
 
   return $.fn.loadpage.options;
 }));

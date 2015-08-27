@@ -2,132 +2,32 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <style>
-        .page{
-          position: absolute;
-          top:0;
-          left:0;
-          width:100%;
-          height: 100vh;
-        }
-        #demo1 {
-          background-image: url(http://gd2.alicdn.com/bao/uploaded/i2/TB1n89VFVXXXXasXFXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg_.webp);
-          background-size: cover;
 
-        }
-        #demo2 {
-          background-image: url(https://img.alicdn.com/imgextra/i4/2555122951/TB2Z.tTdVXXXXXZXpXXXXXXXXXX_!!2555122951.jpg);
-          background-size: cover;
-
-        }
-        #demo2-1 {
-          background-image: url(http://pic.chinadaily.com.cn/img/attachement/jpg/site1/20150521/00221917eae816c7a5490b.jpg);
-          background-size: cover;
-
-        }
-
-        @-webkit-keyframes zkkOut {
-          0% {
-            transform: perspective(1000px) rotateY(0);
-          }
-          100% {
-
-            transform: perspective(1000px) rotateY(90deg) scale(.9);
-          }
-        }
-        @-webkit-keyframes zkkIn {
-          0% {
-            transform: perspective(1000px) rotateY(-90deg) scale(.9);
-          }
-          100% {
-            transform: perspective(1000px) rotateY(0deg);
-          }
-        }
-        .zkkIn {
-          /*-webkit-animation-timing-function: cubic-bezier(0.79, 0.1, 0.94, 0.63);*/
-          /*-webkit-animation-timing-function: ease-in;*/
-          -webkit-animation-name: zkkIn;
-          -webkit-backface-visibility: hidden;
-          -webkit-animation-duration: .3s !important;
-        }
-        .zkkOut {
-          /*-webkit-animation-timing-function: cubic-bezier(0.79, 0.1, 0.94, 0.63);*/
-          /*-webkit-animation-timing-function: ease-out;*/
-          -webkit-animation-name: zkkOut;
-          -webkit-backface-visibility: hidden;
-          -webkit-animation-duration: .3s !important;
-        }
-        a{
-          color: #000 !important;
-        }
-
-    </style>
+    <link rel="stylesheet" href="./demo.css">
     <link rel="stylesheet" href="../loadingPage/loadingPage.css">
     <link rel="stylesheet" href="../loadpage/loadpage.css">
     <link rel="stylesheet" href="./animate.css">
-</head>
-<body>
 
     <script src="http://cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
-    <script>
-      require.config({
-        baseUrl: '../',
-        paths: {
-          jquery: 'http://cdn.bootcss.com/jquery/2.1.3/jquery.min',
-          alertMsg: 'alertMsg/alertMsg.jquery',
-          loadingPage: 'loadingPage/loadingPage',
-          loadpage: 'loadpage/loadpage'
-        }
-      });
-
-      require(['loadingPage','jquery', 'loadpage'], function (l, $, load) {
-        l.loaded();
-
-        load.afterLoadPage = function() {
-          console.log('after')
-        }
-        load.beforeLoadPage = function() {
-          console.log('before')
-        }
-      });
-    </script>
+    <script src='demo.js'></script>
+</head>
+<body>
     <div id="demo1" data-role="page" class="page active" style="display: block;">
         <p>demo1</p>
-        <a href="./demo2.html" data-rel="page">demo2-default</a>
-        <hr>
-        <a href="./demo3.html" data-rel="page">demo2-error</a>
-        <hr>
-        <a href="http://www.google.com" data-rel="page">demo2-error-google</a>
-        <hr>
-        <a href="./demo2.html" data-rel="page" data-transition-out="zkkOut" data-transition-in="zkkIn" data-show-after-hide="true">demo2-zkk</a>
-        <hr>
-        <a href="./demo2.html" data-rel="page" data-transition-out="flipOutX" data-transition-in="flipInX">demo2-flip-x</a>
-        <hr>
-        <a href="./demo2.html" data-rel="page" data-transition-out="flipOutY" data-transition-in="flipInY" data-show-after-hide="">demo2-flip-y</a>
-        <hr>
-        <a href="./demo2.html" data-rel="page" data-transition-out="slideOutLeft" data-transition-in="slideInRight" data-show-after-hide="true">demo2-slide</a>
-        <hr>
-        <a href="./demo2.html" data-rel="page" data-transition-out="rotateOutDownLeft" data-transition-in="rotateInUpRight">demo2-rotate</a>
-        <hr>
-        <a href="./demo2.html" data-rel="page" data-transition-out="bounceOutLeft" data-transition-in="bounceInRight">demo2-rotate</a>
-        <hr>
-        <a href="./demo2.html#demo2-1" data-rel="page" data-transition-out="rotateOutDownLeft" data-transition-in="rotateInUpRight">demo2-1</a>
-        <hr>
-        <a href="http://www.baidu.com/">baidu</a>
-        <p class="zkk">zkk test, this event is bind on demo1.html</p>
-        <script>
-          require(['jquery'], function($){
-            $('.zkk').click(function(){
-              console.log('zkk click' + (+new Date()));
-            })
-
-            setInterval(function(){
-              //console.log('demo1.html ' + (+new Date()));
-            }, 2000);
-          })
-        </script>
+        <a href="./demo3.html" data-rel="page">error-404</a>
+        <a href="http://www.twitter.com/" data-rel="page">error-timeout 20s</a>
+        <a href="http://www.baidu.com/">extern link</a>
+        <p>Animate</p>
+        <a href="./demo2.html" data-rel="page" data-transition-out="slideOutLeft" data-transition-in="slideInRight">default</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="fadeOutDown" data-transition-in="fadeInDown">fade</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="bounceOutUp" data-transition-in="bounceInUp">bounce</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="fadeOut" data-transition-in="lightSpeedIn">lightSpeed</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="rotateOutDownLeft" data-transition-in="rotateInDownRight">rotate</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="rollOut" data-transition-in="rollIn">roll</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="fadeOut" data-transition-in="zoomInUp">zoom</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="fadeOut" data-transition-in="flipInX">flip</a>
+        <a href="./demo2.html" data-rel="page" data-transition-out="flipOutDown" data-transition-in="flipInDown">custom自定义</a>
     </div>
-
 
 </body>
 </html>
