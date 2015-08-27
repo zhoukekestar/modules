@@ -32,13 +32,12 @@
   };
 
 
-  var cache                 = [{url: location.href, doc: $('html').html()}],
-      options               = $.fn.loadpage.options,
-      sessionStorage        = {},//window.sessionStorage ? window.sessionStorage : {},
-      previousHistoryState  = null;
+  var options               = $.fn.loadpage.options,
+      sessionStorage        = window.sessionStorage ? window.sessionStorage : {};
 
 
   if(!history || !history.pushState) {
+
     if (options.debug) {
       alert('History.pushState is not supported on your browser. 您的游览器不支持history技术.')
     }
@@ -48,6 +47,11 @@
 
   } else {
 
+    // Cache loaded page when loaded.
+    sessionStorage['cache_' + location.href] = JSON.stringify({
+      doc: $('html').html(),
+      time: new Date().getTime()
+    })
     history.replaceState('', '', location.href);
   }
 
@@ -205,10 +209,6 @@
             // Remove old pages.
             $(this).remove();
 
-            // Some hide element will not animate so that it can't be selected by $(this).
-            // Remove it by outAnimation Class.
-            $('.' + outAnimation).remove();
-
           });
 
 
@@ -222,25 +222,20 @@
           page = $(options.pageSelector, $html).first();
         }
 
-        // Hide page before append to body.
-        page
-          .hide()
-          .addClass(options.pageClass)
-
 
         $('body').append(page);
 
-        // Show first page OR the special page
+        // Show it
         page
+          .hide()
+          .addClass(options.activeClass + ' ' + options.pageClass + ' ' + options.animationClass + ' ' + inAnimation)
           .show()
-          .addClass(options.activeClass)
-          .addClass(options.animationClass + ' ' + inAnimation)
           .one(options.animationend, function(){
             $(this).removeClass(options.animationClass + ' ' + inAnimation);
             options.afterLoadPage();
           });
 
-
+        // Save current animation & push state into history.
         if (pushState) {
 
           sessionStorage['animate_' + location.href] = JSON.stringify({
@@ -289,35 +284,28 @@
   // Init function
   (function() {
 
-    // Show the first page. Hide others.
-    try {
-      var firstPage = $(options.pageSelector).addClass(options.pageClass).first();
-      $(options.pageSelector).not(firstPage).hide();
-      firstPage.show().addClass(options.activeClass);
-    } catch (e) {
-      if (options.debug) {
-        alert(e.message)
-      }
-    }
+    // Page element init.
+    // Add page-class & active class.
+    $(options.pageSelector).addClass(options.pageClass).addClass(options.activeClass)
+
+
     // Dynamic bind a element's link click.
+    // Example: <a href='example.com' date-rel='page'>link to page</a>
+    //
     $('body').delegate(options.linkSelector, 'click', function(e) {
+
       e.preventDefault();
-      try {
-        var url = $(this).attr('href');
-        var inAnimation = $(this).data('transition-in');
-        var outAnimation = $(this).data('transition-out');
 
-        utils.showPage(url, outAnimation, inAnimation, true);
+      var url           = $(this).attr('href');
+      var inAnimation   = $(this).data('transition-in');
+      var outAnimation  = $(this).data('transition-out');
 
-      } catch (e) {
-        if (options.debug) {
-          alert(e.message);
-        }
-      }
+      utils.showPage(url, outAnimation, inAnimation, true);
 
     });
 
     // Bind back button's click.
+    // Just back.
     $('body').delegate(options.backSelector, 'click', function(e) {
       e.preventDefault()
       history.back();
@@ -328,30 +316,17 @@
     // Popup a history.
     window.onpopstate = function(e) {
 
-      if (options.debug) {
-        alert(JSON.stringify(e.state))
-        alert('back active.')
-      }
-
       if (e.state === null || e.state === undefined) {
-        return;
+        return ;
       }
 
       var animate = JSON.parse(sessionStorage['animate_' + location.href])
 
       // reverse animate
-      animate.outAnimation = utils.reverseAnimate(animate.outAnimation);
-      animate.inAnimation = utils.reverseAnimate(animate.inAnimation);
+      animate.outAnimation  = utils.reverseAnimate(animate.outAnimation);
+      animate.inAnimation   = utils.reverseAnimate(animate.inAnimation);
 
-      try {
-
-        // reverse in & out
-        utils.showPage(location.href, animate.inAnimation, animate.outAnimation, false);
-      } catch (e) {
-        if (options.debug) {
-          alert(e.message)
-        }
-      }
+      utils.showPage(location.href, animate.inAnimation, animate.outAnimation, false);
     }
 
   })();
