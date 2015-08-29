@@ -92,6 +92,6 @@ require.config({
     tabs          : ['jquery'],
     template      : ['jquery'],
 
-    ajaxUpload    : ['jquery']
+    ajaxUpload    : []
   }
 });
