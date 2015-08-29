@@ -35,6 +35,10 @@
       <code>ele.classList.add('class') / ele.className = ele.className + ' class'</code>
     </li>
     <li>
+      <code>$ele.toggleClass('class')</code> to
+      <code>ele.classList.toggle('class')</code>
+    </li>
+    <li>
       <code>$ele.removeClass('class')</code> to
       <code>ele.classList.remove('class') / ele.className = ele.className.replace(new RegExp('\\bclass\\b', 'g'), '')</code>
       <p>
@@ -102,7 +106,11 @@
     </li>
     <li>
       <code>$ele.trigger('click')</code> to
-      <code>ele.click() / var event = document.createEvent('HTMLEvents'); event.initEvent('click', true, true); ele.dispatchEvent(event)</code>
+      <code>ele.click() / var event = new Event("click", {"bubbles":true, "cancelable":false}); ele.dispatchEvent(event)</code>
+      <p>
+        See <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/Event">this ( what you should do)</a>. <br>
+        And <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createEvent">this ( what you should not do)</a>
+      </p>
     </li>
     <li>
       <code>$ele.data('msg')</code> to
