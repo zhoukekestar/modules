@@ -39,5 +39,5 @@
   "tabs"          : "tabs/tabs.css",
   "template"      : null,
 
-  "ajaxUpload"    : null
+  "ajaxUpload"    : "upload/public/upload-progress-top.css"
 }
