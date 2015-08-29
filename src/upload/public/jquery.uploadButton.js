@@ -18,16 +18,16 @@
       dataType: 'json',
       progressall: function (e, data) {
 
-        if ($('#fileupload-progressall').length === 0) {
-          $('body').append('<div id="fileupload-progressall"><span></span></div>')
+        if ($('.upload-progress-top').length === 0) {
+          $('body').append('<div class="upload-progress-top"><span></span></div>')
         }
-        $('#fileupload-progressall').show();
+        $('.upload-progress-top').show();
         var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#fileupload-progressall span').css('width', progress + '%').html(progress);
+        $('.upload-progress-top span').css('width', progress + '%').html(progress);
 
       },
       done: function (e, data) {
-        $('#fileupload-progressall').fadeOut();
+        $('.upload-progress-top').fadeOut();
 
         callback(e, data);
       }

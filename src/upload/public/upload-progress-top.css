@@ -1,4 +1,5 @@
-#fileupload-progressall {
+.upload-progress-top {
+  transition: all 1s;
   position: fixed;
   height: 10px;
   width: 100%;
@@ -10,7 +11,7 @@
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.12);
   z-index: 999;
 }
-#fileupload-progressall span {
+.upload-progress-top span {
   transition: all 1s;
   background-color: #5cb85c;
   height: 100%;
