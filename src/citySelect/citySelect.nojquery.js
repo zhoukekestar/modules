@@ -93,7 +93,7 @@
     nextSelect(options.eles, options.data, 0);
   };
 
-  var citySelect = function(eles, url){
+  var citySelect = function(eles, url) {
 
     eles  = (typeof eles === 'string') ? document.querySelectorAll(eles) : eles;
     url   = (url === undefined) ? './city.min.json' : url;
@@ -133,7 +133,7 @@
     }
 
     // Return selected function.
-    var resturnObj = {
+    return {
       selected: function(s) {
 
         // Make sure that city-json-data is loaded.
@@ -151,13 +151,11 @@
             eles[i].onchange();
           }
         }
-        return resturnObj;
       }
     }
 
-    return resturnObj;
   };
 
-
   return citySelect;
+
 }));
