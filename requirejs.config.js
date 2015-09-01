@@ -38,7 +38,7 @@ require.config({
     tabs          : 'tabs/tabs',
     template      : 'template/jquery.template',
 
-    ajaxUpload    : 'upload/public/jquery.ajaxUpload'
+    ajaxUpload    : 'upload/public/ajaxUpload'
   },
   shim: {
     swiper: {
@@ -80,7 +80,7 @@ require.config({
     loadpage      : ['jquery', 'alertMsg', 'loadingPage'],
     loadingPage   : [],
 
-    paging        : ['jquery'],
+    paging        : [],
     popup         : ['jquery'],
     preview       : ['jquery'],
     prompt        : [],
