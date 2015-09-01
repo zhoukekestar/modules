@@ -25,8 +25,10 @@
 	}
 
 
-	require(["paging"], function(){
-		var myPaging = $(".paging").paging({
+	require(["paging", 'jquery'], function(paging, $){
+
+
+		var myPaging = paging('.paging', {
 			current: getQueryString("p"),
 			onselect: function(n){
 				location.href = "./demo.html?p=" + n;
