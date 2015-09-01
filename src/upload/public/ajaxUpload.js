@@ -110,7 +110,18 @@
 
               hideProgress();
 
-              options.success(xmlHttp.response, xmlHttp)
+              // IE 10, IE 11
+              // responseType is 'json'
+              // @see http://caniuse.com/#search=formData
+              if (typeof xmlHttp.response !== 'object') {
+
+                options.success(JSON.parse(xmlHttp.response), xmlHttp);
+
+              } else {
+
+                options.success(xmlHttp.response, xmlHttp)
+              }
+
             }
           }
 

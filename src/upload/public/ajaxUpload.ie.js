@@ -17,9 +17,7 @@
           error: function(){},
           progress: function(){}
         },
-        xmlHttp,
         loading = false,
-        uploadFormData,
 
         showProgress = function() {
           var progressall = document.querySelector('.' + options.progressall);
@@ -71,63 +69,6 @@
       options[key] = o[key]
     }
 
-    // Upload form data
-    // This function should call by `form` Element so that you can use `this` to get data.
-    uploadFormData = function(url) {
-
-      // Get form data include file
-      var formData  = new FormData(this);
-
-      // Set XMLHttpRequest
-      xmlHttp = new XMLHttpRequest()
-      xmlHttp.open("POST", url, true);
-      xmlHttp.responseType = 'json';
-
-      // Abort handler
-      xmlHttp.onabort = function() {
-        options.abort();
-      }
-
-      // Error handler
-      xmlHttp.onerror = function(err) {
-        options.error(err, xmlHttp)
-      }
-
-      // When upload is starting....
-      // Show progress
-      xmlHttp.onloadstart = function() {
-        showProgress();
-      }
-
-      // Listen upload progress.
-      xmlHttp.upload.addEventListener('progress', function(e){
-
-        var percent = Math.floor(e.loaded / e.total * 100);
-
-        updateProgress(percent);
-
-        options.progress(percent, e);
-
-      }, false);
-
-      // After uploaded!
-      xmlHttp.onreadystatechange = function(){
-        if (xmlHttp.readyState === 4) {
-
-          loading = false;
-          self.innerHTML = '上传图片'
-
-          hideProgress();
-
-          options.success(xmlHttp.response, xmlHttp)
-        }
-      }
-
-      // Send it!
-      xmlHttp.send(formData);
-
-    }
-
 
     // Init
     self.innerHTML = '上传图片';
@@ -143,29 +84,6 @@
 
 
 
-
-    if (!IEMode) {
-
-      // Bind current element's click event.
-      self.addEventListener('click', function() {
-
-
-        if (loading === false) {
-          inputEle.click();
-        } else {
-          xmlHttp.abort();
-        }
-
-      })
-
-      inputEle.onchange = function() {
-
-        loading = true;
-        self.innerHTML = '取消上传'
-
-        uploadFormData.call(this.parentNode, url);
-      }
-    }
 
 
     // For old browser.
