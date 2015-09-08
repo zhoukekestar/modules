@@ -45,16 +45,20 @@
         (totalPage - options.showitem) <= 0 ? (startPage = 1) : (startPage = totalPage - options.showitem + 1);
       }
 
-      html += "<ul>"
-      html += "<li class='first-child' data-num='1'>&lt;&lt;</li><li data-num='" + pre + "'>&lt;</li>";
-      for (var i = startPage; i <= endPage; i = i + 1) {
-        if (i === options.current)
-          html += "<li class='active' data-num='" + i + "'>" + i + "</li>";
-        else
-          html += "<li data-num='" + i + "'>" + i + "</li>";
+      if (startPage <= endPage) {
+
+        html += "<ul>"
+        html += "<li class='first-child' data-num='1'>&lt;&lt;</li><li data-num='" + pre + "'>&lt;</li>";
+        for (var i = startPage; i <= endPage; i = i + 1) {
+          if (i === options.current)
+            html += "<li class='active' data-num='" + i + "'>" + i + "</li>";
+          else
+            html += "<li data-num='" + i + "'>" + i + "</li>";
+        }
+        html += "<li data-num='" + next + "'>&gt;</li><li class='last-child' data-num='" + totalPage + "'>&gt;&gt;</li>";
+        html += "</ul>";
+
       }
-      html += "<li data-num='" + next + "'>&gt;</li><li class='last-child' data-num='" + totalPage + "'>&gt;&gt;</li>";
-      html += "</ul>";
 
       // Replace html.
       self.innerHTML = html;
