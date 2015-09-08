@@ -12,39 +12,39 @@ modulesConfig = {
 * You can get your modules in `dist` directory.
 
 ## src keywords
-* alert confirm prompt, ��ǿ������ԭ����ʾ
-* alert message, ��ʾ��Ϣ
-* city select, ����ѡ��, �༶����
-* checkbox, like, radio, ѡ���, ��, iOS����
-* load page, single page, web application, ����ҳ��, ��ҳ��Ӧ��
-* simple paging, �򵥷�ҳ
-* pull to refresh, pull to load, load more, ����ˢ��, ��������
-* rich text editor, ueditor for nodejs, ���ı��༭��, �ٶ�ueditor
-* simple upload, �򵥵��ϴ�������jquery-fileupload��, ���ϴ�����
+* alert confirm prompt, 增强游览器原生显示
+* alert message, 显示消息
+* city select, 城市选择, 多级联动
+* checkbox, like, radio, 选择框, 赞, iOS开关
+* load page, single page, web application, 加载页面, 单页面应用
+* simple paging, 简单分页
+* pull to refresh, pull to load, load more, 下拉刷新, 下拉加载
+* rich text editor, ueditor for nodejs, 富文本编辑器, 百度ueditor
+* simple upload, 简单的上传（基于jquery-fileupload）, 简化上传代码
 
 ## src
-* ģ��Դ�룬���붼��ģ�黯�ģ�
-* һ��һ�������У���Ƚ����ɣ�����Ҫһ��ȫ������
-* ��������ô�ú��п�д��˵����д��demo������һ�£�
-* ����bug���ύһ�£�����һ�£�
+* 模块源码，代码都是模块化的，
+* 一个一个看就行，会比较轻松，不需要一下全看懂。
+* 看懂了怎么用后，有空写点说明？写个demo？补充一下？
+* 发现bug，提交一下，讨论一下？
 
-## ����
-* ���鿴һ��[��ƪ����](http://isux.tencent.com/half-package-web-components-for-design.html)���ǳ���
+## 留言
+* 建议看一下[这篇文章](http://isux.tencent.com/half-package-web-components-for-design.html)，非常好
 
-## �뷨
-1���Կ�ܵĿ�����
+## 想法
+1、对框架的看法：
 
-  ǰ�˵�js��ܶ��ֶ����������е�Ī����angularjs��react�ˣ�����kissy��YUI���е�������·�أ����������Ҿ��ã����ֿ�ܶ��Ƕ�ԭ��html��׼���ƻ�������react���Լ���jsx�﷨����Ȼ��html���ƣ����ͱ�׼��ȥ��Զ��������angularjs���Լ��ĺö����ԣ�����ng-app,ng-model֮��ġ�
+  前端的js框架多种多样，最流行的莫过于angularjs和react了，还有kissy，YUI（有点走下坡路呢），不过，我觉得，这种框架都是对原有html标准的破坏，比如react有自己的jsx语法（虽然和html类似，但和标准相去甚远），还有angularjs有自己的好多属性，比如ng-app,ng-model之类的。
 
-  ���ò����ϣ�ѧϰ�κο�ܶ����гɱ��ģ���ǰ�ο�ܱ仯��̫����Ƶ������ѧϰ�ɱ����ǳ��ء�
+  不得不承认，学习任何框架都是有成本的，但前段框架变化又太过于频繁，这学习成本更是沉重。
 
-  ��һֱ����̫ϲ����ܣ���������jsģ���������е㹤����ĸо���Ҫ�õ�ʲô���ͼ���ʲô���������ֵ���ϣ��������ڿ�ܱ�����ģ���������������ֻ���react��kissy��ģ�������������ܹ�ֱ���������������������ܵ��������Ȼ�����ܻ�����requirejs��ģ����ع��ߣ�
+  我一直都不太喜欢框架，更倾向于js模块和组件（有点工具类的感觉，要用到什么，就加载什么），是那种低耦合，不依赖于框架本身的模块和组件，不是那种基于react、kissy的模块或组件，而是能够直接拿来就能在游览器上跑的组件（当然，可能会依赖requirejs等模块加载工具）
 
-2����js��׼�Ŀ������ɲο�[ieBetter.js](https://github.com/zhoukekestar/ieBetter.js)��Ŀǰ����ԥҪ��Ҫ֧��IE������ֱ����������˵�ɡ�������
+2、对js标准的看法（可参考[ieBetter.js](https://github.com/zhoukekestar/ieBetter.js)，目前正犹豫要不要支持IE，还是直接抛弃，再说吧。。）：
 
-  ��ϣ���ұ�дjs�����ʱ�����ܡ������ı��롱���������Ǹ��ּ��ݡ����磬�һ�дһ��`event.js`��
+  我希望我编写js代码的时候，我能“正常的编码”，而不考虑各种兼容。比如，我会写一个`event.js`：
 
-  ��`navigator.appVersion.indexOf("MSIE 8") !== -1`��ʱ���ִ��
+  当`navigator.appVersion.indexOf("MSIE 8") !== -1`的时候会执行
 
   ```js
     Element.prototype.addEventListener = function (name, callback) {
@@ -52,9 +52,9 @@ modulesConfig = {
   }
   ```
 
-  ȥ����IE8��Ȼ�������ط����Ҿ͡��������ر����ˣ�ֱ��д`addEvnetListener`���У����ÿ��Ǽ��ݡ���������������һ����дһ��addEvent������Ȼ������ģ�鶼����addEvent���������ñ�׼��`addEventListener`���������ܸо�addEvent�����Ƕ���ģ��о��е㡰��Ⱦ��������
+  去兼容IE8，然后其他地方，我就“正常”地编码了，直接写`addEvnetListener`就行，不用考虑兼容。而不是像其他人一样，写一个addEvent方法，然后其他模块都调用addEvent方法，不用标准的`addEventListener`方法，我总感觉addEvent方法是多余的，感觉有点“污染环境”。
 
-  �ٱ��磬���ajax�������һ�дһ��
+  再比如，相对ajax方法，我会写一个
 
    ```js
   if (!window.XMLHttpRequest) {
@@ -64,45 +64,125 @@ modulesConfig = {
   }
   ```
 
-  �������˻�ȥдһ��ajax������Ȼ������ģ�鶼����ajax����ȥʹ��ajax������W3C�ı�׼����`new XMLHttpRequest()`.
+  而其他人会去写一个ajax方法，然后其他模块都调用ajax方法去使用ajax，不用W3C的标准方法`new XMLHttpRequest()`.
 
-  ��ϣ����������д����������������������һЩ�ű����Ѳ�����ĥƽ�����ˡ�
+  我希望能正常编写，而不正常的游览器加载一些脚本，把不正常磨平就行了。
 
-  �Ҳ�֪�������ı��뷽ʽ�ò��ã����������ʵġ���Ϊ�ҿ��������еĿ�ܣ�������ţ�ı��벻�������ġ���������һ������ķ�����Ȼ��ѱ�׼��һ�ߣ���������ѱ�׼ͨ�����ݽű����ѡ���׼����Ϊ����׼����
+  我不知道这样的编码方式好不好，这是我想问的。因为我看到的所有的框架，包括大牛的编码不是这样的。都是添加一个额外的方法，然后把标准放一边，而我是想把标准通过兼容脚本而把“标准”成为“标准”。
 
-3����css��׼�Ŀ�����
+3、对css标准的看法：
 
-  ��ϣ���ұ�дcss��ʱ����Ҳ���������룬���������ּ��ݣ����js��˼����һ����
+  我希望我编写css的时候，我也能正常编码，而不靠各种兼容，这跟js的思想是一样的
 
-  �����һ�д`formValidator.js`��ȥ֧�ָ���������������֧�ֵ����ԣ�Ȼ���ҾͿ�������д��
+  比如我会写`formValidator.js`，去支持各种其他游览器不支持的属性，然后我就可以这样写了
 
-  `<input name="abc" placeholder="6���ַ�" value="123456" pattern="^[0-9]{6}$">`
+  `<input name="abc" placeholder="6个字符" value="123456" pattern="^[0-9]{6}$">`
 
   `<input name="abc" value="123456" required minlength="6" maxlength="10">`
 
-  ��Щ���������������ǿһЩ���ԣ���ͱ�׼��Щ���룬��Ҳ����֮�٣���Щʱ��W3C�ı�׼����������ı仯�����Ծ͡���������
+  有些情况，我甚至会增强一些属性（这和标准有些出入，但也无奈之举，有些时候W3C的标准跟不上需求的变化，所以就。。。。）
 
-  `<input type="email" name="emial" placeholder="email" data-msg='{"email":"emial��ʽ������"}'>`
+  `<input type="email" name="emial" placeholder="email" data-msg='{"email":"emial格式错了啦"}'>`
 
 
-4���Ա�׼��ǿ�Ŀ���������[#zhangxinxu#](https://github.com/zhangxinxu)�Ľ��飬������api����Ҳ����ǿ���������г�ͻ���д�˼������
+4、对标准增强的看法（听了[#zhangxinxu#](https://github.com/zhangxinxu)的建议，游览器api可能也会增强，这样会有冲突，有待思考）：
 
-  ��ԭ�б�׼����ǿ�������ƻ�ԭ��ϵͳ��api��һ���������Ҫ�ӹ��ܣ���Ӧ������һ�����������Ҳ���ô�룬�κο⡢��������ѧϰ����Խ����Խ���ױ�������
+  对原有标准的增强，但不破坏原有系统的api，一般情况，想要加功能，就应该添加一个方法，而我不这么想，任何库、组件，如果学习曲线越陡，越容易被抛弃，
 
-  ���ԣ�������չԭ��ϵͳ��api����Ȼ�����ڲ�֪�������£����ܶ����ǵĴ�����ɲ���Ҫ�����ţ�����Ҫ����ԭ��ϵͳ��api
+  所以，我想扩展原有系统的api，当然，对于不知情的情况下，不能对他们的代码造成不必要的困扰，所以要兼容原有系统的api
 
-  ���磺����ϵͳ��alert����������һ������������ǿЧ��չʾ
+  比如：对于系统的alert方法，添加一个参数用于增强效果展示
 
   ```js
    var _alert = window.alert;
     window.alert = function(msg, option) {/* Code here*/}
   ```
 
-  1���򵥵��ã�û�ж���Ĵ������Ҫִ�е�����¡�����`alert('your message', false)`����ֱ�ӵ��ü��ɣ������false������ʾ��ʹ��ϵͳԭ���ĵ�����
+  1）简单调用，没有额外的代码块需要执行的情况下。调用`alert('your message', false)`函数直接调用即可，后面的false参数表示不使用系统原生的弹出框
 
-  2��alert���д������Ҫִ�У�ʹ��`alert('your message', callback-function)`����callback-function�м�����Ҫִ�еĴ��루ͬ��ʵ�ֲ��ˣ�ֻ��callback�ˣ�
+  2）alert后还有代码块需要执行，使用`alert('your message', callback-function)`，在callback-function中加入需要执行的代码（同步实现不了，只能callback了）
 
-  Ч������������ģ�
+  效果大概是这样的：
 
   https://github.com/zhoukekestar/modules/blob/master/src/alert/demo.gif
+
+5、插件参数设置 VS 元素参数设置
+
+  ```js
+  var div = document.querySelector('div')
+  div.onxxx
+  ```
+  当你在chrome打上面这段代码的时候，你会发现有好多的onabort,...onprogress,...onerror...等等
+
+  当你使用插件的时候
+  ```js
+  var ext = $('selector').ext({
+    onerror: function(){
+      /* code here ... */
+    },
+    onxxx: function() {
+      /* code here ... */
+    },
+    max: xx
+  })
+
+  ```
+  为了方便调用，更自然地去写js代码，同时将原生js代码中的各种原有属性加以利用（跟RESTful中，将HTTP status加以利用类似），也可以省去插件初始化的显示调用，将以下代码
+  ```js
+  <div id='upload-btn' data-url='/upload'></div>
+  var ext = ajaxUpload('#upload-btn', {
+    success: function(d) {
+    },
+    abort: function() {
+    }
+  });
+  ```
+  改成
+  ```js
+  <div data-url='/upload' data-role='ajaxUpload'>upload</div>
+  var btn = document.querySelector('#upload-btn');
+  btn.onsuccess = function(d) {
+  }
+  btn.onabort = function() {
+  }
+  ```
+  在写插件的过程中，从
+  ```js
+
+  var ajaxUpload = function(ele, o) {
+    var ele = (typeof ele === 'string') ? document.querySelector(ele) : ele,
+        options = $.extend({
+          /* default options */
+        }, o)
+
+    /* init code */
+
+  }
+
+  ```
+  ```js
+  document.addEventListener('click', function(e) {
+
+    var target = e.target;
+    if (target.getAttribute('data-role') === 'ajaxUpload') {
+
+      if (target.inited === undefined) {
+        target.inited = true;
+        /* init code */
+      }
+    }
+  })
+
+  // OR
+
+  window.addEventListener('load', function(){
+
+    var ele = document.querySelector('[data-role="ajaxUpload"]');
+
+    /* init code */
+
+  })
+  ```
+
+
 
