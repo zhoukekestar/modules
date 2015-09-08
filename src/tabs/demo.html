@@ -1,32 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <style>
     body{
-      margin: 0;
-      padding: 0;
+    margin: 0;
+    padding: 0;
     }
-  </style>
-  <link rel="stylesheet" href="tabs.css" >
-</head>
-<body>
-<div data-role="tabs">
-  <div class="tabs-nav">
-    <ul class="tabs-list">
-      <li data-href="#tabs-1">收入</li>
-      <li data-href="#tabs-2" class="active">支出</li>
-    </ul>
-  </div>
-  <div class="tabs-content">
-    <div class="tabs-panel" id="tabs-1">tabs-1</div>
-    <div class="tabs-panel" id="tabs-2">tabs-2</div>
-  </div>
-</div>
-<div data-role="tabs"><div class="tabs-nav"><ul class="tabs-list"><li data-href="#tabs-1">未付款订单</li><li data-href="#tabs-2" class="active">待发货订单</li><li data-href="#tabs-3">已发货订单</li><li data-href="#tabs-4">完成订单</li><li data-href="#tabs-5">已关闭订单</li><li data-href="#tabs-6">全部订单</li></ul></div><div class="tabs-content"><div id="tabs-1" class="tabs-panel" style="display: none;">tabs-1</div><div id="tabs-2" class="tabs-panel" style="display: block;">tabs-2</div><div id="tabs-3" class="tabs-panel" style="display: none;">tabs-3</div><div id="tabs-4" class="tabs-panel" style="display: none;">tabs-4</div><div id="tabs-5" class="tabs-panel" style="display: none;">tabs-5</div><div id="tabs-6" class="tabs-panel" style="display: none;">tabs-6</div></div></div>
-<script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
-<script src="tabs.js"></script>
-</body>
+    </style>
+    <link rel="stylesheet" href="tabs.css" >
+  </head>
+  <body>
+    <div data-role="tabs">
+      <div class="tabs-nav">
+        <ul class="tabs-list">
+          <li data-href="#tabs-1">收入</li>
+          <li data-href="#tabs-2" class="active">支出</li>
+        </ul>
+      </div>
+      <div class="tabs-content">
+        <div class="tabs-panel" id="tabs-1">tabs-1</div>
+        <div class="tabs-panel" id="tabs-2">tabs-2</div>
+      </div>
+    </div>
+    <div data-role="tabs">
+      <div class="tabs-nav">
+        <ul class="tabs-list">
+          <li data-href="#tabs-1">未付款订单</li>
+          <li data-href="#tabs-2" class="active">待发货订单</li>
+          <li data-href="#tabs-3">已发货订单</li>
+          <li data-href="#tabs-4">完成订单</li>
+          <li data-href="#tabs-5">已关闭订单</li>
+          <li data-href="#tabs-6">全部订单</li>
+        </ul>
+      </div>
+      <div class="tabs-content">
+        <div id="tabs-1" class="tabs-panel" style="display: none;">tabs-1</div>
+        <div id="tabs-2" class="tabs-panel" style="display: block;">tabs-2</div>
+        <div id="tabs-3" class="tabs-panel" style="display: none;">tabs-3</div>
+        <div id="tabs-4" class="tabs-panel" style="display: none;">tabs-4</div>
+        <div id="tabs-5" class="tabs-panel" style="display: none;">tabs-5</div>
+        <div id="tabs-6" class="tabs-panel" style="display: none;">tabs-6</div>
+      </div>
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js">
+    </script>
+    <script src="tabs.js"></script>
+  </body>
 </html>
