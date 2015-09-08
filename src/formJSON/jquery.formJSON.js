@@ -90,7 +90,12 @@
       res = JSON.stringify(res);
     }
 
-
+    /**
+     * If there are no data should be sent, just return.
+     */
+    if (res === 'null') {
+      return;
+    }
 
     /**
      * Add session header for cross-domain request.
