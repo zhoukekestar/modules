@@ -3,7 +3,7 @@
   if (typeof define === "function" && define.amd) {
     define(factory);
   } else {
-    window.paging = factory();
+    factory();
   }
 }(function() {
 
@@ -98,5 +98,35 @@
     }
   }
 
-  return paging;
+
+  window.addEventListener('load', function() {
+
+    // Should i use namespace ?
+    // Because i own this element, everything is under this plugin's control. Do i need?
+    //var namespace = 'paging_';
+    var namespace = '';
+    var ele = document.querySelector('[data-role="paging"]');
+    if (ele[namespace + 'inited'] === undefined ) {
+
+      ele[namespace + 'inited'] = true;
+
+      var elep = paging(ele, {
+        current: +ele.getAttribute('data-current'),
+        onselect: function(n){
+
+          (typeof ele[namespace + 'onselect'] === 'function') && ele[namespace + 'onselect'](n);
+
+        },
+        total: +ele.getAttribute('data-total'),
+        pagesize: +ele.getAttribute('data-pagesize')
+      })
+
+      ele[namespace + 'select'] = elep.select;
+      ele[namespace + 'reBuild'] = elep.reBuild;
+    }
+
+
+  })
+
+  return null;
 }));

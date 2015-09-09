@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="paging.css" type="text/css" />
+</head>
+<body>
+  <div class="paging" data-role='paging' data-current='' data-total='1205' data-pagesize='10'></div>
+
+  <button class="select">Select 3</button>
+  <script src="./paging.delegate.js"></script>
+  <script>
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURI(r[2]); return null;
+    }
+
+    var p = document.querySelector('.paging');
+    p.setAttribute('data-current', getQueryString('p'));
+
+    p.onselect = function(n) {
+      location.href = "./demo.delegate.html?p=" + n;
+    }
+    document.querySelector('.select').onclick = function(){
+      p.select(3)
+    }
+  </script>
+</body>
+</html>
