@@ -112,7 +112,7 @@ modulesConfig = {
   var div = document.querySelector('div')
   div.onxxx
   ```
-  当你在chrome打上面这段代码的时候，你会发现有好多的onabort,...onprogress,...onerror...等等
+  当你在chrome打上面这段代码的时候，你会发现有onabort,...onprogress,...onerror...等等
 
   当你使用插件的时候
   ```js
@@ -127,7 +127,11 @@ modulesConfig = {
   })
 
   ```
-  为了方便调用，更自然地去写js代码，同时将原生js代码中的各种原有属性加以利用（跟RESTful中，将HTTP status加以利用类似），也可以省去插件初始化的显示调用，将以下代码
+  当两者结合放一起看的时候，有着相似之处。
+  为了方便调用，更自然地去写js代码，同时将原生js代码中的各种原有属性加以利用（跟RESTful中，将HTTP status加以利用类似），
+  也可以省去插件初始化的显示调用。一个是以插件为中心，元素为辅助，另一个是以元素为中心，插件为辅助，这两者，我更喜欢后者，将元素从js边缘移至js中心。
+
+  将以下代码
   ```js
   <div id='upload-btn' data-url='/upload'></div>
   var ext = ajaxUpload('#upload-btn', {
@@ -136,6 +140,8 @@ modulesConfig = {
     abort: function() {
     }
   });
+  // 所有操作围绕ext变量展开
+  // 需要显式调用插件的初始化
   ```
   改成
   ```js
@@ -145,6 +151,8 @@ modulesConfig = {
   }
   btn.onabort = function() {
   }
+  // 所有操作围绕btn元素展开
+  // 忽略插件的初始化，也无需关注插件是否初始化正确或成功，只需针对元素
   ```
   在写插件的过程中，从
   ```js
@@ -160,6 +168,7 @@ modulesConfig = {
   }
 
   ```
+  改成
   ```js
   document.addEventListener('click', function(e) {
 
