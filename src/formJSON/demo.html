@@ -20,7 +20,7 @@
 <body>
 
 <p>表单的method字段，可设置为POST，GET，PUT，DELETE，其中POST为默认方法，当设置为GET请求时，对象将以键值对的形式添加到请求URL的后端</p>
-<form action="./demo" method="PUT">
+<form action="./demo" method="PUT" data-role='formJSON'>
 
   <p>string，默认string类型</p>
   <span>str</span><input name="str" value="str-abc"/>
@@ -61,38 +61,26 @@
 </form>
 <p>表单提交结果：</p>
 <p id="result">...</p>
-<p>动态绑定表单提交：</p>
-<div id="dynamic"></div>
-<script type="text/javascript" src="../_lib/jquery.min.js"></script>
-<script type="text/javascript" src="jquery.formJSON.js"></script>
-<script type="text/html" id="tmpl">
-  <form action="./d">
-    <input name="key" value="value">
-    <input type="submit" />
-  </form>
-</script>
+
+<script type="text/javascript" src='./formJSON.js'></script>
 <script type="text/javascript">
-  $(function(){
-    $('form').formJSON({
-      debug: function (d) {
-        console.log(d);
-        $('#result').html(JSON.stringify(d));
-      },
-      error: function(e) {
-        console.log(e)
-      }
-    })
 
-    $('#dynamic').formJSON({
-      delegate: 'form',
-      success: function(){
 
-      }
-    })
-    $('#dynamic').append($('#tmpl').html())
-    $('#dynamic').append($('#tmpl').html())
-    $('#dynamic').append($('#tmpl').html())
-  });
+  var form = document.querySelector('form');
+  form.onerror = function(xml) {
+    console.log('error')
+  }
+  form.onended = function(d, xml) {
+
+  }
+  form._data = function(d) {
+    d['add_by_data'] = 'add by data function';
+
+    console.log(d);
+    document.querySelector('#result').innerHTML = JSON.stringify(d);
+    return d;
+  }
+
 </script>
 </body>
 </html>
