@@ -141,14 +141,18 @@
           _callback = function() {
             for (var i = 0; i < s.length; i++) {
               eles[i].querySelector('option[value="'+ s[i]+'"]').selected = true;
-              eles[i].onchange();
+
+              eles[i].dispatchEvent(new Event('change', {bubbles: true}))
+              eles[i].onchange && eles[i].onchange();
             }
             return true;
           }
         } else {
           for (var i = 0; i < s.length; i++) {
             eles[i].querySelector('option[value="'+ s[i]+'"]').selected = true;
-            eles[i].onchange();
+
+            eles[i].dispatchEvent(new Event('change', {bubbles: true}))
+            eles[i].onchange && eles[i].onchange();
           }
         }
       }
@@ -160,7 +164,7 @@
 
     var role = document.querySelector('[data-role="citySelect"]');
     var namespace = '_';
-    if (!role[namespace + 'inited']) {
+    if (role && !role[namespace + 'inited']) {
       role[namespace + 'inited'] = true;
       role[namespace + 'selected'] = citySelect(role.querySelectorAll('select'), role.getAttribute('data-url')).selected;
 
