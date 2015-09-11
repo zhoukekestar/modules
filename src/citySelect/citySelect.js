@@ -1,31 +1,37 @@
 !( function( factory ){
   if (typeof define === "function" && define.amd ) {
-    define( [ "jquery" ], factory );
+    define( factory );
   } else {
-    factory( jQuery );
+    factory();
   }
-}( function($){
+}( function() {
 
   var cityData;
-  var citySelect = function( options ){
-    options = $.extend( {
-      $this: null,
+  var init = function( o ){
+
+    var options = {
+      eles: null,
       data: [],
       valname: "v",
       showname: "n",
       arrname: "s"
-    }, options );
+    };
+
+    for (var key in o) {
+      options[key] = o[key]
+    }
+
 
     /**
      * *
-     * @param  {[jquery elements]}  $ele  [The jquery elements]
+     * @param  {[elements]}         eles  [The elements]
      * @param  {[object]}           data  [Current level's data]
      * @param  {[number]}           count [Current level]
      */
-    function nextSelect($ele, data, count)
-    {
+    var nextSelect = function(eles, data, count) {
+
       // Nothind to do, just return.
-      if (data === undefined || data === null || data.length === 0)
+      if (data === undefined || data === null || data.length === 0 || !eles[count])
         return;
 
 
@@ -35,55 +41,70 @@
 
       // Add current options & show it.
       for (i = 0, max = data.length; i < max; i++) {
-
         html += '<option value="' + data[i][options.valname] + '">'+ data[i][options.showname] + '</option>';
       }
-      $( $ele[count] ).append(html).show();
+
+      var temp = document.createElement("div");
+      temp.innerHTML = html;
+      [].slice.call(temp.children).forEach(function(child) {
+        eles[count].appendChild(child);
+      })
+
+      eles[count].style.display = 'inline';
 
       // Unbind old handler & Bind select change event.
-      $( $ele[count] ).off();
-      $( $ele[count] ).on('change', function(){
+      eles[count].addEventListener('change', function(){
+
+        //$( eles[count] ).off();
+        // need to remove listener???
 
         // Remove the greater level elements
-        for (i = count + 1, max = $ele.length; i < max; i++) {
+        for (i = count + 1, max = eles.length; i < max; i++) {
 
-          $( $ele[i] ).find("option").remove();
-          $( $ele[i] ).hide().off();
+          var ops = eles[i].querySelectorAll('option');
+          [].slice.call(ops).forEach(function(ele){
+            ele.remove();
+          })
+          eles[i].style.display = 'none';
+
         }
 
         // If you select -1, it means that you have not select any option. Do nothing.
-        if ($(this).val() === -1)
+        if (this.value === -1)
           return;
 
         for (i = 0, max = data.length; i < max; i++) {
 
-          if (data[i][options.valname] == $(this).val()) {
+          if (data[i][options.valname] == this.value) {
 
-            nextSelect($ele, data[i][options.arrname], count + 1);
+            nextSelect(eles, data[i][options.arrname], count + 1);
           }
         }
       });
 
-    }
+    };
 
     // Hide all elements.
-    options.$this.hide();
+    [].slice.call(options.eles).forEach(function(ele){
+      ele.style.display = 'none';
+    })
 
     // Init the first level.
-    nextSelect(options.$this, options.data, 0);
+    nextSelect(options.eles, options.data, 0);
   };
 
-  $.fn.citySelect = function(url){
+  var citySelect = function(eles, url) {
 
-    url = url === undefined ? './city.min.json' : url;
-    var $this = $(this);
+    eles  = (typeof eles === 'string') ? document.querySelectorAll(eles) : eles;
+    url   = !url ? './city.min.json' : url;
+
     var _callback = false;
 
     // If had cityData.
     if (cityData) {
 
-      citySelect({
-        $this: $this,
+      init({
+        eles: eles,
         data: cityData
       })
 
@@ -93,40 +114,65 @@
     // No cityData, get it by ajax.
     } else {
 
-      $.getJSON(url, function(json){
-        cityData = json;
-        citySelect({
-          $this: $this,
-          data: json
-        });
-        _callback = typeof _callback === 'function' ? _callback() : true;
-      });
+      var xhr = new XMLHttpRequest()
+      xhr.open("GET", url, true);
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4) {
+          var json = JSON.parse(xhr.responseText);
+          cityData = json;
+          init({
+            eles: eles,
+            data: json
+          });
+          _callback = typeof _callback === 'function' ? _callback() : true;
+
+        }
+      }
+      xhr.send();
 
     }
 
     // Return selected function.
-    var resturnObj = {
+    return {
       selected: function(s) {
 
+        // Make sure that city-json-data is loaded.
         if (_callback === false) {
           _callback = function() {
             for (var i = 0; i < s.length; i++) {
-              $( $this[i] ).find("option[value="+ s[i]+"]").attr("selected", true).trigger("change");
+              eles[i].querySelector('option[value="'+ s[i]+'"]').selected = true;
+              eles[i].onchange();
             }
             return true;
           }
         } else {
           for (var i = 0; i < s.length; i++) {
-            $( $this[i] ).find("option[value="+ s[i]+"]").attr("selected", true).trigger("change");
+            eles[i].querySelector('option[value="'+ s[i]+'"]').selected = true;
+            eles[i].onchange();
           }
         }
-        return resturnObj;
       }
     }
 
-    return resturnObj;
   };
 
+  window.addEventListener('load', function() {
 
-  return $;
+    var role = document.querySelector('[data-role="citySelect"]');
+    var namespace = '_';
+    if (!role[namespace + 'inited']) {
+      role[namespace + 'inited'] = true;
+      role[namespace + 'selected'] = citySelect(role.querySelectorAll('select'), role.getAttribute('data-url')).selected;
+
+      var selected = role.getAttribute('data-selected');
+      if (selected) {
+        selected = JSON.parse(selected);
+        role[namespace + 'selected'](selected);
+      }
+    }
+
+  })
+
+  return null;
+
 }));

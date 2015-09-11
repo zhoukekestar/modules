@@ -2,25 +2,17 @@
 <html>
     <head>
         <title> </title>
-		<meta charset="utf-8" />
+    <meta charset="utf-8" />
     </head>
     <body>
-		<select></select>
-		<select></select>
-		<select></select>
-		<script src="http://cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
-		<script>
-		require.config({
-			baseUrl: './',
-			paths: {
-				jquery: 'http://cdn.bootcss.com/jquery/2.1.3/jquery.min',
-				citySelect: 'citySelect',
-			}
-		});
-
-		require(["citySelect"], function(){
-			window.city = $("select").citySelect().selected([121,908,1210606]);
-		})
-		</script>
+    <div data-role='citySelect'>
+      <select></select>
+      <select></select>
+      <select></select>
+    </div>
+    <script src="citySelect.nojquery.js"></script>
+    <script>
+      document.querySelector('[data-role="citySelect"]')._selected([121,908,1210606]);
+    </script>
     </body>
 </html>
