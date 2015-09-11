@@ -20,7 +20,7 @@
 <body>
 
 <p>表单的method字段，可设置为POST，GET，PUT，DELETE，其中POST为默认方法，当设置为GET请求时，对象将以键值对的形式添加到请求URL的后端</p>
-<form action="./demo" method="PUT" data-role='formJSON'>
+<form class="form1" action="./demo" method="PUT" data-role='formJSON'>
 
   <p>string，默认string类型</p>
   <span>str</span><input name="str" value="str-abc"/>
@@ -62,11 +62,17 @@
 <p>表单提交结果：</p>
 <p id="result">...</p>
 
+<p>设置data-onerror，将onerror事件交给其他元素的onerror函数处理</p>
+<form class="form2" data-target='.form1' data-role='formJSON' action='/c'>
+  <input name='name' value='value'>
+  <button>submit it</button>
+</form>
+
 <script type="text/javascript" src='./formJSON.js'></script>
 <script type="text/javascript">
 
 
-  var form = document.querySelector('form');
+  var form = document.querySelector('.form1');
   form.onerror = function(xml) {
     console.log('error')
   }

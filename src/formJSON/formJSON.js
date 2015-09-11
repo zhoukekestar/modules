@@ -28,7 +28,7 @@
 
   var serialize = function(){
     var result = []
-    this.serializeArray().forEach(function(elm){
+    serializeArray.call(this).forEach(function(elm){
       result.push(encodeURIComponent(elm.name) + '=' + encodeURIComponent(elm.value))
     })
     return result.join('&')
@@ -96,7 +96,7 @@
         deepSet(res, keys, value);
       });
 
-      res = options.data(res);
+      res = options.data.call(self, res);
       res = JSON.stringify(res);
     }
 
@@ -107,7 +107,11 @@
       return;
     }
 
-
+    /**
+     *
+     * AJAX request
+     *
+     */
     var xmlHttp = new XMLHttpRequest();
     /**
      * Add session header for cross-domain request.
@@ -117,8 +121,13 @@
      * before you send it.
      * */
     var session = document.cookie.match(/sessionToken=([^;]*)(;|$)/);
-    xmlHttp.open(method, action === undefined ? self.getAttribute('action') : action, true);
+    action = (action === undefined ? self.getAttribute('action') : action);
 
+    if (method === 'GET')
+      action += '?' + res;
+
+    xmlHttp.open(method, action, true);
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
     if (session) {
       xmlHttp.setRequestHeader('X-AVOSCloud-Session-Token', session[1])
     }
@@ -126,13 +135,17 @@
     xmlHttp.onreadystatechange = function() {
       if (xmlHttp.readyState === 4) {
         if (xmlHttp.status >= 200 && xmlHttp.status < 300) {
-          options.ended(xmlHttp.response, xmlHttp)
+          options.ended.call(self, xmlHttp.response, xmlHttp)
         } else {
-          options.error(xmlHttp);
+          options.error.call(self, xmlHttp);
         }
       }
     }
-    xmlHttp.send(res);
+
+    if (method === 'GET')
+      xmlHttp.send();
+    else
+      xmlHttp.send(res);
   }
 
 
@@ -200,14 +213,15 @@
   document.addEventListener('submit', function(e) {
 
     var target = e.target;
-
     if (target.getAttribute('data-role') === 'formJSON') {
 
+      var temp = (temp = target.getAttribute('data-target')) && document.querySelector(temp);
+
       var options = {
-        ended: target.onended || function(){},
+        ended: target.onended || ( temp && temp.onended ) || function(){},
         // to change data
-        data: target._data || function(d){return d},
-        error: target.onerror || function(){}
+        data: target._data || ( temp && temp._data ) || function(d){return d},
+        error: target.onerror || ( temp && temp.onerror ) || function(){}
       };
 
       submitHandler.call(target, e, options, formAction);
@@ -215,6 +229,20 @@
 
   })
 
+  // Fix.
+  // Submit a form by javascript won't fire submit event.
+  // @see http://stackoverflow.com/questions/12819357/form-submitted-using-submit-from-a-link-cannot-be-caught-by-onsubmit-handler
+
+  var _submit = HTMLFormElement.prototype.submit;
+  HTMLFormElement.prototype.submit = function() {
+
+    if (this.getAttribute('data-role') === 'formJSON') {
+      this.dispatchEvent(new Event('submit', {bubbles: true}));
+    } else {
+      _submit.call(this);
+    }
+  }
 
   return null;
+
 }));
