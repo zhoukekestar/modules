@@ -64,7 +64,7 @@
     </li>
     <li>
       <code>$ele.append('&lt;div&gt;&lt;/div&gt;')</code> to
-      <code>var temp = document.createElement("div"); temp.innerHTML = '&lt;div&gt;&lt;/div&gt;'; ele.appendChild(temp.firstChild)</code>
+      <code>ele.innerHTML += '&lt;div&gt;&lt;/div&gt;'; / var temp = document.createElement("div"); temp.innerHTML = '&lt;div&gt;&lt;/div&gt;'; ele.appendChild(temp.firstChild)</code>
       <p>Bad example (CSS styling won't apply to the node as it's a xml document.):</p>
       <pre>
         var parser = new DOMParser();
