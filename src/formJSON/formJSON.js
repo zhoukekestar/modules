@@ -123,8 +123,9 @@
     var session = document.cookie.match(/sessionToken=([^;]*)(;|$)/);
     action = (action === undefined ? self.getAttribute('action') : action);
 
-    if (method === 'GET')
-      action += '?' + res;
+    if (method === 'GET') {
+      action += action.indexOf('?') === -1 ? ('?' + res) : ( '&' + res);
+    }
 
     xmlHttp.open(method, action, true);
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
