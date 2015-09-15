@@ -28,8 +28,11 @@ modulesConfig = {
 * 看懂了怎么用后，有空写点说明？写个demo？补充一下？
 * 发现bug，提交一下，讨论一下？
 
-## 留言
+## 好文推荐
 * 建议看一下[这篇文章](http://isux.tencent.com/half-package-web-components-for-design.html)，非常好
+
+## Polyfills Projects
+* [Modernizr](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills)
 
 ## 想法
 1、对框架的看法：
@@ -40,35 +43,13 @@ modulesConfig = {
 
   我一直都不太喜欢框架，更倾向于js模块和组件（有点工具类的感觉，要用到什么，就加载什么），是那种低耦合，不依赖于框架本身的模块和组件，不是那种基于react、kissy的模块或组件，而是能够直接拿来就能在游览器上跑的组件（当然，可能会依赖requirejs等模块加载工具）
 
-2、对js标准的看法（可参考[ieBetter.js](https://github.com/zhoukekestar/ieBetter.js)，目前正犹豫要不要支持IE，还是直接抛弃，再说吧。。）：
+2、对js标准的看法：
 
-  我希望我编写js代码的时候，我能“正常的编码”，而不考虑各种兼容。比如，我会写一个`event.js`：
+  我发现有好多类似的项目可以帮我们磨平游览器差异，以标准方式编码，比如写AJAX，只要```new XMLHttpRequest()```就行，不必为IE考虑，其他交给第三方库，例如[This](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/XMLHttpRequest/polyfill.js)
 
-  当`navigator.appVersion.indexOf("MSIE 8") !== -1`的时候会执行
+  [ieBetter.js](https://github.com/zhoukekestar/ieBetter.js)
 
-  ```js
-    Element.prototype.addEventListener = function (name, callback) {
-     this.attachEvent('on' + name, callback);
-  }
-  ```
-
-  去兼容IE8，然后其他地方，我就“正常”地编码了，直接写`addEvnetListener`就行，不用考虑兼容。而不是像其他人一样，写一个addEvent方法，然后其他模块都调用addEvent方法，不用标准的`addEventListener`方法，我总感觉addEvent方法是多余的，感觉有点“污染环境”。
-
-  再比如，相对ajax方法，我会写一个
-
-   ```js
-  if (!window.XMLHttpRequest) {
-    window.XMLHttpRequest = function() {
-       return new ActiveXObject('Microsoft.XMLHTTP');
-    }
-  }
-  ```
-
-  而其他人会去写一个ajax方法，然后其他模块都调用ajax方法去使用ajax，不用W3C的标准方法`new XMLHttpRequest()`.
-
-  我希望能正常编写，而不正常的游览器加载一些脚本，把不正常磨平就行了。
-
-  我不知道这样的编码方式好不好，这是我想问的。因为我看到的所有的框架，包括大牛的编码不是这样的。都是添加一个额外的方法，然后把标准放一边，而我是想把标准通过兼容脚本而把“标准”成为“标准”。
+  [polyfill-service](https://github.com/Financial-Times/polyfill-service)
 
 3、对css标准的看法：
 
