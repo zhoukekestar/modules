@@ -33,6 +33,99 @@
     })
     return result.join('&')
   }
+    /**
+   * Set obj's value by keys
+   * @param  {[object]}           obj   The target you want to set.
+   * @param  {[array]}            keys  The value's path.
+   * @param  {[string, array...]} value Target's value.
+   * @return {[object]}                 The target after setting value.
+   *
+   * Example: obj = {'a':'a'}, keys = ['b','bb'], value = 'b-value'
+   * return {
+   *         'a': 'a',
+   *         'b': {
+   *           'bb': 'b-value'
+   *          }
+   *        }
+   */
+  var deepSet = function(obj, keys, value) {
+
+    var curKey = keys[0];
+    if(keys.length === 1) {
+
+      curKey === '' ? obj.push(value) : obj[curKey] = value;
+
+      return;
+    }
+    if (keys.length > 1) {
+      if (typeof obj[curKey] === 'undefined')
+        obj[curKey] = keys[1] === '' ? [] : {};
+    }
+
+    var o = obj[curKey];
+    keys.shift();
+    return deepSet(o, keys, value);
+  }
+
+  var integerKeysAsArrayIndexes = function(obj, keys, value) {
+
+    var allKeysIsInteger = true;
+    var arr = [];
+    var temp;
+    keys = keys || [];
+    value = value || obj;
+
+
+
+    for (var key in value) {
+
+      temp = keys.concat();
+
+      if (isNaN(+key)) {
+        allKeysIsInteger = false;
+      } else {
+        arr.push(value[key]);
+      }
+      temp.push(key);
+
+      if ((typeof value[key] === 'object') && !Array.isArray(value[key])) {
+        integerKeysAsArrayIndexes(obj, temp, value[key]);
+      }
+    }
+
+    if (allKeysIsInteger) {
+
+      if (keys.length === 0) {
+        obj = arr;
+      } else {
+        deepSet(obj, keys, arr)
+      }
+    }
+    return obj;
+  }
+  // TEST: integerKeysAsArrayIndexes
+  // var json = integerKeysAsArrayIndexes({
+  //   a: {
+  //     0: {
+  //       aa: "aa",
+  //       bb: {
+  //         0: "bb0",
+  //         1: "bb1",
+  //         3: "bb3"
+  //       }
+  //     },
+  //     1: "a"
+  //   },
+  //   b: "b"
+  // })
+  // console.log(JSON.stringify(json));
+  // var json = integerKeysAsArrayIndexes({
+  //   0: "a",
+  //   1: {
+  //     "a": "b"
+  //   }
+  // })
+  // console.log(JSON.stringify(json));
 
 
   // keys: ["a", ""]
@@ -85,7 +178,7 @@
         } else if (type === 'time') {
           value = new Date(value).getTime();
 
-        } else if (type === 'bool') {
+        } else if (type === 'bool' || type === 'boolean') {
           if (value === 'false')
             value = false
           else
@@ -96,6 +189,7 @@
         deepSet(res, keys, value);
       });
 
+      res = integerKeysAsArrayIndexes(res);
       res = options.data.call(self, res);
       res = JSON.stringify(res);
     }
@@ -150,39 +244,7 @@
   }
 
 
-  /**
-   * Set obj's value by keys
-   * @param  {[object]}           obj   The target you want to set.
-   * @param  {[array]}            keys  The value's path.
-   * @param  {[string, array...]} value Target's value.
-   * @return {[object]}                 The target after setting value.
-   *
-   * Example: obj = {'a':'a'}, keys = ['b','bb'], value = 'b-value'
-   * return {
-   *         'a': 'a',
-   *         'b': {
-   *           'bb': 'b-value'
-   *          }
-   *        }
-   */
-  var deepSet = function(obj, keys, value) {
 
-    var curKey = keys[0];
-    if(keys.length === 1) {
-
-      curKey === '' ? obj.push(value) : obj[curKey] = value;
-
-      return;
-    }
-    if (keys.length > 1) {
-      if (typeof obj[curKey] === 'undefined')
-        obj[curKey] = keys[1] === '' ? [] : {};
-    }
-
-    var o = obj[curKey];
-    keys.shift();
-    return deepSet(o, keys, value);
-  }
 
   /**
    * Example:
