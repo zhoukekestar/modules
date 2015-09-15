@@ -3,7 +3,7 @@
   if (typeof define === "function" && define.amd) {
     define(factory);
   } else {
-    window.paging = factory();
+    factory();
   }
 }(function() {
 
@@ -14,7 +14,7 @@
       total: 1,
       pagesize: 10,
       current: 1,
-      showitem: 5, // if 6, it will show 7 items.
+      showitem: 5, // if showitem is 6, it will show 7 items.
       debug: false,
       onselect: function() {}
     };
@@ -98,5 +98,34 @@
     }
   }
 
-  return paging;
+
+  var init = function() {
+
+    var namespace = '_';
+    var ele = document.querySelector('[data-role="paging"]');
+    if (ele[namespace + 'inited'] === undefined ) {
+
+      ele[namespace + 'inited'] = true;
+
+      var elep = paging(ele, {
+        current : +ele.getAttribute('data-current'),
+        onselect: function(n){
+
+          (typeof ele['onselect'] === 'function') && ele['onselect'](n);
+
+        },
+        total   : +ele.getAttribute('data-total'),
+        pagesize: +ele.getAttribute('data-pagesize')
+      })
+
+      ele[namespace + 'select'] = elep.select;
+      ele[namespace + 'reBuild'] = elep.reBuild;
+    }
+
+  };
+
+  window.addEventListener('load', init);
+  window.addEventListener('reload', init);
+
+  return null;
 }));
