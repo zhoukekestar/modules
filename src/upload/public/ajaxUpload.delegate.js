@@ -114,7 +114,7 @@
                 response = xmlHttp.response;
               }
 
-              (typeof thisButton.onsuccess === 'function') && (thisButton.onsuccess(response, xmlHttp));
+              (typeof thisButton.onended === 'function') && (thisButton.onended(response, xmlHttp));
 
             }
           }

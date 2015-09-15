@@ -29,21 +29,10 @@
     btn.onabort = function() {
       console.log('llll~~~~abort')
     }
-    btn.onsuccess = function(d) {
+    btn.onended = function(d) {
       console.log(d);
     }
 
-    window.addEventListener('load', function() {
-      console.log('load')
-    })
-
-    document.body.onload = function() {
-      console.log('onload')
-    }
-
-    document.body.addEventListener('ready', function() {
-      console.log('ready')
-    })
   </script>
 </body>
 </html>
