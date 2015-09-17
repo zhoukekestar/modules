@@ -9,7 +9,7 @@
   <div class="paging" data-role='paging' data-current='' data-total='1205' data-pagesize='10'></div>
 
   <button class="select">Select 3</button>
-  <script src="./paging.delegate.js"></script>
+  <script src="./paging.js"></script>
   <script>
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -21,7 +21,7 @@
     p.setAttribute('data-current', getQueryString('p'));
 
     p.onselect = function(n) {
-      location.href = "./demo.delegate.html?p=" + n;
+      location.href = "./demo.html?p=" + n;
     }
     document.querySelector('.select').onclick = function(){
       p._select(3)
