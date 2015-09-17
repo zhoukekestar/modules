@@ -124,8 +124,13 @@
 
   };
 
-  window.addEventListener('load', init);
-  window.addEventListener('reload', init);
+
+  document.addEventListener('readystatechange', function(e) {
+    if (document.readyState === 'interactive') {
+      init();
+    }
+  })
+  document.addEventListener('reload', init)
 
   return null;
 }));
