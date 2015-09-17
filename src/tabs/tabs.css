@@ -1,53 +1,49 @@
 @CHARSET "UTF-8";
 
 .tabs-list {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
 }
 
 .tabs-list:after {
-	content: "";
-	display: table;
-	clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .tabs-list li {
-	display: block;
-	width: 50%;
-	float: left;
-	text-align: center;
-	border-bottom: solid 1px #EA6644;
-	box-sizing: border-box;
-	position: relative;
-	padding: .5em 0;
-	cursor: pointer;
+      float: left;
+    text-align: center;
+    padding: .5em 0;
+    cursor: pointer;
 }
 
 .tabs-list li.active {
-	color: #EA6644;
-	border-bottom: solid 1px #EA6644;
+  color: #B41800;
 }
-
-.tabs-list li.active:before {
-content: "";
-display: block;
-position: absolute;
-margin-left: -5px;
-left: 50%;
-bottom: -9px;
-border: solid 5px;
-border-color: #fff transparent transparent !important;
-z-index: 3;
+.tabs-nav {
+  position: relative;
 }
-
-.tabs-list li.active:after {
-	content: "";
-	display: block;
-	position: absolute;
-	margin-left: -5px;
-	left: 50%;
-	bottom: -10px;
-	border: solid 5px;
-	border-color: #EA6644 transparent transparent;
+.tabs-nav .line {
+  width: 100%;
+  position: absolute;
+  height: 2px;
+  bottom: 3px;
+}
+.tabs-nav .line span {
+  width: 4em;
+  height: 100%;
+  position: absolute;
+  left: 39px;
+  transition: all .5s;
+}
+.tabs-nav .line span:after {
+  content: '';
+  width: 6em;
+  display: block;
+  background-color: #B41800;
+  height: 100%;
+  margin: auto;
 }
