@@ -233,7 +233,9 @@
           .one(options.animationend, function(){
             $(this).removeClass(options.animationClass + ' ' + inAnimation);
             options.afterLoadPage();
+
           });
+        document.dispatchEvent(new Event('reload'));
 
         // Save current animation & push state into history.
         if (pushState) {
