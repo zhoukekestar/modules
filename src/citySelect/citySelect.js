@@ -7,7 +7,7 @@
 }( function() {
 
   var cityData;
-  var init = function( o ){
+  var initCitySelect = function( o ){
 
     var options = {
       eles: null,
@@ -89,7 +89,7 @@
       ele.style.display = 'none';
     })
 
-    // Init the first level.
+    // initCitySelect the first level.
     nextSelect(options.eles, options.data, 0);
   };
 
@@ -103,7 +103,7 @@
     // If had cityData.
     if (cityData) {
 
-      init({
+      initCitySelect({
         eles: eles,
         data: cityData
       })
@@ -120,7 +120,7 @@
         if (xhr.readyState === 4) {
           var json = JSON.parse(xhr.responseText);
           cityData = json;
-          init({
+          initCitySelect({
             eles: eles,
             data: json
           });
@@ -160,8 +160,7 @@
 
   };
 
-  window.addEventListener('load', function() {
-
+  var init = function() {
     var role = document.querySelector('[data-role="citySelect"]');
     var namespace = '_';
     if (role && !role[namespace + 'inited']) {
@@ -174,8 +173,14 @@
         role[namespace + 'selected'](selected);
       }
     }
+  }
 
+  document.addEventListener('readystatechange', function(e) {
+    if (document.readyState === 'interactive') {
+      init();
+    }
   })
+  document.addEventListener('reload', init)
 
   return null;
 
