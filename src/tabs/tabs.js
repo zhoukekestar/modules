@@ -1,39 +1,84 @@
 !( function( factory ) {
-    if ( typeof define === "function" && define.amd ) {
-        define([ "jquery" ], factory );
-    } else {
-        var init = factory( jQuery );
-        init();
+  if ( typeof define === "function" && define.amd ) {
+    define( factory );
+  } else {
+    factory( );
+  }
+}(function(){
+
+  var slice = [].slice;
+  var init = function() {
+
+    slice.apply(document.querySelectorAll('[data-role="tabs"]')).forEach(function(tabs) {
+
+      // Set tab's width
+      var width = 100 / tabs.querySelectorAll('.tabs-list > li').length;
+      slice.apply(tabs.querySelectorAll('.tabs-list > li')).forEach(function(tab, index) {
+        tab.style.width = width + '%';
+        tab.setAttribute('data-index', index);
+      })
+
+      // Show active tab
+      // Show active content & hide other content
+      //
+      var active_tab = tabs.querySelector('.tabs-list > li.active') || tabs.querySelector('.tabs-list > li');
+
+      var active_content = active_tab.getAttribute('data-href');
+      active_content = tabs.querySelector('.tabs-content > ' + active_content);
+
+      slice.apply(tabs.querySelectorAll('.tabs-content > div')).forEach(function(content) {
+        content.style.display = 'none';
+      })
+      active_tab.classList.add('active');
+      active_content.style.display = 'block';
+
+      // Set line
+      var line = tabs.querySelector('.line span');
+      if (line) {
+        line.style.width = width + '%';
+        line.style.left = (+active_tab.getAttribute('data-index')) * width + '%';
+      }
+
+
+      // Bind tab's click event.
+      tabs.addEventListener('click', function(e){
+
+        var target = e.target;
+        var temp_tab = target.getAttribute('data-href');
+        var temp_content;
+
+        if (temp_tab && (tabs.onselected ? tabs.onselected(e) !== false : true)) {
+
+          // Hide
+          active_tab.classList.remove('active');
+          active_content.style.display = 'none';
+
+
+          // Show
+          temp_content = tabs.querySelector('.tabs-content > ' + temp_tab);
+          temp_tab = e.target;
+
+          temp_tab.classList.add('active');
+          temp_content.style.display = 'block';
+
+          if (line)
+            line.style.left = (+temp_tab.getAttribute('data-index')) * width + '%';
+
+
+          // Update acitve tab & content
+          active_tab = temp_tab;
+          active_content = temp_content;
+        }
+      })
+    })
+  };
+
+  document.addEventListener('readystatechange', function(e) {
+    if (document.readyState === 'interactive') {
+      init();
     }
-}(function($){
+  })
+  document.addEventListener('reload', init)
+  return null;
 
-    var init = function() {
-        $("[data-role='tabs']").each(function () {
-            var witdh = 100 / $(this).find('.tabs-list > li').length;
-          $(this).find('.tabs-list > li').css('width', witdh + '%');
-
-            var $this = $(this);
-            var active_tab = $this.find(".tabs-list > li.active").data("href");
-
-            // No active tab find. First child element set to active.
-            if (active_tab === undefined)
-                active_tab = $(this).find(".tabs-list > li").eq(0).data("href");
-
-            $this
-                .find(".tabs-content > div").hide().end()
-                .find(active_tab).show();
-
-            $this.find(".tabs-list > li").click(function () {
-
-                var active_tab = $(this).data("href");
-                $this
-                    .find(".tabs-list > li").removeClass("active").end()
-                    .find(".tabs-content > div").hide().end()
-                    .find(active_tab).show();
-                $(this).addClass("active");
-            });
-
-        });
-    };
-    return init;
 }));
