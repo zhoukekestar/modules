@@ -1,0 +1,32 @@
+.imageView {
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.56);
+  transition: all .5s;
+  opacity: 0;
+  z-index: -1;
+}
+.imageView span {
+  width: 38px;
+  font-size: 3em;
+  color: #fff;
+  position: absolute;
+  right: .5em;
+  padding-left: .2em;
+  cursor: pointer;
+  border-radius: 50%;
+  font-weight: normal;
+  -webkit-user-select: none;
+}
+.imageView .img {
+  height: 100%;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
