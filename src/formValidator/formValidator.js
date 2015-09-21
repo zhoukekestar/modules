@@ -32,7 +32,7 @@
     },
     // Form validation: required.
     required: function(ele, msg) {
-      if ( ele.getAttribute("required") && !ele.value )
+      if ( ele.getAttribute("required") !== null && !ele.value )
         return msg.required;
       return "";
     },
@@ -125,9 +125,9 @@
     return returnMsg;
 
   }
-  var inputHandler = function(target) {
+  var namespace = '_';
+  var inputHandler = function(target, fromType) {
 
-    var namespace = '_';
     var msg = validIt.call(target) || (target[namespace + 'checkValidity'] && target[namespace + 'checkValidity'].call(target));
 
     if (msg) {
@@ -137,13 +137,22 @@
       var e = new Event('invalid', {
         bubbles: true
       });
-      e.invalidationMessage = msg;
+      e[namespace + 'invalidationMessage'] = msg;
+      e[namespace + 'fromType'] = fromType;
       target.dispatchEvent(e);
 
     } else {
 
       target[namespace + 'invalid'] = false;
       target[namespace + 'invalidationMessage'] = '';
+
+      var e = new Event('valid', {
+        bubbles: true
+      });
+      e[namespace + 'invalidationMessage'] = '';
+      e[namespace + 'fromType'] = fromType;
+      target.dispatchEvent(e);
+
     }
 
     msg = msg || '';
@@ -157,21 +166,26 @@
   //   inputHandler(e.target);
   // })
 
-  // document.body.addEventListener('input', function(e) {
-
-  //     inputHandler(e.target);
-
-  // });
+  document.body.addEventListener('input', function(e) {
+    if (e.target[namespace + 'invalid'] !== undefined)
+      inputHandler(e.target, 'input');
+  });
 
   document.body.addEventListener('submit', function(e) {
     var inputs = [].slice.apply(e.target.querySelectorAll('input, textarea'));
     var isValid = true;
 
     for (var i = 0, max = inputs.length; i < max; i++) {
-      inputHandler(inputs[i]) === '' || (isValid = false);
 
-      if (!isValid)
-        break;
+      var type = inputs[i].getAttribute('type');
+
+      if (type === 'submit' || type === 'hidden')
+        continue;
+
+      inputHandler(inputs[i], 'submit') === '' || (isValid = false);
+
+      // if (!isValid)
+      //   break;
     }
 
     if (!isValid) {
