@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title></title>
+</head>
+<body>
+  <form>
+    <input type=''>
+    <input type='text'>
+    <input type='email'>
+    <input type='cellphone'>
+    <input type='integer'>
+    <input type='url'>
+
+    <input required>
+    <input pattern='/name/'>
+    <input minlength='4'>
+    <input maxlength='5'>
+    <input type='submit'>
+  </form>
+  <script src='./formValidator.js'></script>
+  <script>
+  document.querySelector('form').oninvalid = function(e) {
+    console.log(e.invalidationMessage)
+  }
+  </script>
+</body>
+</html>
