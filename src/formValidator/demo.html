@@ -3,8 +3,10 @@
 <head>
   <meta charset='utf-8'>
   <title></title>
+  <link rel="stylesheet" type="text/css" href="./formValidator.css">
 </head>
 <body>
+  <p>form example:</p>
   <form novalidate>
     <input type='email'>
     <input type='cellphone'>
@@ -15,13 +17,29 @@
     <input pattern='/name/'>
     <input minlength='4'>
     <input maxlength='5'>
+    <input class="customValid">
+
+    <input type='submit'>
+  </form>
+  <p>REC form style:</p>
+  <form novalidate>
+    <div class="form-group">
+      <label>name</label>
+      <div class="input-group">
+        <input required>
+      </div>
+    </div>
     <input type='submit'>
   </form>
   <script src='./formValidator.js'></script>
   <script src='./formOnInvalid.js'></script>
   <script>
-  document.querySelector('form').oninvalid = function(e) {
-    console.log(e._invalidationMessage)
+  document.querySelector('.customValid')._checkValidity = function() {
+
+    if (this.value === 'custom')
+      return '';
+    else
+      return 'Please input custom'
   }
   </script>
 </body>
