@@ -100,7 +100,7 @@
             if (xmlHttp.readyState === 4) {
 
               loading = false;
-              self.innerHTML = '上传图片'
+              self.innerHTML = self._innerHTML;
 
               hideProgress();
 
@@ -149,6 +149,8 @@
     inputEle.onchange = function() {
 
       loading = true;
+
+      self._innerHTML = self.innerHTML;
       self.innerHTML = '取消上传'
 
       uploadFormData.call(this.parentNode, url);
