@@ -1,12 +1,27 @@
 (function(){
-  document.addEventListener('invalid', function(e) {
-    e.target.style.border = 'solid #f00';
 
-    if (e._fromType !== 'input')
-      alert(e._invalidationMessage);
+  var showOneMessageInOneMinute = true;
+  document.addEventListener('invalid', function(e) {
+
+    e.target.classList.add('formValidator-invalid');
+    e.target.classList.remove('formValidator-valid');
+
+    if (e._type !== 'input') {
+
+      if (showOneMessageInOneMinute) {
+        showOneMessageInOneMinute = false;
+        alert(e._invalidationMessage);
+
+      }
+      setTimeout(function(){
+        showOneMessageInOneMinute = true;
+      }, 100)
+
+    }
   })
 
   document.addEventListener('valid', function(e) {
-    e.target.style.border = 'solid #0f0';
+    e.target.classList.add('formValidator-valid');
+    e.target.classList.remove('formValidator-invalid');
   })
 }());

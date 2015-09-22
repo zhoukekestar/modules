@@ -89,7 +89,6 @@
     }
   }
 
-
   var validIt = function() {
     var validMsg = JSON.parse(this.getAttribute('data-validMsg')),
         key,
@@ -125,8 +124,15 @@
     return returnMsg;
 
   }
+
   var namespace = '_';
-  var inputHandler = function(target, fromType) {
+  var inputHandler = function(target, type) {
+
+    // Disabled special type input.
+    var inputType = target.getAttribute('type');
+    if (inputType === 'submit' || inputType === 'hidden')
+      return;
+
 
     var msg = validIt.call(target) || (target[namespace + 'checkValidity'] && target[namespace + 'checkValidity'].call(target));
 
@@ -138,7 +144,7 @@
         bubbles: true
       });
       e[namespace + 'invalidationMessage'] = msg;
-      e[namespace + 'fromType'] = fromType;
+      e[namespace + 'type'] = type;
       target.dispatchEvent(e);
 
     } else {
@@ -150,7 +156,7 @@
         bubbles: true
       });
       e[namespace + 'invalidationMessage'] = '';
-      e[namespace + 'fromType'] = fromType;
+      e[namespace + 'type'] = type;
       target.dispatchEvent(e);
 
     }
@@ -161,37 +167,45 @@
 
   /**
    * Event bind
+   *
    */
-  // document.body.addEventListener('blur', function(e) {
-  //   inputHandler(e.target);
-  // })
+  document.body.addEventListener('focusout', function(e) {
+    inputHandler(e.target, e.type)
+  })
 
   document.body.addEventListener('input', function(e) {
     if (e.target[namespace + 'invalid'] !== undefined)
-      inputHandler(e.target, 'input');
+      inputHandler(e.target, e.type);
   });
 
+  /**
+  * Stop propagation 'submit' event if necessary before bubbling to `document` node.
+  */
   document.body.addEventListener('submit', function(e) {
+
     var inputs = [].slice.apply(e.target.querySelectorAll('input, textarea'));
     var isValid = true;
 
     for (var i = 0, max = inputs.length; i < max; i++) {
 
       var type = inputs[i].getAttribute('type');
-
       if (type === 'submit' || type === 'hidden')
         continue;
 
-      inputHandler(inputs[i], 'submit') === '' || (isValid = false);
+      inputHandler(inputs[i], e.type) === '' || (isValid = false);
 
       // if (!isValid)
       //   break;
     }
 
+    /*
+    * Stop everything if invalid input is existed.
+    */
     if (!isValid) {
       e.preventDefault();
       e.stopPropagation();
     }
+
   });
 
 }());
