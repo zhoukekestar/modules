@@ -170,11 +170,12 @@
    *
    */
   document.body.addEventListener('focusout', function(e) {
-    inputHandler(e.target, e.type)
+    if (e.target.getAttribute('data-role') === 'formValidator')
+      inputHandler(e.target, e.type)
   })
 
   document.body.addEventListener('input', function(e) {
-    if (e.target[namespace + 'invalid'] !== undefined)
+    if (e.target.getAttribute('data-role') === 'formValidator' && e.target[namespace + 'invalid'] !== undefined)
       inputHandler(e.target, e.type);
   });
 
@@ -183,7 +184,7 @@
   */
   document.body.addEventListener('submit', function(e) {
 
-    var inputs = [].slice.apply(e.target.querySelectorAll('input, textarea'));
+    var inputs = [].slice.apply(e.target.querySelectorAll('[data-role="formValidator"]'));
     var isValid = true;
 
     for (var i = 0, max = inputs.length; i < max; i++) {

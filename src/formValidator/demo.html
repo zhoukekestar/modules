@@ -8,16 +8,16 @@
 <body>
   <p>form example:</p>
   <form novalidate>
-    <input type='email'>
-    <input type='cellphone'>
-    <input type='integer'>
-    <input type='url'>
+    <input type='email' data-role='formValidator'>
+    <input type='cellphone' data-role='formValidator'>
+    <input type='integer' data-role='formValidator'>
+    <input type='url' data-role='formValidator'>
 
-    <input required>
-    <input pattern='/name/'>
-    <input minlength='4'>
-    <input maxlength='5'>
-    <input class="customValid">
+    <input required data-role='formValidator'>
+    <input pattern='/name/' data-role='formValidator'>
+    <input minlength='4' data-role='formValidator'>
+    <input maxlength='5' data-role='formValidator'>
+    <input class="customValid" data-role='formValidator'>
 
     <input type='submit'>
   </form>
@@ -26,7 +26,7 @@
     <div class="form-group">
       <label>name</label>
       <div class="input-group">
-        <input required>
+        <input required data-role='formValidator' data-validMsg='{"required":"no! it\"s required"}'>
       </div>
     </div>
     <input type='submit'>
