@@ -5,27 +5,24 @@
 <title></title>
 </head>
 <body>
-	<button id="btn3">显示提示</button>
+	<button id="btn3" onclick="toast('提示，将会自动消失')">显示提示</button>
 	<button id="btn4">显示提示（指定宽度）</button>
   <button id="btn5">消失后执行</button>
   <button id="btn6">消失后执行2</button>
 
 
 	<script src="../_lib/jquery.min.js"></script>
-  <script src="./alertMsg.js"></script>
+  <script src="./toast.js"></script>
 	<script>
 
-		$("#btn3").click(function(){
-			alertMsg("提示，将会自动消失");
-		});
 		$("#btn4").click(function(){
-			alertMsg({
+			toast({
 				content:"提示，将会自动消失~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
 				width:250
 			});
 		});
     $("#btn5").click(function(){
-      alertMsg({
+      toast({
         content:"消失后执行1",
         done: function(){
           alert('执行')
@@ -33,7 +30,7 @@
       });
     });
     $("#btn6").click(function(){
-      alertMsg("消失后执行2").then(function(){
+      toast("消失后执行2").then(function(){
         alert('执行2')
       });
     });

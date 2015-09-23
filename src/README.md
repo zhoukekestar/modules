@@ -10,10 +10,6 @@ Base libraries for modules like: jQuery.
 ### alert
 ![alert](./alert/demo.gif)
 
-### alertMsg
-Alert message.<br>
-![alertMsg](./alertMsg/demo.gif)
-
 ### citySelect
 Select city for China.<br>
 ![citySelect](./citySelect/demo.gif)
@@ -43,6 +39,9 @@ Select city for China.<br>
 ### pull-v2
 * Pull to refresh `version 2`. <br> ![pull-v2](./pull-v2/demo.gif)
 
+### toast
+Alert message.<br>
+![toast](./toast/demo.gif)
 
 ### editor -> ueditor for nodejs
 

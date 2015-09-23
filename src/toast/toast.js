@@ -2,7 +2,7 @@
 	if ( typeof define === "function" && define.amd ) {
 		define(factory );
 	} else {
-		window.alertMsg = factory();
+		window.toast = factory();
 	}
 }( function() {
 
