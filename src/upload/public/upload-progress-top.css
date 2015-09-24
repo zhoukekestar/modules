@@ -9,7 +9,7 @@
   font-size: 10px;
   line-height: 10px;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.12);
-  z-index: 999;
+  z-index: 10000;
 }
 .upload-progress-top span {
   transition: all 1s;
