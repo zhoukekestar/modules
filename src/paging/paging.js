@@ -103,7 +103,7 @@
 
     var namespace = '_';
     var ele = document.querySelector('[data-role="paging"]');
-    if (ele[namespace + 'inited'] === undefined ) {
+    if (ele && ele[namespace + 'inited'] === undefined ) {
 
       ele[namespace + 'inited'] = true;
 
