@@ -16,11 +16,16 @@
 <script type="text/javascript">
 
   window.addEventListener('load', function() {
+
     var tmpl = document.querySelector('#tmpl')
+
+    /* 更新指定元素 */
     tmpl._updateBy(["a", "b", "c"]);
 
+    /* 更新指定元素，在原有基础上进行添加*/
     tmpl._appendBy(['dd', 'ee']);
 
+    /* 直接输出html，不进行元素修改操作 */
     console.log(tmpl._htmlBy(['a', 'b']))
   });
 
