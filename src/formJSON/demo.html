@@ -20,6 +20,9 @@
 <body>
 
 <p>表单的method字段，可设置为POST，GET，PUT，DELETE，其中POST为默认方法，当设置为GET请求时，对象将以键值对的形式添加到请求URL的后端</p>
+<p>:type 设置相应type</p>
+<p>以.结束代表一个数组</p>
+<p>中间使用数字，将解析为数组对象</p>
 <form class="form1" action="./demo" method="PUT" data-role='formJSON'>
 
   <input name="str" value="str-abc"/>
@@ -60,7 +63,7 @@
 <p>表单提交结果：</p>
 <p id="result">...</p>
 
-<p>设置data-onerror，将onerror事件交给其他元素的onerror函数处理</p>
+<p>设置data-target属性，将处理函数移交给指定元素</p>
 <form class="form2" data-target='.form1' data-role='formJSON' action='/c'>
   <input name='name' value='value'>
   <button>submit it</button>
@@ -69,14 +72,19 @@
 <script type="text/javascript" src='./formJSON.js'></script>
 <script type="text/javascript">
 
-
   var form = document.querySelector('.form1');
+
+  /* 当form提交失败的处理函数 */
   form.onerror = function(xml) {
     console.log('error')
   }
+
+  /* 当form提交结束的处理函数 */
   form.onended = function(d, xml) {
 
   }
+
+  /* 使用_data 过滤自动化生成的数据，并返回*/
   form._data = function(d) {
     d['add_by_data'] = 'add by data function';
 
