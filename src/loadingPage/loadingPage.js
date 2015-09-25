@@ -6,55 +6,41 @@
   }
 }(function(){
 
-  var init = function(){
+  var loading = function(){
     var ele = document.createElement("div");
   	ele.setAttribute("class", "loadingPage");
-  	document.getElementsByTagName("body")[0].appendChild(ele);
+    try {
+  	 document.querySelector("body").appendChild(ele);
+    } catch (e) {
+      alert('Please place #loadingPage# after body.')
+    }
   }
 
-  init();
+  loading();
+
 
   document.addEventListener('loadingPageLoaded', function(e){
-    var ele = document.getElementsByClassName('loadingPage');
-    if (typeof ele !== undefined && ele[0] !== undefined) {
+    var ele = document.querySelector('.loadingPage');
+    if (ele) {
       try{
-        ele[0].remove();
+        ele.remove();
       } catch (e) {
-        ele[0].parentNode.removeChild(ele[0])
+        ele.parentNode.removeChild(ele)
       }
     }
   });
 
   document.addEventListener('loadingPageLoading', function(){
-    init();
+    loading();
   });
 
   window.loadingPage = {
     loading: function() {
-      var eve;
-      try {
-        eve = new Event('loadingPageLoading');
-      } catch (e) {
-        eve = document.createEvent("HTMLEvents");
-        eve.initEvent("loadingPageLoading", false, false);
-      }
-      document.dispatchEvent(eve);
+      document.dispatchEvent(new Event('loadingPageLoading'));
     },
     loaded: function() {
-      var eve;
-      try {
-        eve = new Event('loadingPageLoaded');
-      } catch (e) {
-        eve = document.createEvent("HTMLEvents");
-        eve.initEvent("loadingPageLoaded", false, false);
-      }
-      document.dispatchEvent(eve);
+      document.dispatchEvent(new Event('loadingPageLoaded'));
     }
   };
 
-  return loadingPage;
-  /**
-   * document.dispatchEvent(new Event('loadingPageLoaded'));
-   * document.dispatchEvent(new Event('loadingPageLoading'));
-   */
 }));

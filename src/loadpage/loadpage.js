@@ -1,117 +1,52 @@
-!(function( factory ) {
+!( function( factory ) {
   if ( typeof define === "function" && define.amd ) {
-    define(["jquery", "loadingPage", "alertMsg" ], factory );
+    define( factory );
   } else {
-    factory( jQuery );
+    factory( );
   }
-}(function($, loadingPage){
+}(function(){
 
-  if($.fn.loadpage) { return; }
+  // Dependencies
+  var toast = window.toast || window.alert,
 
-  $.fn.loadpage = {};
-  $.fn.loadpage.options = {
-    debug           : false,
-    pageSelector    : '[data-role="page"]',
-    linkSelector    : 'a[data-rel="page"]',
-    backSelector    : 'a[data-rel="back"]',
-    activeClass     : 'active',
-    pageClass       : 'page',
+      loadingPageLoading = function() {
+        document.dispatchEvent(new Event('loadingPageLoading'));
+      },
 
-    // Cache pages' number.
-    cachePages      : 5,
+      loadingPageLoaded = function() {
+        document.dispatchEvent(new Event('loadingPageLoaded'));
+      },
 
-    animationClass  : 'animated',
-    animationstart  : "animationstart webkitAnimationStart oanimationstart MSAnimationStart",
-    animationend    : "animationend webkitAnimationEnd oanimationend MSAnimationEnd",
-    inAnimation     : 'slideInRight',
-    outAnimation    : 'slideOutLeft',
+      defaultOptions = {
+        debug           : false,
+        pageSelector    : '[data-role="page"]',
+        activeClass     : 'active',
+        pageClass       : 'page',
 
-    // Before/After load page, it will excute.
-    beforeLoadPage  : function(){return true},
-    afterLoadPage   : function(){return true}
-  };
+        // Cache pages' number.
+        cachePages      : 5,
+
+        animationClass  : 'animated',
+        inAnimation     : 'slideInRight',
+        outAnimation    : 'slideOutLeft',
+
+        // Before/After load page, it will excute.
+        beforeLoadPage  : function(){return true},
+        afterLoadPage   : function(){return true}
+      };
 
 
-  var options               = $.fn.loadpage.options,
-      sessionStorage        = window.sessionStorage ? window.sessionStorage : {};
-
-
-  if(!history || !history.pushState) {
-
-    if (options.debug) {
-      alert('History.pushState is not supported on your browser. 您的游览器不支持history技术.')
-    }
-    $.fn.loadpage = function() { return this; };
-    $.fn.loadpage.options = {};
-    return;
-
-  } else {
-
-    // Cache loaded page when loaded.
-    sessionStorage['cache_' + location.href] = JSON.stringify({
-      doc: $('html').html(),
-      time: new Date().getTime()
-    })
-    history.replaceState('', '', location.href);
-  }
+  var options           = defaultOptions,
+      sessionStorage    = window.sessionStorage ? window.sessionStorage : {};
 
 
   /**
    * htmlDoc Covert html to document
    * load    Load page by given url.
-   * showPage Show html in current document, by givent animation.
+   * showPage Show html in current document, by given animation.
    *
    */
   var utils   = {
-
-    /**
-     * Prevents jQuery from stripping elements from $(html)
-     * @param   {string}    url - url being evaluated
-     * @author  Ben Alman   http://benalman.com/
-     * @see     https://gist.github.com/cowboy/742952
-     *
-     */
-    htmlDoc: function (html) {
-      var parent,
-          elems       = $(),
-          matchTag    = /<(\/?)(html|head|body|title|base|meta)(\s+[^>]*)?>/ig,
-          prefix      = "ss" + Math.round(Math.random() * 100000),
-          htmlParsed  = html.replace(matchTag, function(tag, slash, name, attrs) {
-              var obj = {};
-              if (!slash) {
-                  $.merge(elems, $("<" + name + "/>"));
-                  if (attrs) {
-                      $.each($("<div" + attrs + "/>")[0].attributes, function(i, attr) {
-                          obj[attr.name] = attr.value;
-                      });
-                  }
-                  elems.eq(-1).attr(obj);
-              }
-              return "<" + slash + "div" + (slash ? "" : " id='" + prefix + (elems.length - 1) + "'") + ">";
-          });
-
-      // If no placeholder elements were necessary, just return normal
-      // jQuery-parsed HTML.
-      if (!elems.length) {
-          return $(html);
-      }
-      // Create parent node if it hasn't been created yet.
-      if (!parent) {
-          parent = $("<div/>");
-      }
-      // Create the parent node and append the parsed, place-held HTML.
-      parent.html(htmlParsed);
-
-      // Replace each placeholder element with its intended element.
-      $.each(elems, function(i) {
-          var elem = parent.find("#" + prefix + i).before(elems[i]);
-          elems.eq(i).html(elem.contents());
-          elem.remove();
-      });
-
-      return parent.children().unwrap();
-    },
-
 
     /**
      * Convert a relative url to absolute url by `<a>` element (_linkEle).
@@ -143,42 +78,47 @@
       var loaded = false;
       setTimeout(function(){
         if (loaded === false)
-          loadingPage.loading();
+          loadingPageLoading();
       }, 1000);
 
-      // Load page.
-      $.ajax({
-        url: url,
-        success: function(d) {
+      /**
+       * AJAX request
+       */
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open('GET', url, true);
+
+      xmlHttp.timeout = 20000;
+      xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4) {
 
           // Loaded
           loaded = true;
-          loadingPage.loaded();
+          loadingPageLoaded();
 
-          var data = {
-            doc: d,
-            time: new Date().getTime()
+          /* success */
+          if (xmlHttp.status >= 200 && xmlHttp.status < 300) {
+
+            var data = {
+              doc: xmlHttp.responseText,
+              time: new Date().getTime()
+            }
+            // Cache it.
+            sessionStorage['cache_' + url] = JSON.stringify(data)
+
+            callback(data)
+
+          /* error */
+          } else {
+
+            // Oh, yes!! You can test it by visiting google on China just like this:
+            // <a href="http://www.google.com" data-rel="page">demo2-error-google</a>
+            // You can see it after 20 seconds. ~~~poor man.
+            toast('加载失败');
+            callback(null);
           }
-          // Cache it.
-          sessionStorage['cache_' + url] = JSON.stringify(data)
-
-
-          callback(data)
-        },
-        timeout: 20000,
-        error: function(){
-
-          // Loaded
-          loaded = true;
-          loadingPage.loaded();
-
-          // Oh, yes!! You can test it by visiting google on China just like this:
-          // <a href="http://www.google.com" data-rel="page">demo2-error-google</a>
-          // You can see it after 20 seconds. ~~~poor man.
-          $.alertMsg('加载失败');
-          callback(null);
         }
-      });
+      }
+      xmlHttp.send();
 
     },
     /**
@@ -192,8 +132,8 @@
 
       if (options.beforeLoadPage() === false) return;
 
-      outAnimation  = !outAnimation ? options.outAnimation : outAnimation;
-      inAnimation   = !inAnimation  ? options.inAnimation  : inAnimation;
+      outAnimation  = outAnimation || options.outAnimation;
+      inAnimation   = inAnimation  || options.inAnimation;
 
 
       utils.loadByURL(url, function(data) {
@@ -202,39 +142,37 @@
         }
 
         // Remove current pages & append to body. Bind hide animation.
-        $(options.pageSelector)
-          .addClass(options.animationClass + ' ' + outAnimation)
-          .one(options.animationend, function(){
-
-            // Remove old pages.
-            $(this).remove();
-
-          });
-
-
-        var $html = $(utils.htmlDoc(data.doc));
-        var page;
-
-        // Fix bug if html's root element is #data-role='page'#
-        if ($html.data('role') === 'page') {
-          page = $html;
-        } else {
-          page = $(options.pageSelector, $html).first();
-        }
+        var oldPage = document.querySelector(options.pageSelector);
+        oldPage.classList.add(options.animationClass);
+        oldPage.classList.add(outAnimation);
+        oldPage.addEventListener('animationend', function(){
+          // Remove old pages.
+          this.remove();
+        })
 
 
-        $('body').append(page);
+        var html = document.createElement('div');
+        html.innerHTML = data.doc;
 
-        // Show it
-        page
-          .hide()
-          .addClass(options.activeClass + ' ' + options.pageClass + ' ' + options.animationClass + ' ' + inAnimation)
-          .show()
-          .one(options.animationend, function(){
-            $(this).removeClass(options.animationClass + ' ' + inAnimation);
-            options.afterLoadPage();
+        var newPage =  html.querySelector(options.pageSelector);
 
-          });
+        newPage.classList.add(options.activeClass)
+        newPage.classList.add(options.pageClass)
+        newPage.classList.add(options.animationClass)
+        newPage.classList.add(inAnimation)
+
+
+        newPage.addEventListener('animationend', function(e){
+
+          e.stopPropagation();
+          this.classList.remove(options.animationClass);
+          this.classList.remove(inAnimation)
+          options.afterLoadPage();
+
+        });
+        document.querySelector('html > body').appendChild(newPage);
+
+        /* Reload module after get 'reload' event */
         document.dispatchEvent(new Event('reload'));
 
         // Save current animation & push state into history.
@@ -258,7 +196,7 @@
      */
     _reverseKey: [
       ['In', 'Out'],
-      //['Right', 'Left'],
+      // ['Right', 'Left'],
       //['X', 'Y'],
       ['Down', 'Up']
     ],
@@ -284,36 +222,65 @@
   };
 
   // Init function
-  (function() {
+  var init = function() {
+
+    // History && cache
+    if(!history || !history.pushState) {
+
+      if (options.debug) {
+        alert('History.pushState is not supported on your browser. 您的游览器不支持history技术.')
+      }
+      defaultOptions = {};
+      return;
+
+    } else {
+
+      // Cache loaded page when loaded.
+      sessionStorage['cache_' + location.href] = JSON.stringify({
+        doc: document.querySelector('html').outerHTML,
+        time: new Date().getTime()
+      })
+      history.replaceState('', '', location.href);
+    }
+
+    // loaded
+    loadingPageLoaded();
+
 
     // Page element init.
     // Add page-class & active class.
-    $(options.pageSelector).addClass(options.pageClass).addClass(options.activeClass)
+    var page = document.querySelector(options.pageSelector);
+    page && page.classList.add(options.pageClass);
+    page && page.classList.add(options.activeClass);
 
 
-    // Dynamic bind a element's link click.
-    // Example: <a href='example.com' date-rel='page'>link to page</a>
-    //
-    $('body').delegate(options.linkSelector, 'click', function(e) {
+    // BIND
+    document.addEventListener('click', function(e) {
 
-      e.preventDefault();
+      var target = e.target;
 
-      var url           = $(this).attr('href');
-      var inAnimation   = $(this).data('transition-in');
-      var outAnimation  = $(this).data('transition-out');
+      // Dynamic bind a element's link click.
+      // Example: <a href='example.com' date-rel='page'>link to page</a>
+      if (target.nodeName === 'A' && target.getAttribute('data-rel') === 'page') {
 
-      utils.showPage(url, outAnimation, inAnimation, true);
+        e.preventDefault();
 
-    });
+        var url           = target.getAttribute('href');
+        var inAnimation   = target.getAttribute('data-transition-in');
+        var outAnimation  = target.getAttribute('data-transition-out');
 
-    // Bind back button's click.
-    // Just back.
-    $('body').delegate(options.backSelector, 'click', function(e) {
-      e.preventDefault()
-      history.back();
-    });
+        utils.showPage(url, outAnimation, inAnimation, true);
 
+      }
 
+      // Bind back button's click.
+      // Just back.
+      // Example: <a data-rel="back"></a>
+      if (target.nodeName === 'A' && target.getAttribute('data-rel') === 'back') {
+        e.preventDefault()
+        history.back();
+      }
+    })
 
     // Popup a history.
     window.onpopstate = function(e) {
@@ -331,7 +298,24 @@
       utils.showPage(location.href, animate.inAnimation, animate.outAnimation, false);
     }
 
-  })();
+  };
 
-  return $.fn.loadpage.options;
+  document.addEventListener('readystatechange', function(e) {
+    if (document.readyState === 'interactive') {
+      init();
+    }
+  })
+
+
+  /* Fix */
+  // document.addEventListener('webkitAnimationEnd', function(e) {
+
+  //   if (!e._fix) {
+  //     var eve = new Event('animationend', {bubbles: true});
+  //     eve._fix = true;
+
+  //     e.target.dispatchEvent(eve);
+  //   }
+  // })
+
 }));
