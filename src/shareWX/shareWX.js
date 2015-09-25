@@ -10,7 +10,7 @@
 
     /**
      *
-     * Sign url api ( You can use [nodejs/lib/wechat.js] to response the request. ) :
+     * Sign url api ( You can use [wechat.js](https://github.com/zhoukekestar/modules-nodejs/blob/master/lib/wechat.js) to response the request. ) :
      *
      * Example:
      * Request: /wechat/sdk/sign?url=http%3A%2F%2F223.95.81.53%3A23002%2Fshop%2Fevent%2F1
