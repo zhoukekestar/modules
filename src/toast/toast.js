@@ -1,9 +1,9 @@
 !( function( factory ) {
-	if ( typeof define === "function" && define.amd ) {
-		define(factory );
-	} else {
-		window.toast = factory();
-	}
+  if ( typeof define === "function" && define.amd ) {
+    define( factory );
+  } else {
+    factory( );
+  }
 }( function() {
 
   /**
@@ -109,5 +109,6 @@
     };
 	};
 
-	return alertMsg;
+  window.toast = window.toast || alertMsg;
+
 }));
