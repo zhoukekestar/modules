@@ -132,6 +132,41 @@
     });
   }
 
-  return shareWX;
+  var init = function(force) {
+    var namespace = '_';
+    var role = document.querySelector('[data-role=shareWX]');
+
+    if (role && (!role[namespace + 'inited'] || force)) {
+      role[namespace + 'inited'] = true;
+
+      var data = {
+        title: role.getAttribute('data-title'),
+        desc: role.getAttribute('data-desc'),
+        link: role.getAttribute('data-link'),
+        imgUrl: role.getAttribute('data-imgUrl'),
+        debug: !!role.getAttribute('data-debug'),
+        success: role[namespace + 'success'],
+        cancel: role[namespace + 'cancel']
+      }
+
+      shareWX(data)
+
+      role[namespace + 'wx'] = wx;
+    }
+  }
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    init()
+  } else {
+    document.addEventListener('readystatechange', function(e) {
+      if (document.readyState === 'interactive') {
+        init();
+      }
+    })
+  }
+
+  document.addEventListener('reload', function(){
+    init(true);
+  })
 
 }));
