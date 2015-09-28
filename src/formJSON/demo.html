@@ -69,6 +69,7 @@
   <button>submit it</button>
 </form>
 
+<script type="text/javascript" src='../_fixMobile/XMLHttpRequest.js'></script>
 <script type="text/javascript" src='./formJSON.js'></script>
 <script type="text/javascript">
 
@@ -76,12 +77,12 @@
 
   /* 当form提交失败的处理函数 */
   form.onerror = function(xml) {
-    console.log('error')
+    alert('error')
   }
 
   /* 当form提交结束的处理函数 */
   form.onended = function(d, xml) {
-
+    alert('onended')
   }
 
   /* 使用_data 过滤自动化生成的数据，并返回*/

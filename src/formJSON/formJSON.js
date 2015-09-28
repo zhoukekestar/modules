@@ -143,7 +143,6 @@
   // input(type='submit')
   //
   var submitHandler = function(e, options, action) {
-    e.preventDefault();
 
     var self = this;
     var method = self.getAttribute('method') || 'POST';
@@ -189,7 +188,8 @@
         deepSet(res, keys, value);
       });
 
-      res = integerKeysAsArrayIndexes(res);
+      if (options.parseInteger)
+        res = integerKeysAsArrayIndexes(res);
       res = options.data.call(self, res);
       res = JSON.stringify(res);
     }
@@ -226,11 +226,18 @@
     if (session) {
       xmlHttp.setRequestHeader('X-AVOSCloud-Session-Token', session[1])
     }
+
     xmlHttp.responseType = 'json';
+
     xmlHttp.onreadystatechange = function() {
       if (xmlHttp.readyState === 4) {
         if (xmlHttp.status >= 200 && xmlHttp.status < 300) {
-          options.ended.call(self, xmlHttp.response, xmlHttp)
+
+          if (typeof xmlHttp.response === 'string')
+            options.ended.call(self, JSON.parse(xmlHttp.response), xmlHttp);
+          else
+            options.ended.call(self, xmlHttp.response, xmlHttp);
+
         } else {
           options.error.call(self, xmlHttp);
         }
@@ -278,9 +285,13 @@
     var target = e.target;
     if (target.getAttribute('data-role') === 'formJSON') {
 
+      e.preventDefault();
+
       var temp = (temp = target.getAttribute('data-target')) && document.querySelector(temp);
+      var parseInteger = target.getAttribute('data-parseInteger') === 'false' ? false : true;
 
       var options = {
+        parseInteger: parseInteger,
         ended: target.onended || ( temp && temp.onended ) || function(){},
         // to change data
         data: target._data || ( temp && temp._data ) || function(d){return d},
@@ -288,6 +299,7 @@
       };
 
       submitHandler.call(target, e, options, formAction);
+
     }
 
   })
