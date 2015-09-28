@@ -8,20 +8,21 @@ require.config({
     gaodeMap      : '_lib/gaodeMap',
     jqueryCookie  : '_lib/jquery.cookie.min',
     jqueryLazyload: '_lib/jquery.lazyload.min',
-    jweixin       : '_lib/jweixin-1.0.0',
+    jweixin       : '_lib/jweixin-1.1.0',
 
 
     alert         : 'alert/alert',
-    alertMsg      : 'alertMsg/alertMsg.jquery',
 
     baseUtils     : 'baseUtils/baseUtils',
 
     citySelect    : 'citySelect/citySelect',
     confirm       : 'confirm/confirm',
 
-    formJSON      : 'formJSON/jquery.formJSON',
-    formValidator : 'H5Form/formValidator',
-    formSubmit    : 'H5Form/formSubmit',
+    formJSON      : 'formJSON/formJSON',
+    formOnInvalid : 'formValidator/formOnInvalid',
+    formValidator : 'formValidator/formValidator',
+
+    imageView     : 'imageView/imageView',
 
     loadpage      : 'loadpage/loadpage',
     loadingPage   : 'loadingPage/loadingPage',
@@ -36,9 +37,10 @@ require.config({
     shareWX       : 'shareWX/shareWX',
 
     tabs          : 'tabs/tabs',
-    template      : 'template/jquery.template',
+    template      : 'template/template',
 
-    ajaxUpload    : 'upload/public/ajaxUpload'
+    toast         : 'toast/toast',
+    ajaxUpload    : 'upload/public/ajaxUpload.delegate'
   },
   shim: {
     swiper: {
@@ -66,18 +68,17 @@ require.config({
     jweixin       : [],
 
     alert         : [],
-    alertMsg      : ['jquery'],
 
     baseUtils     : ['jquery'],
 
     citySelect    : ['jquery'],
     confirm       : [],
 
-    formJSON      : ['jquery'],
-    formValidator : ['jquery', 'alertMsg'],
-    formSubmit    : ['formValidator'],
+    formJSON      : [],
+    formOnInvalid : [],
+    formValidator : [],
 
-    loadpage      : ['jquery', 'alertMsg', 'loadingPage'],
+    loadpage      : [],
     loadingPage   : [],
 
     paging        : [],
@@ -89,9 +90,10 @@ require.config({
 
     shareWX       : ['jweixin'],
 
-    tabs          : ['jquery'],
-    template      : ['jquery'],
+    tabs          : [],
+    template      : [],
 
+    toast         : [],
     ajaxUpload    : []
   }
 });
