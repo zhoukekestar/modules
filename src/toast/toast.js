@@ -70,6 +70,8 @@
 
     // Build alertMsg's Div element.
     div.innerHTML = options.content;
+    div.classList.add('toast');
+
     for (css in alertMsgCSS) {
       div.style[css] = alertMsgCSS[css];
     }
