@@ -125,11 +125,16 @@
   };
 
 
-  document.addEventListener('readystatechange', function(e) {
-    if (document.readyState === 'interactive') {
-      init();
-    }
-  })
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    init()
+  } else {
+    document.addEventListener('readystatechange', function(e) {
+      if (document.readyState === 'interactive') {
+        init();
+      }
+    })
+  }
+
   document.addEventListener('reload', init)
 
   return null;

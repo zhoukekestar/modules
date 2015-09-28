@@ -17,15 +17,20 @@
         if (r != null) return decodeURI(r[2]); return null;
     }
 
+    /* 初始化 */
     var p = document.querySelector('.paging');
     p.setAttribute('data-current', getQueryString('p'));
 
+    /* 选择相应页面的处理函数 */
     p.onselect = function(n) {
       location.href = "./demo.html?p=" + n;
     }
+
+
     document.querySelector('.select').onclick = function(){
       p._select(3)
     }
+
   </script>
 </body>
 </html>
