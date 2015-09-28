@@ -37,15 +37,10 @@
 
 
   var options           = defaultOptions,
-      sessionStorage    = window.sessionStorage ? window.sessionStorage : {};
+      sessionStorage    = window.sessionStorage ? window.sessionStorage : {},
+      inAnimation       = options.inAnimation;
+      outAnimation      = options.outAnimation;
 
-
-  /**
-   * htmlDoc Covert html to document
-   * load    Load page by given url.
-   * showPage Show html in current document, by given animation.
-   *
-   */
   var utils   = {
 
     /**
@@ -121,20 +116,51 @@
       xmlHttp.send();
 
     },
+
+    oldPageEnd: function(e) {
+      this.remove();
+
+      this.removeEventListener('animationend', utils.oldPageEnd);
+    },
+    newPageEnd: function(e) {
+      e.stopPropagation();
+      this.classList.remove(options.animationClass);
+      this.classList.remove(inAnimation)
+
+      var scripts = [];
+      // execute script
+      Array.prototype.slice.apply(this.querySelectorAll('script')).forEach(function(script) {
+
+        var src = script.getAttribute('src');
+        var temp = document.createElement('script');
+        if (src) {
+          temp.src = src
+        } else {
+          temp.innerHTML = script.innerHTML;
+        }
+        scripts.push(temp);
+        script.remove();
+      })
+
+
+      for (var i = 0, max = scripts.length; i < max; i++){
+        this.appendChild(scripts[i])
+      }
+
+
+      options.afterLoadPage();
+
+      this.removeEventListener('animationend', utils.newPageEnd)
+    },
+
     /**
      * Show page by url
      * @param  {string} url - url string
-     * @param  {string} outAnimation - page hide animation
-     * @param  {string} inAnimation  - page show animation
      * @param  {bool}   pushState    - whether need pushState
      */
-    showPage: function(url, outAnimation, inAnimation, pushState) {
+    showPage: function(url, pushState) {
 
       if (options.beforeLoadPage() === false) return;
-
-      outAnimation  = outAnimation || options.outAnimation;
-      inAnimation   = inAnimation  || options.inAnimation;
-
 
       utils.loadByURL(url, function(data) {
         if (data === null) {
@@ -145,10 +171,8 @@
         var oldPage = document.querySelector(options.pageSelector);
         oldPage.classList.add(options.animationClass);
         oldPage.classList.add(outAnimation);
-        oldPage.addEventListener('animationend', function(){
-          // Remove old pages.
-          this.remove();
-        })
+
+        oldPage.addEventListener('animationend', utils.oldPageEnd);
 
 
         var html = document.createElement('div');
@@ -162,15 +186,10 @@
         newPage.classList.add(inAnimation)
 
 
-        newPage.addEventListener('animationend', function(e){
+        newPage.addEventListener('animationend', utils.newPageEnd);
 
-          e.stopPropagation();
-          this.classList.remove(options.animationClass);
-          this.classList.remove(inAnimation)
-          options.afterLoadPage();
-
-        });
         document.querySelector('html > body').appendChild(newPage);
+
 
         /* Reload module after get 'reload' event */
         document.dispatchEvent(new Event('reload'));
@@ -257,21 +276,30 @@
     // BIND
     document.addEventListener('click', function(e) {
 
-      var target = e.target;
+      //
+      for (var i = 0, max = e.path.length; i < max; i++) {
+        var target = e.path[i];
 
-      // Dynamic bind a element's link click.
-      // Example: <a href='example.com' date-rel='page'>link to page</a>
-      if (target.nodeName === 'A' && target.getAttribute('data-rel') === 'page') {
+        if (target === document.body) break;
 
-        e.preventDefault();
+        // Dynamic bind a element's link click.
+        // Example: <a href='example.com' date-rel='page'>link to page</a>
+        if (target && target.nodeName === 'A' && target.getAttribute('data-rel') === 'page') {
 
-        var url           = target.getAttribute('href');
-        var inAnimation   = target.getAttribute('data-transition-in');
-        var outAnimation  = target.getAttribute('data-transition-out');
+          e.preventDefault();
 
-        utils.showPage(url, outAnimation, inAnimation, true);
+          var url       = target.getAttribute('href');
+          inAnimation   = target.getAttribute('data-transition-in');
+          inAnimation = inAnimation || options.inAnimation;
 
+          outAnimation  = target.getAttribute('data-transition-out');
+          outAnimation = outAnimation || options.outAnimation;
+
+          utils.showPage(url, true);
+
+        }
       }
+
 
       // Bind back button's click.
       // Just back.
@@ -292,20 +320,25 @@
       var animate = JSON.parse(sessionStorage['animate_' + location.href])
 
       // reverse animate
-      animate.outAnimation  = utils.reverseAnimate(animate.outAnimation);
-      animate.inAnimation   = utils.reverseAnimate(animate.inAnimation);
+      inAnimation  = utils.reverseAnimate(animate.outAnimation);
+      outAnimation = utils.reverseAnimate(animate.inAnimation);
 
-      utils.showPage(location.href, animate.inAnimation, animate.outAnimation, false);
+      utils.showPage(location.href, false);
     }
 
   };
 
-  document.addEventListener('readystatechange', function(e) {
-    if (document.readyState === 'interactive') {
-      init();
-    }
-  })
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    init()
+  } else {
+    document.addEventListener('readystatechange', function(e) {
+      if (document.readyState === 'interactive') {
+        init();
+      }
+    })
+  }
 
+  return defaultOptions;
 
   /* Fix */
   // document.addEventListener('webkitAnimationEnd', function(e) {
