@@ -35,7 +35,7 @@
         return;
 
 
-      var html = '<option value="-1">--请选择--</option>',
+      var html = '<option value="">--请选择--</option>',
           i,
           max;
 
@@ -175,11 +175,16 @@
     }
   }
 
-  document.addEventListener('readystatechange', function(e) {
-    if (document.readyState === 'interactive') {
-      init();
-    }
-  })
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    init()
+  } else {
+    document.addEventListener('readystatechange', function(e) {
+      if (document.readyState === 'interactive') {
+        init();
+      }
+    })
+  }
+
   document.addEventListener('reload', init)
 
   return null;

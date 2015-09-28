@@ -10,9 +10,11 @@
       <select></select>
       <select></select>
     </div>
-    <script src="citySelect.nojquery.js"></script>
+    <script src="citySelect.js"></script>
     <script>
-      document.querySelector('[data-role="citySelect"]')._selected([121,908,1210606]);
+      setTimeout(function(){
+        document.querySelector('[data-role="citySelect"]')._selected([121,908,1210606]);
+      }, 1000)
     </script>
     </body>
 </html>
