@@ -5,3 +5,9 @@ if (HTMLElement && !HTMLElement.prototype.remove) {
     this.parentNode.removeChild(this);
   };
 }
+
+if (HTMLElement && !HTMLElement.prototype.click) {
+  HTMLElement.prototype.click = function() {
+    this.dispatchEvent(new Event('click', {bubbles: true}));
+  }
+}

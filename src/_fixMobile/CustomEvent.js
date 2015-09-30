@@ -10,6 +10,16 @@
 (function(global){
 
   var ok = function() {
+
+    // Android 4.3- not support customEvent, but reuturn ture.
+    // KTouch android/4.3
+    // Nexus android 4.3
+    var ua = global.navigator.userAgent.toLowerCase();
+    if (ua.indexOf('android/4.3') !== -1 || ua.indexOf('android/4.2') !== -1 || ua.indexOf('android/4.1') !== -1 ||
+        ua.indexOf('android 4.3') !== -1 || ua.indexOf('android 4.2') !== -1 || ua.indexOf('android 4.1') !== -1) {
+      return false;
+    }
+
     if (!('Event' in global)) return false;
     if (typeof global.Event === 'function') return true;
 
@@ -23,7 +33,7 @@
     }
   }
 
-  if (!ok) {
+  if (!ok()) {
 
     global.Event = function Event(type, eventInitDict) {
       if (!type) {
@@ -41,4 +51,4 @@
     };
   }
 
-})(window)
+})(window);
