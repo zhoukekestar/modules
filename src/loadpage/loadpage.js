@@ -132,7 +132,16 @@
       Array.prototype.slice.apply(this.querySelectorAll('script')).forEach(function(script) {
 
         var src = script.getAttribute('src');
+        var type = script.getAttribute('type') || 'text/javascript';
+
+        if (type !== 'text/javascript') return;
+
         var temp = document.createElement('script');
+        // for (var i =0, max = script.attributes.length; i < max; i++) {
+        //   var attr = script.attributes[i];
+        //   temp.setAttribute(attr.name, attr.value)
+        // }
+
         if (src) {
           temp.src = src
         } else {
