@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="./menu.css">
+</head>
+<body>
+  <nav data-role='menu'>
+    <ul class="nav">
+      <li>
+        <a href="">nav</a>
+        <ul class="sub-nav collapse nav">
+          <li>
+            <a href="" data-menu='1'>sub-nav</a>
+          </li>
+          <li>
+            <a href="">sub-nav-2</a>
+            <ul class="sub-nav">
+              <li><a href="" data-menu='2'>sub-nav-2-1</a></li>
+              <li><a href="" data-menu='3'>sub-nav-2-2</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="">nav-2</a>
+        <ul class="sub-nav">
+          <li>
+            <a href="?test=1">sub-nav</a>
+          </li>
+          <li>
+            <a href="?test-2">sub-nav-2</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="?test=3">nav-3</a>
+      </li>
+    </ul>
+  </nav>
+  <script src='./menu.js'></script>
+</body>
+</html>

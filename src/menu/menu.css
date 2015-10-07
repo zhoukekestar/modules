@@ -1,0 +1,7 @@
+nav .sub-nav.collapse {
+  display: none;
+}
+
+nav li.active {
+  background-color: #f00;
+}
