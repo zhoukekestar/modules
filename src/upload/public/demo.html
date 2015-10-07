@@ -12,32 +12,32 @@
       text-align: center;
       border-radius: 6px;
       padding: 10px;
+      margin: 80px;
     }
+
     </style>
-    <link rel='stylesheet' href='upload-progress-top.css'>
+    <link rel='stylesheet' href='ajaxUpload.css'>
+    <link rel='stylesheet' href='ajaxUpload-single.css'>
 </head>
 <body>
-  <h1>demo
-    <br>
-    <a href="/demo2.html">demo2</a><br>
-    <a href='/demo2.amd.html'>/demo2.amd.html</a>
-  </h1>
-  <p>This demo can be used on mobile OR morden browser.</p>
-  <div id='upload-btn' data-url='/upload'></div>
+  <div id='upload-btn' data-url='/upload' data-role='ajaxUpload'>上传图片</div>
+  <div data-url='/upload' data-role='ajaxUpload' data-ajaxUpload-plugin='single'>
+    <input type='hidden' name='img'>
+  </div>
   <div id='output'></div>
-  <script src="./ajaxUpload.js"></script>
+  <script src="ajaxUpload.js"></script>
+  <script src="ajaxUpload-single.test.js"></script>
   <script>
-
-    ajaxUpload('#upload-btn', {
-      success: function(d) {
-        d.forEach(function(r) {
-          document.querySelector('#output').innerHTML = '<a href="' + r.url + '" target="_blank">' + r.url + '</a><br>';
-        })
-      },
-      abort: function() {
-        alert('上传已取消')
-      }
-    });
+    var btn = document.querySelector('#upload-btn');
+    btn.onprogress = function(p, e) {
+      console.log(p)
+    }
+    btn.onabort = function() {
+      console.log('llll~~~~abort')
+    }
+    btn.onended = function(d) {
+      console.log(d);
+    }
 
   </script>
 </body>

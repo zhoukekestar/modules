@@ -1,0 +1,29 @@
+[data-ajaxUpload-plugin=single] {
+      height: 80px;
+width: 80px;
+border: solid 1px #ccc;
+border-radius: 4px;
+background-size: cover;
+background-position: center;
+position: relative;
+cursor: pointer;
+display: inline-block;
+}
+[data-ajaxUpload-plugin=single]:after {
+  content: '上传图片';
+  font-size: .8em;
+  background-color: rgba(0,0,0,.43);
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  width: 4.5em;
+  text-align: center;
+  margin-left: -2.5em;
+  margin-top: -.5em;
+
+}
+[data-ajaxUpload-plugin=single]:hover:after {
+  opacity: 1;
+}

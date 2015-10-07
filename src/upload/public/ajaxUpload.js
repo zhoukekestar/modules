@@ -2,30 +2,24 @@
   if ( typeof define === "function" && define.amd ) {
     define( factory );
   } else {
-    window.ajaxUpload = factory( );
+    factory( );
   }
 }( function() {
 
-  var ajaxUpload = function(ele, o) {
+  var ajaxUpload = function(ele) {
 
     var
         self    = (typeof ele === 'string') ? document.querySelector(ele) : ele,
-        options = {
-          progressall: 'upload-progress-top',
-          abort: function() {},
-          success: function(){},
-          error: function(){},
-          progress: function(){}
-        },
+        progressallClass = 'upload-progress-top',
         xmlHttp,
         loading = false,
 
         showProgress = function() {
-          var progressall = document.querySelector('.' + options.progressall);
+          var progressall = document.querySelector('.' + progressallClass);
 
           if (progressall === null) {
             var d = document.createElement('div');
-            d.classList.add(options.progressall);
+            d.classList.add(progressallClass);
             d.innerHTML = '<span></span>';
             document.querySelector('body').appendChild(d);
             progressall = d;
@@ -38,7 +32,7 @@
         },
 
         hideProgress = function() {
-          var progressall = document.querySelector('.' + options.progressall);
+          var progressall = document.querySelector('.' + progressallClass);
           if (progressall !== null) {
            setTimeout(function() {
 
@@ -56,7 +50,7 @@
         },
 
         updateProgress = function(percent) {
-          var span          = document.querySelector('.' + options.progressall + ' span');
+          var span          = document.querySelector('.' + progressallClass + ' span');
           span.style.width  = percent + '%';
           span.innerHTML    = percent;
         },
@@ -65,9 +59,8 @@
         // This function should call by `form` Element so that you can use `this` to get data.
         uploadFormData = function(url) {
 
-          var thisForm  = this;
           // Get form data include file
-          var formData  = new FormData(thisForm);
+          var formData  = new FormData(this);
 
           // Set XMLHttpRequest
           xmlHttp = new XMLHttpRequest()
@@ -76,14 +69,12 @@
 
           // Abort handler
           xmlHttp.onabort = function() {
-            options.abort();
-            (typeof thisForm.onabort === 'function') && (thisForm.onabort());
+            (typeof self.onabort === 'function') && (self.onabort());
           }
 
           // Error handler
           xmlHttp.onerror = function(err) {
-            options.error(err, xmlHttp)
-            (typeof thisForm.onerror === 'function') && (thisForm.onerror(err, xmlHttp));
+            (typeof self.onerror === 'function') && (self.onerror(err, xmlHttp));
           }
 
           // When upload is starting....
@@ -99,9 +90,7 @@
 
             updateProgress(percent);
 
-            options.progress(percent, e);
-
-            (typeof thisForm.onprogress === 'function') && (thisForm.onprogress(percent, e));
+            (typeof self.onprogress === 'function') && (self.onprogress(percent, e));
 
           }, false);
 
@@ -110,25 +99,21 @@
             if (xmlHttp.readyState === 4) {
 
               loading = false;
-              self.innerHTML = '上传图片'
+              self.innerHTML = self._innerHTML;
 
               hideProgress();
 
+              var response = null;
               // IE 10, IE 11
               // responseType is 'json'
               // @see http://caniuse.com/#search=formData
               if (typeof xmlHttp.response !== 'object') {
-
-                options.success(JSON.parse(xmlHttp.response), xmlHttp);
-
-                (typeof thisForm.onsuccess === 'function') && (thisForm.onsuccess(JSON.parse(xmlHttp.response), xmlHttp));
-
+                response = JSON.parse(xmlHttp.response);
               } else {
-
-                options.success(xmlHttp.response, xmlHttp)
-
-                (typeof thisForm.onsuccess === 'function') && (thisForm.onsuccess(xmlHttp.response, xmlHttp));
+                response = xmlHttp.response;
               }
+
+              (typeof self.onended === 'function') && (self.onended(response, xmlHttp));
 
             }
           }
@@ -141,15 +126,6 @@
         inputEle,
         url     = self.getAttribute('data-url'),
         form    = document.createElement('form');
-
-
-    // Extend options
-    for (var key in o) {
-      options[key] = o[key]
-    }
-
-    // Init
-    self.innerHTML = '上传图片';
 
     // Add form element into body
     form.innerHTML = '<input id="' + inputID + '" data-url="' + url + '" type="file" name="file" value="" multiple style="display:none !important">';
@@ -172,6 +148,8 @@
     inputEle.onchange = function() {
 
       loading = true;
+
+      self._innerHTML = self.innerHTML;
       self.innerHTML = '取消上传'
 
       uploadFormData.call(this.parentNode, url);
@@ -179,6 +157,19 @@
 
   }
 
-  return ajaxUpload;
+  document.addEventListener('click', function(e) {
+
+    var target = e.target;
+    if (target.getAttribute('data-role') === 'ajaxUpload') {
+
+      if (target.inited === undefined) {
+        target.inited = true;
+        ajaxUpload(target)
+        target.click();
+      }
+    }
+  })
+
+  return null;
 
 } ) );
