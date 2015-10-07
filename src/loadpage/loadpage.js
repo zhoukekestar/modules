@@ -74,7 +74,7 @@
       setTimeout(function(){
         if (loaded === false)
           loadingPageLoading();
-      }, 1000);
+      }, 2000);
 
       /**
        * AJAX request
