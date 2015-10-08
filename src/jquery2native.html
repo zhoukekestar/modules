@@ -139,6 +139,22 @@
     <code>$ele.before(yourInsertElement)</code> to
     <code>ele.parentNode.insertBefore(yourInsertElement, ele)</code>
     </li>
+    <li>
+      <code>$(function(){ init(); })</code> to
+
+      <pre>
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        init()
+      } else {
+        document.addEventListener('readystatechange', function(e) {
+          if (document.readyState === 'interactive') {
+            init();
+          }
+        })
+      }
+      </pre>
+
+    </li>
   </ul>
   <h1>jQuery cookie</h1>
   <ul>
