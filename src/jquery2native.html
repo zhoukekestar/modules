@@ -126,6 +126,7 @@
       <pre>
       var xmlHttp = new XMLHttpRequest()
       xmlHttp.open("GET", url, true);
+      xmlHttp.setRequestHeader('Content-Type', 'application/json');
       xmlHttp.onreadystatechange = function(){
         if (xmlHttp.readyState === 4) {
           alert(xmlHttp.responseText);
