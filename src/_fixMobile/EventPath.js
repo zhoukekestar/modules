@@ -12,7 +12,7 @@
       e.path.push(document);
       e.path.push(window);
     }
-  })
+  }, true)
 
 })(window);
 
