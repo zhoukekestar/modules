@@ -349,15 +349,4 @@
 
   return defaultOptions;
 
-  /* Fix */
-  // document.addEventListener('webkitAnimationEnd', function(e) {
-
-  //   if (!e._fix) {
-  //     var eve = new Event('animationend', {bubbles: true});
-  //     eve._fix = true;
-
-  //     e.target.dispatchEvent(eve);
-  //   }
-  // })
-
 }));
