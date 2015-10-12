@@ -7,6 +7,7 @@
 }(function(){
 
   var loading = function(){
+    if (document.querySelector('.loadingPage')) return;
     var ele = document.createElement("div");
   	ele.setAttribute("class", "loadingPage");
     try {
