@@ -1,25 +1,21 @@
 @CHARSET "UTF-8";
-
 .tabs-list {
   margin: 0;
   padding: 0;
   list-style: none;
   background-color: #fff;
 }
-
 .tabs-list:after {
   content: "";
   display: table;
   clear: both;
 }
-
 .tabs-list li {
-      float: left;
-    text-align: center;
-    padding: .5em 0;
-    cursor: pointer;
+  float: left;
+  text-align: center;
+  padding: .5em 0;
+  cursor: pointer;
 }
-
 .tabs-list li.active {
   color: #B41800;
 }
@@ -41,7 +37,7 @@
 }
 .tabs-nav .line span:after {
   content: '';
-  width: 6em;
+  width: 5em;
   display: block;
   background-color: #B41800;
   height: 100%;
