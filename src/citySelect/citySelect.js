@@ -35,7 +35,8 @@
         return;
 
 
-      var html = '<option value="">--请选择--</option>',
+      var defaultVal = eles[count].getAttribute('data-default') || '--请选择--',
+          html = '<option value="">' + defaultVal + '</option>',
           i,
           max;
 
@@ -53,7 +54,8 @@
       eles[count].style.display = 'inline';
 
       // Unbind old handler & Bind select change event.
-      eles[count].addEventListener('change', function(){
+      //
+      var changeHandler = function(){
 
         //$( eles[count] ).off();
         // need to remove listener???
@@ -63,6 +65,8 @@
 
           var ops = eles[i].querySelectorAll('option');
           [].slice.call(ops).forEach(function(ele){
+
+            ele.removeEventListener(changeHandler);
             ele.remove();
           })
           eles[i].style.display = 'none';
@@ -80,7 +84,8 @@
             nextSelect(eles, data[i][options.arrname], count + 1);
           }
         }
-      });
+      }
+      eles[count].addEventListener('change', changeHandler);
 
     };
 
