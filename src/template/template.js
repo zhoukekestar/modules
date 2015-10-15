@@ -43,8 +43,16 @@
       updateBy = function(d) {
         try {
           var holder = this.getAttribute('data-holder');
-          if (!holder) return;
-          document.querySelector(holder).innerHTML = this[namespace + 'fn'](d);
+          if (!holder) {
+            console.log('Holder is empty.')
+            return;
+          }
+          holder = document.querySelector(holder)
+          if (!holder) {
+            console.log("Can't select " + holder);
+            return;
+          }
+          holder.innerHTML = this[namespace + 'fn'](d);
         } catch (e) {
           console.log(e);
         }
@@ -52,8 +60,16 @@
       appendBy = function(d) {
         try {
           var holder = this.getAttribute('data-holder');
-          if (!holder) return;
-          document.querySelector(holder).innerHTML += this[namespace + 'fn'](d);
+          if (!holder) {
+            console.log('Holder is empty.')
+            return;
+          }
+          holder = document.querySelector(holder)
+          if (!holder) {
+            console.log("Can't select " + holder);
+            return;
+          }
+          holder.innerHTML += this[namespace + 'fn'](d);
         } catch (e) {
           console.log(e);
         }
