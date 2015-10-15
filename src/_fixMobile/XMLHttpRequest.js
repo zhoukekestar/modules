@@ -11,12 +11,18 @@
 
 (function(global, NativeXMLHttpRequest) {
 
-  var ua = global.navigator.userAgent.toLowerCase();
+  var testTypeJSON = true;
 
-  // KTouch android/4.3
-  // Nexus android 4.3
-  if (ua.indexOf('android/4.3') !== -1 || ua.indexOf('android/4.2') !== -1 || ua.indexOf('android/4.1') !== -1 ||
-      ua.indexOf('android 4.3') !== -1 || ua.indexOf('android 4.2') !== -1 || ua.indexOf('android 4.1') !== -1) {
+  try {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open('GET', '/', true);
+    xmlHttp.responseType = 'json';
+  } catch (e) {
+
+    testTypeJSON = false;
+  }
+
+  if (!testTypeJSON) {
 
 
       // <Global>.XMLHttpRequest
