@@ -88,6 +88,12 @@
         wx.config(options);
 
         wx.ready(function(){
+
+          if (options.hide) {
+
+            wx.hideOptionMenu();
+          }
+
           share(wx, options);
         })
       }
@@ -140,6 +146,7 @@
       role[namespace + 'inited'] = true;
 
       var data = {
+        hide: !!role.getAttribute('data-hide'),
         title: role.getAttribute('data-title'),
         desc: role.getAttribute('data-desc'),
         link: role.getAttribute('data-link'),
