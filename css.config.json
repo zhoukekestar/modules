@@ -13,7 +13,6 @@
 
 
   "alert"         : "alert/alert.css",
-  "alertMsg"      : null,
 
   "baseUtils"     : null,
 
@@ -22,7 +21,9 @@
 
   "formJSON"      : null,
   "formValidator" : null,
-  "formSubmit"    : null,
+  "formOnInvalid" : "formValidator/formValidator.css",
+
+  "imageView"     : "imageView/imageView.css",
 
   "loadpage"      : "loadpage/loadpage.css",
   "loadingPage"   : "loadingPage/loadingPage.css",
@@ -39,5 +40,7 @@
   "tabs"          : "tabs/tabs.css",
   "template"      : null,
 
-  "ajaxUpload"    : "upload/public/upload-progress-top.css"
+  "toast"         : null,
+  "ajaxUpload"    : "upload/public/ajaxUpload.css",
+  "ajaxUpload-single" : "upload/public/ajaxUpload-single.css"
 }

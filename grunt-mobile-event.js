@@ -1,53 +1,28 @@
+/*
+  grunt --gruntfile grunt-mobile.js
+
+*/
 module.exports = function(grunt){
 
     // Your Project's directory.
     var
 
-      copyto = 'G:\\svn\\www.toomao.com\\public\\',
+      copyto = 'D:\\svn\\m.toomao.com\\public\\event\\',
       // copyto = 'G:\\svn\\m.toomao.com\\public\\',
       modulesConfig = {
         // NO AMD RULES
-        swiper        : true,
-        gaodeMap      : false,
-        jqueryCookie  : false,
-        jqueryLazyload: false,
         jweixin       : true,
 
         // AMD
-        alert         : false,
-
-        baseUtils     : false,
-
         citySelect    : true,
-        confirm       : false,
-
         formJSON      : true,
-        formValidator : true,
-        formOnInvalid : true,
-
-        imageView     : true,
-
-        loadpage      : true,
-        loadingPage   : true,
-
-        paging        : true,
-        popup         : false,
-        preview       : false,
-        prompt        : false,
-        pullDown      : false,
-        pullUp        : false,
-
-        shareWX       : true,
-
-        tabs          : true,
-        template      : true,
-        toast         : true,
-
-        ajaxUpload    : true
+        shareWX       : true
       },
 
       // javascript
-      modulesJS = [],
+      modulesJS = ['HTMLElement', 'XMLHttpRequest', 'CustomEvent', 'EventPath', 'logForBrowser'],
+      jsBase = './src/',
+      externJS = [jsBase + '_fixMobile/HTMLElement.js', jsBase + '_fixMobile/XMLHttpRequest.js', jsBase + '_fixMobile/CustomEvent.js', jsBase + '_fixMobile/EventPath.js', jsBase + 'baseUtils/logForBrowser.js'],
       uglifyJSTask = [],
       requireJSTask = {},
       requireJSConfig = grunt.file.read('./requirejs.config.js', {encoding: 'utf8'}),
@@ -57,7 +32,6 @@ module.exports = function(grunt){
       cssBase = './src/',
       cssConfig = grunt.file.readJSON('css.config.json'),
       cssTaskList = [
-        cssBase + 'loadpage/animate.css',
         cssBase + 'baseCSS/base.css'
       ];
 
@@ -131,7 +105,7 @@ module.exports = function(grunt){
                         ' * web-moduels v<%= pkg.version %>\n' +
                         ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
                         ' * Licensed under <%= pkg.license %>\n' +
-                        ' * Include base.css, animate.css, ' + modulesCSS.toString() + ' \n' +
+                        ' * Include base.css, CSS-Controls/radio, ' + modulesCSS.toString() + ' \n' +
                         ' * Update on <%= grunt.template.today("yyyy-mm-dd HH:MM;ss") %> \n' +
                         ' */\n'
             },
@@ -146,10 +120,10 @@ module.exports = function(grunt){
             src: "./dist/modules.min.js",
             dest: copyto + "/js/modules.min.js"
           },
-          map: {
-            src: "./dist/modules.min.map",
-            dest: copyto + "/js/modules.min.map"
-          },
+          // map: {
+          //   src: "./dist/modules.min.map",
+          //   dest: copyto + "/js/modules.min.map"
+          // },
           css: {
             src: "./dist/modules.min.css",
             dest: copyto + "/css/modules.min.css"
@@ -160,8 +134,8 @@ module.exports = function(grunt){
         // javascript
         uglify: {
             options: {
-                sourceMap: true,
-                sourceMapName: './dist/modules.min.map'
+                // sourceMap: true,
+                // sourceMapName: './dist/modules.min.map'
             },
             release: {
                 files: {
@@ -173,7 +147,7 @@ module.exports = function(grunt){
         concat: {
           debug: {
             files: {
-              "./dist/modules.min.js": uglifyJSTask
+              "./dist/modules.min.js": externJS.concat(uglifyJSTask)
             }
           }
         },
@@ -214,7 +188,7 @@ module.exports = function(grunt){
 
 
     // 默认任务
-    grunt.registerTask('release', ['less', 'requirejs', 'uglify', 'clean', 'cssmin', 'usebanner', 'copy']);
-    grunt.registerTask('default', ['less', 'requirejs', 'concat', 'clean', 'cssmin', 'usebanner']);
+    // grunt.registerTask('default', ['less', 'requirejs', 'uglify', 'clean', 'cssmin', 'usebanner', 'copy']);
+    grunt.registerTask('default', ['less', 'requirejs', 'concat', 'clean', 'cssmin', 'usebanner', 'copy']);
     // grunt.registerTask('default', ['less', 'requirejs', 'concat', 'clean', 'cssmin', 'usebanner', 'copy']);
 };

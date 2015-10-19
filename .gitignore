@@ -16,5 +16,11 @@ hs_err_pid*
 /build
 /target
 node_modules
-output
-build
+
+#output
+#build
+#grunt-www.js
+#grunt-mobile.js
+#run-www.cmd
+#run-admin.cmd
+#run-mobile.cmd

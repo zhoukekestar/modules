@@ -27,6 +27,8 @@ require.config({
     loadpage      : 'loadpage/loadpage',
     loadingPage   : 'loadingPage/loadingPage',
 
+    menu          : 'menu/menu',
+
     paging        : 'paging/paging',
     popup         : 'popup/popup',
     preview       : 'preview/preview',
@@ -40,7 +42,9 @@ require.config({
     template      : 'template/template',
 
     toast         : 'toast/toast',
-    ajaxUpload    : 'upload/public/ajaxUpload.delegate'
+    ajaxUpload    : 'upload/public/ajaxUpload',
+
+    'ajaxUpload-single' : 'upload/public/ajaxUpload-single'
   },
   shim: {
     swiper: {
@@ -81,6 +85,8 @@ require.config({
     loadpage      : [],
     loadingPage   : [],
 
+    menu          : [],
+
     paging        : [],
     popup         : ['jquery'],
     preview       : ['jquery'],
@@ -94,6 +100,8 @@ require.config({
     template      : [],
 
     toast         : [],
-    ajaxUpload    : []
+    ajaxUpload    : [],
+
+    'ajaxUpload-single' : []
   }
 });
