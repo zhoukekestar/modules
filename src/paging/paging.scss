@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-$color : #DE5F44;
+$color : #B41800;
 $border-color : #A2A2A2;
 
 .paging {
@@ -37,7 +37,7 @@ $border-color : #A2A2A2;
     }
     &:hover {
       color: #fff;
-      background-color: lighten($color, 15%);
+      background-color: lighten($color, 5%);
     }
     &.disabled:hover{
       cursor: no-drop;

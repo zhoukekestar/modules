@@ -12,7 +12,7 @@
     padding: 3px;
     width: 25px;
     text-align: center;
-    color: #DE5F44;
+    color: #B41800;
     text-decoration: none;
     float: left;
     border-right: solid #A2A2A2 1px;
@@ -28,15 +28,13 @@
       border-radius: 0 5px 5px 0; }
     .paging li:hover {
       color: #fff;
-      background-color: #e99785; }
+      background-color: #ce1b00; }
     .paging li.disabled:hover {
       cursor: no-drop; }
     .paging li.active, .paging li.active:hover {
       color: #FFF;
-      background-color: #DE5F44; }
+      background-color: #B41800; }
   .paging:after {
     content: "";
     clear: both;
     display: block; }
-
-/*# sourceMappingURL=paging.css.map */
