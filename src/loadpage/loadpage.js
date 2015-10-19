@@ -307,16 +307,17 @@
           utils.showPage(url, true);
 
         }
+
+        // Bind back button's click.
+        // Just back.
+        // Example: <a data-rel="back"></a>
+        if (target.nodeName === 'A' && target.getAttribute('data-rel') === 'back') {
+          e.preventDefault()
+          history.back();
+        }
       }
 
 
-      // Bind back button's click.
-      // Just back.
-      // Example: <a data-rel="back"></a>
-      if (target.nodeName === 'A' && target.getAttribute('data-rel') === 'back') {
-        e.preventDefault()
-        history.back();
-      }
     })
 
     // Popup a history.
