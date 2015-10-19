@@ -11,7 +11,7 @@
 
 
 
-    var path = e.path.concat();
+    var path = e.path && e.path.concat();
     if (path[0].nodeName && path[0].nodeName !== 'A' && path[1].nodeName && path[1].nodeName !== 'A' && path[2].nodeName && path[2].nodeName !== 'A') {
       return;
     }
