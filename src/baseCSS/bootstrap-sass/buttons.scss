@@ -1,0 +1,65 @@
+
+/* @see https://github.com/twbs/bootstrap/blob/master/less/mixins/buttons.less */
+@mixin button($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:hover,
+  &:focus,
+  &.focus,
+  &:active,
+  &.active {
+    color: $color;
+    background-color: darken($background, 10%);
+        border-color: darken($border, 12%);
+  }
+  &:active,
+  &.active {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: $background;
+          border-color: $border;
+    }
+  }
+}
+
+.btn-red {
+  @include button(#fff, #B41800, #B41800)
+}
+.btn-success,
+.btn-upload,
+.btn-primary {
+  @include button(#1F1F1F, #EAEAEA, #e0e0e0)
+}
+
+.btn-red.btn-wide,
+.btn-success.btn-wide,
+.btn-upload.btn-wide,
+.btn-primary.btn-wide {
+  width: 200px;
+}
+
+.btn-text {
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 0;
+  color: #666;
+  &:hover,
+  &:focus,
+  &.focus,
+  &:active,
+  &.active {
+    color: #000;
+    text-decoration: none;
+  }
+}
