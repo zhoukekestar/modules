@@ -30,7 +30,7 @@
      */
     var nextSelect = function(eles, data, count) {
 
-      // Nothind to do, just return.
+      // Nothing to do, just return.
       if (data === undefined || data === null || data.length === 0 || !eles[count])
         return;
 
@@ -64,9 +64,9 @@
         for (i = count + 1, max = eles.length; i < max; i++) {
 
           var ops = eles[i].querySelectorAll('option');
-          [].slice.call(ops).forEach(function(ele){
+          eles[i].removeEventListener(changeHandler);
 
-            ele.removeEventListener(changeHandler);
+          [].slice.call(ops).forEach(function(ele){
             ele.remove();
           })
           eles[i].style.display = 'none';
