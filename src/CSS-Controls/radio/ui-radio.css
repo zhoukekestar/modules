@@ -11,7 +11,7 @@
   border-radius: 50%;
   outline: none !important;
   position: relative;
-  box-sizing: border-box;
+  box-sizing: content-box;
   margin: 3px;
 }
 .ui-radio:checked {
