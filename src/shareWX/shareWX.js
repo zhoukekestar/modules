@@ -75,7 +75,7 @@
 
   var shareWX= function(o) {
 
-    for (var key in o) { options[key] = o[key] }
+    for (var key in o) { options[key] = o[key] || options[key] }
 
     var xmlHttp = new XMLHttpRequest()
     xmlHttp.open("GET", options.api + '?url=' + encodeURIComponent(location.href.split('#')[0]), true);
@@ -146,6 +146,7 @@
       role[namespace + 'inited'] = true;
 
       var data = {
+        api: role.getAttribute('data-api'),
         hide: !!role.getAttribute('data-hide'),
         title: role.getAttribute('data-title'),
         desc: role.getAttribute('data-desc'),
