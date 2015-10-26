@@ -33,6 +33,15 @@
     })
     return result.join('&')
   }
+
+  var serializeJSONForGET = function(){
+    var result = []
+    serializeArray.call(this).forEach(function(elm){
+      result.push(encodeURIComponent(elm.name) + '=' + encodeURIComponent(elm.value))
+    })
+    return result.join('&')
+  }
+
     /**
    * Set obj's value by keys
    * @param  {[object]}           obj   The target you want to set.
@@ -148,51 +157,70 @@
     var method = self.getAttribute('method') || 'POST';
     var res;
 
+    res = {};
+    serializeArray.call(self).forEach(function(t){
+      var keys  = t.name.split('.');
+      var len   = keys.length - 1;
+      var index = keys[len].indexOf(':');
+      var value = t.value;
+      var type;
+      if (index !== -1) {
+        type    = keys[len].substr(index + 1);
+        keys[len] = keys[len].substr(0, index);
+      } else {
+        type = 'string';
+      }
+
+      if (type === 'array' || type === 'object') {
+
+        value  = JSON.parse(value);
+
+      } else if (type === 'number') {
+
+        value = +value;
+
+      } else if (type === 'time') {
+
+        value = new Date(value).getTime();
+        Number.isNaN(value) && (value = '')
+
+      } else if (type === 'bool' || type === 'boolean') {
+        if (value === 'false')
+          value = false
+        else
+          value = !!value;
+
+      }
+
+      deepSet(res, keys, value);
+    });
+
+    if (options.parseInteger)
+      res = integerKeysAsArrayIndexes(res);
+    res = options.data.call(self, res);
+
+
+    // Stringify result object.
     if (method === "GET") {
-      res = serialize.call(self);
-    } else {
 
-      res = {};
-      serializeArray.call(self).forEach(function(t){
-        var keys  = t.name.split('.');
-        var len   = keys.length - 1;
-        var index = keys[len].indexOf(':');
-        var value = t.value;
-        var type;
-        if (index !== -1) {
-          type    = keys[len].substr(index + 1);
-          keys[len] = keys[len].substr(0, index);
+      var keys = Object.keys(res);
+      var arr = []
+      for (var i = 0, max = keys.length; i < max; i ++) {
+        if (typeof res[keys[i]] === 'string') {
+
+          arr.push(encodeURIComponent(keys[i]) + '=' + encodeURIComponent( res[keys[i]]) )
         } else {
-          type = 'string';
+          arr.push(encodeURIComponent(keys[i]) + '=' + encodeURIComponent( JSON.stringify(res[keys[i]])) );
         }
+      }
+      res = arr.join('&')
 
-        if (type === 'array' || type === 'object') {
-
-          value  = JSON.parse(value);
-
-        } else if (type === 'number') {
-
-          value = +value;
-
-        } else if (type === 'time') {
-          value = new Date(value).getTime();
-
-        } else if (type === 'bool' || type === 'boolean') {
-          if (value === 'false')
-            value = false
-          else
-            value = !!value;
-
-        }
-
-        deepSet(res, keys, value);
-      });
-
-      if (options.parseInteger)
-        res = integerKeysAsArrayIndexes(res);
-      res = options.data.call(self, res);
+    } else {
       res = JSON.stringify(res);
     }
+
+
+
 
     /**
      * If there are no data should be sent, just return.
