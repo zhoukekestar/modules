@@ -17,7 +17,7 @@
      * Response: {"url":"http://223.95.81.53:23002/shop/event/1","appId":"wx7d7b73a6b545f4d4","timestamp":1438830027313,"nonceStr":"2265","signature":"3f0a4edbd91d814faaf6f99b785d88e2ecaf98e8"}
      *
      */
-    api       : '/wechat/sdk/sign',
+    api       : '',
     debug     : false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 
     // Url config
@@ -75,7 +75,7 @@
 
   var shareWX= function(o) {
 
-    for (var key in o) { options[key] = o[key] || options[key] }
+    for (var key in o) { options[key] = o[key]; }
 
     var xmlHttp = new XMLHttpRequest()
     xmlHttp.open("GET", options.api + '?url=' + encodeURIComponent(location.href.split('#')[0]), true);
@@ -146,7 +146,7 @@
       role[namespace + 'inited'] = true;
 
       var data = {
-        api: role.getAttribute('data-api'),
+        api: role.getAttribute('data-api') || '/wechat/sdk/sign',
         hide: !!role.getAttribute('data-hide'),
         title: role.getAttribute('data-title'),
         desc: role.getAttribute('data-desc'),
