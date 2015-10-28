@@ -7,7 +7,7 @@ module.exports = function(grunt){
     // Your Project's directory.
     var
 
-      copyto = 'D:\\svn\\m.toomao.com\\public\\event\\',
+      copyto = 'D:\\svn\\activity.toomao.com\\public\\',
       // copyto = 'G:\\svn\\m.toomao.com\\public\\',
       modulesConfig = {
         // NO AMD RULES
