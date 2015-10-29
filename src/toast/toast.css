@@ -1,0 +1,21 @@
+.toast {
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  z-index: 99999;
+  word-break: break-word;
+  padding: 12px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  text-shadow: none;
+  width: 160px;
+  margin-left: -80px;
+  opacity: 0;
+  transition: all 1s;
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+}
