@@ -24,6 +24,7 @@ require.config({
 
     imageView     : 'imageView/imageView',
 
+    lazyload      : 'lazyload/lazyload',
     loadpage      : 'loadpage/loadpage',
     loadingPage   : 'loadingPage/loadingPage',
 
@@ -82,6 +83,7 @@ require.config({
     formOnInvalid : [],
     formValidator : [],
 
+    lazyload      : [],
     loadpage      : [],
     loadingPage   : [],
 
