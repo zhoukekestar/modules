@@ -93,6 +93,24 @@
 
     XMLHttpRequestPrototype.send = function send() {
       this._request.send(0 in arguments ? arguments[0] : null);
+
+      var request = this;
+
+      if (request.timeout) {
+        setTimeout(function(){
+
+          // request.readyState = 4;
+          // request.responseText = '';
+          // request.response = null;
+          // request.status = 0;
+          // request.statusText = '';
+
+          // request.onreadystatechange && request.onreadystatechange();
+
+          request._request.abort();
+
+        }, request.timeout)
+      }
     };
 
     XMLHttpRequestPrototype.setRequestHeader = function setRequestHeader(header, value) {
