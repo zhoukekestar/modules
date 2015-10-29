@@ -157,6 +157,10 @@
     var method = self.getAttribute('method') || 'POST';
     var res;
 
+    if (self['_running']) {
+      console.log('form submiting. return.')
+      return;
+    }
     res = {};
     serializeArray.call(self).forEach(function(t){
       var keys  = t.name.split('.');
@@ -235,6 +239,7 @@
      *
      */
     var xmlHttp = new XMLHttpRequest();
+    xmlHttp.timeout = 20000;
     /**
      * Add session header for cross-domain request.
      * You can't set cookies for ajax
@@ -259,6 +264,7 @@
 
     xmlHttp.onreadystatechange = function() {
       if (xmlHttp.readyState === 4) {
+        self['_running'] = false;
         if (xmlHttp.status >= 200 && xmlHttp.status < 300) {
 
           if (typeof xmlHttp.response === 'string')
@@ -267,11 +273,15 @@
             options.ended.call(self, xmlHttp.response, xmlHttp);
 
         } else {
+
+          // xmlHttp.status == 0 timeout
+          // xmlHttp.status == 404 not found
           options.error.call(self, xmlHttp);
         }
       }
     }
 
+    self['_running'] = true;
     if (method === 'GET')
       xmlHttp.send();
     else
