@@ -25,6 +25,7 @@
 
   "imageView"     : "imageView/imageView.css",
 
+  "lazyload"      : null,
   "loadpage"      : "loadpage/loadpage.css",
   "loadingPage"   : "loadingPage/loadingPage.css",
 
@@ -40,7 +41,7 @@
   "tabs"          : "tabs/tabs.css",
   "template"      : null,
 
-  "toast"         : null,
+  "toast"         : "toast/toast.css",
   "ajaxUpload"    : "upload/public/ajaxUpload.css",
   "ajaxUpload-single" : "upload/public/ajaxUpload-single.css"
 }
