@@ -182,6 +182,11 @@
       } else if (type === 'number') {
 
         value = +value;
+      } else if (type === 'datetime') {
+
+        // For +08 Beijing Time
+        value = new Date(value + ':00+08:00').getTime()
+        Number.isNaN(value) && (value = '')
 
       } else if (type === 'time') {
 
