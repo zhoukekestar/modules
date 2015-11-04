@@ -7,6 +7,7 @@
     xhr.send(JSON.stringify({
       msg: navigator.userAgent + '\n' + location.href + '\n' + file + ':' + line + '\n' + msg
     }));
+    alert('抱歉，您的游览器出现异常，如需继续，请尝试其他游览器。');
   }
 
 })(window);
