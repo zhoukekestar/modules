@@ -101,6 +101,9 @@
   var citySelect = function(eles, url) {
 
     eles  = (typeof eles === 'string') ? document.querySelectorAll(eles) : eles;
+
+    if (!eles) return;
+
     url   = !url ? './city.min.json' : url;
 
     var _callback = false;
@@ -145,7 +148,11 @@
         if (_callback === false) {
           _callback = function() {
             for (var i = 0; i < s.length; i++) {
-              eles[i].querySelector('option[value="'+ s[i]+'"]').selected = true;
+
+              if (!s[i]) return true;
+
+              var option = eles[i].querySelector('option[value="'+ s[i]+'"]')
+              option && (option.selected = true);
 
               eles[i].dispatchEvent(new Event('change', {bubbles: true}))
               eles[i].onchange && eles[i].onchange();
@@ -154,7 +161,11 @@
           }
         } else {
           for (var i = 0; i < s.length; i++) {
-            eles[i].querySelector('option[value="'+ s[i]+'"]').selected = true;
+
+            if (!s[i]) return true;
+
+            var option = eles[i].querySelector('option[value="'+ s[i]+'"]')
+            option && (option.selected = true);
 
             eles[i].dispatchEvent(new Event('change', {bubbles: true}))
             eles[i].onchange && eles[i].onchange();
