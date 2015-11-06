@@ -281,6 +281,7 @@
 
           // xmlHttp.status == 0 timeout
           // xmlHttp.status == 404 not found
+          xmlHttp.response = xmlHttp.response || {};
           options.error.call(self, xmlHttp);
         }
       }
