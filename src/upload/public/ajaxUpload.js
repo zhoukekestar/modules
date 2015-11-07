@@ -9,10 +9,12 @@
   var ajaxUpload = function(ele) {
 
     var
-        self    = (typeof ele === 'string') ? document.querySelector(ele) : ele,
-        progressallClass = 'upload-progress-top',
+        self              = (typeof ele === 'string') ? document.querySelector(ele) : ele,
+        progressallClass  = 'upload-progress-top',
+        mobileClass       = 'mobile',
+        ua                = window.navigator.userAgent.toLowerCase(),
+        loading           = false,
         xmlHttp,
-        loading = false,
 
         showProgress = function() {
           var progressall = document.querySelector('.' + progressallClass);
@@ -20,6 +22,12 @@
           if (progressall === null) {
             var d = document.createElement('div');
             d.classList.add(progressallClass);
+
+
+            if (ua.indexOf('android') !== -1 || ua.indexOf('iphone') !== -1) {
+              d.classList.add(mobileClass);
+            }
+
             d.innerHTML = '<span></span>';
             document.querySelector('body').appendChild(d);
             progressall = d;
@@ -99,7 +107,7 @@
             if (xmlHttp.readyState === 4) {
 
               loading = false;
-              self.innerHTML = self._innerHTML;
+              // self.innerHTML = self._innerHTML;
 
               hideProgress();
 
@@ -141,6 +149,7 @@
         inputEle.click();
       } else {
         xmlHttp.abort();
+        alert('已取消上传');
       }
 
     })
@@ -149,26 +158,51 @@
 
       loading = true;
 
-      self._innerHTML = self.innerHTML;
-      self.innerHTML = '取消上传'
+      // self._innerHTML = self.innerHTML;
+      // self.innerHTML = '取消上传'
 
       uploadFormData.call(this.parentNode, url);
     }
 
+    // Trigger input & alert system file-upload view
+    inputEle.click();
   }
 
-  document.addEventListener('click', function(e) {
+  // document.addEventListener('click', function(e) {
 
-    var target = e.target;
-    if (target.getAttribute('data-role') === 'ajaxUpload') {
+  //   alert('hi,...')
+  //   var target = e.target;
+  //   if (target.getAttribute('data-role') === 'ajaxUpload') {
 
-      if (target.inited === undefined) {
-        target.inited = true;
-        ajaxUpload(target)
-        target.click();
+  //     if (target.inited === undefined) {
+  //       target.inited = true;
+  //       alert('ajaxUpload init')
+  //       ajaxUpload(target)
+  //       // target.click();
+  //     }
+  //   }
+  // })
+
+  var init = function() {
+    var eles = document.querySelectorAll('[data-role=ajaxUpload]');
+    for (var i = 0, max = eles.length; i < max; i++) {
+
+      if (!eles[i].inited) {
+        eles[i].inited = true;
+        ajaxUpload(eles[i]);
       }
     }
-  })
+  }
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    init()
+  } else {
+    document.addEventListener('readystatechange', function(e) {
+      if (document.readyState === 'interactive') {
+        init();
+      }
+    })
+  }
 
   return null;
 

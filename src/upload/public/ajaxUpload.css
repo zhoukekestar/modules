@@ -11,6 +11,11 @@
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.12);
   z-index: 10000;
 }
+.upload-progress-top.mobile {
+  height: 7px;
+  font-size: 7px;
+  line-height: 7px;
+}
 .upload-progress-top span {
   transition: all 1s;
   background-color: #5cb85c;

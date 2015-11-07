@@ -29,6 +29,10 @@
   <script src="ajaxUpload-single.test.js"></script>
   <script>
     var btn = document.querySelector('#upload-btn');
+
+    // btn.onclick = function() {
+    //   alert('onclick')
+    // }
     btn.onprogress = function(p, e) {
       console.log(p)
     }
