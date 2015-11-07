@@ -1,7 +1,9 @@
 (function(global){
 
   // For Android 4.3- (included)
-  document.body.addEventListener('click', function(e) {
+  var pathFill = function() {
+    var e = arguments[0];
+
     if (!e.path) {
       e.path = [];
       var t = e.target;
@@ -12,7 +14,10 @@
       e.path.push(document);
       e.path.push(window);
     }
-  }, true)
+  }
+
+  document.body.addEventListener('click', pathFill);
+  document.body.addEventListener('click', pathFill, true);
 
 })(window);
 
