@@ -31,6 +31,7 @@ module.exports = function(grunt){
 
         imageView     : true,
 
+        lazyload      : true,
         loadpage      : true,
         loadingPage   : true,
 
