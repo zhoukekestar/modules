@@ -189,7 +189,12 @@
 
       if (!eles[i].inited) {
         eles[i].inited = true;
-        ajaxUpload(eles[i]);
+
+        // if (navigator.userAgent.toLowerCase().indexOf('android') !== -1) {
+        //   alert('安卓版暂不支持上传图片');
+        // } else {
+          ajaxUpload(eles[i]);
+        // }
       }
     }
   }

@@ -20,11 +20,16 @@
     <link rel='stylesheet' href='ajaxUpload-single.css'>
 </head>
 <body>
+  <p>Perfect uplaod.</p>
+  <p>完美上传，兼容android4.2。<a href='./ajaxSubmit.html'>ajaxSubmit</a></p>
   <div id='upload-btn' data-url='/upload' data-role='ajaxUpload'>上传图片</div>
   <div data-url='/upload' data-role='ajaxUpload' data-ajaxUpload-plugin='single'>
     <input type='hidden' name='img'>
   </div>
   <div id='output'></div>
+
+  <input id='testFile' type='file'>
+  <button id='testBtn'>test</button>
   <script src="ajaxUpload.js"></script>
   <script src="ajaxUpload-single.test.js"></script>
   <script>
@@ -41,6 +46,53 @@
     }
     btn.onended = function(d) {
       console.log(d);
+    }
+
+  </script>
+  <script type="text/javascript">
+    document.querySelector('#testBtn').onclick = function() {
+      var input = document.querySelector('#testFile');
+      if (input.files && input.files[0]) {
+        var file = input.files[0];
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          var dataURL = reader.result;
+
+          var xmlHttp = new XMLHttpRequest()
+          xmlHttp.open("POST", '/upload', true);
+          xmlHttp.setRequestHeader('Content-Type', 'application/json');
+          xmlHttp.onreadystatechange = function(){
+            if (xmlHttp.readyState === 4) {
+              alert(xmlHttp.responseText);
+            }
+          }
+          xmlHttp.sendAsBinary(dataURL);
+        }
+
+        reader.readAsBinaryString(file);
+      }
+    }
+
+    /*\
+    |*|
+    |*|  :: XMLHttpRequest.prototype.sendAsBinary() Polyfill ::
+    |*|
+    |*|  https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#sendAsBinary()
+    |*|
+    \*/
+
+    if (!XMLHttpRequest.prototype.sendAsBinary) {
+      XMLHttpRequest.prototype.sendAsBinary = function (sData) {
+        var nBytes = sData.length, ui8Data = new Uint8Array(nBytes);
+        for (var nIdx = 0; nIdx < nBytes; nIdx++) {
+          ui8Data[nIdx] = sData.charCodeAt(nIdx) & 0xff;
+        }
+        /* send as ArrayBufferView...: */
+        this.send(ui8Data);
+        /* ...or as ArrayBuffer (legacy)...: this.send(ui8Data.buffer); */
+      };
     }
 
   </script>
