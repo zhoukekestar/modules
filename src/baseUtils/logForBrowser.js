@@ -16,7 +16,7 @@
     }
   }
 
-  console.log('logForBrowser init.')
+  // console.log('logForBrowser init.')
 
   console._error = console.error;
   console.error = function(msg, url, line, col, err) {
