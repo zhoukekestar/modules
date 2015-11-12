@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    #upload-btn{
+      width: 80px;
+      background-color: #6BC4FF;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 10px;
+      margin: 80px;
+    }
+
+    </style>
+    <link rel='stylesheet' href='ajaxUpload.css'>
+    <link rel='stylesheet' href='ajaxUpload-single.css'>
+</head>
+<body>
+  <p>Perfect uplaod.</p>
+  <p>完美上传，兼容android4.2。<a href='./ajaxSubmit.html'>ajaxSubmit</a></p>
+  <div id='upload-btn' data-url='http://server2.toomao.com:9000/1.1/images' data-role='ajaxUpload'>上传图片</div>
+  <script src="ajaxUpload.v2.js"></script>
+  <script src="XMLHttpRequest.js"></script>
+  <script>
+    var btn = document.querySelector('#upload-btn');
+
+    // btn.onclick = function() {
+    //   alert('onclick')
+    // }
+    btn.onprogress = function(p, e) {
+      console.log(p)
+      alert(p)
+    }
+    btn.onabort = function() {
+      console.log('llll~~~~abort')
+      alert('abort')
+    }
+    btn.onended = function(d) {
+      console.log(d);
+      alert(JSON.stringify(d))
+    }
+
+  </script>
+  <script type="text/javascript">
+    window.onerror = function(msg, url, line, col, err) {
+      msg = 'CUA:' + navigator.userAgent + '\nURL:' + location.href + '\nERR:' + (url || "local") + ':' + (line || -1) + ':' + (col || -1) + ' ' + msg + '\nSTACK:' + ((err && err.stack) || "");
+      alert(msg);
+    }
+  </script>
+</body>
+</html>

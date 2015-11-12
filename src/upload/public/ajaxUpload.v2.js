@@ -63,17 +63,57 @@
           span.innerHTML    = percent;
         },
 
+        pushSegment = function (oFREvt) {
+
+          var owner = this.owner;
+          owner.segments[this.segmentIdx] += oFREvt.target.result + "\r\n";
+          owner.status--;
+
+          if (owner.status > 0) {
+            return;
+          } else {
+            submitData(owner);
+          }
+        },
+
+        submitFiles = function(oField, url) {
+
+          if (!oField.files) {
+            return;
+          }
+
+          var oSegmReq,
+              oFile;
+
+          oField.url = url;
+          oField.status = 0;
+          oField.segments = [];
+
+          for (var i = 0; i < oField.files.length; i++) {
+            oFile = oField.files[i];
+            oSegmReq = new FileReader();
+            /* (custom properties:) */
+            oSegmReq.segmentIdx = oField.segments.length;
+            oSegmReq.owner = oField;
+            /* (end of custom properties) */
+            oSegmReq.onload = pushSegment;
+            oField.segments.push("Content-Disposition: form-data; name=\"" + oField.name + "\"; filename=\""+ oFile.name + "\"\r\nContent-Type: " + oFile.type + "\r\n\r\n");
+            oField.status++;
+            oSegmReq.readAsBinaryString(oFile);
+          }
+        },
+
         // Upload form data
         // This function should call by `form` Element so that you can use `this` to get data.
-        uploadFormData = function(url) {
+        submitData = function(oData) {
 
-          // Get form data include file
-          var formData  = new FormData(this);
+          var sBoundary = "---------------------------" + Date.now().toString(16);
 
           // Set XMLHttpRequest
           xmlHttp = new XMLHttpRequest()
-          xmlHttp.open("POST", url, true);
+          xmlHttp.open("POST", oData.url, true);
           xmlHttp.responseType = 'json';
+          xmlHttp.setRequestHeader("Content-Type", "multipart\/form-data; boundary=" + sBoundary);
 
           // Abort handler
           xmlHttp.onabort = function() {
@@ -127,7 +167,7 @@
           }
 
           // Send it!
-          xmlHttp.send(formData);
+          xmlHttp.sendAsBinary("--" + sBoundary + "\r\n" + oData.segments.join("--" + sBoundary + "\r\n") + "--" + sBoundary + "--\r\n");
 
         },
         inputID = 'ajaxUpload-' + new Date().getTime(),
@@ -136,7 +176,8 @@
         form    = document.createElement('form');
 
     // Add form element into body
-    form.innerHTML = '<input id="' + inputID + '" data-url="' + url + '" type="file" name="file" value="" multiple style="display:none !important">';
+    form.style.cssText = '    position: fixed;    left: 0px;    top: 0px;    width: 0;    height: 0;    overflow: hidden;';
+    form.innerHTML = '<input id="' + inputID + '" data-url="' + url + '" type="file" name="file" value="" multiple>';
     document.querySelector('body').appendChild(form)
     inputEle = document.getElementById(inputID);
 
@@ -144,10 +185,10 @@
     // Bind current element's click event.
     self.addEventListener('click', function() {
 
-
       if (loading === false) {
         inputEle.click();
       } else {
+        loading = false;
         xmlHttp.abort();
         alert('已取消上传');
       }
@@ -161,11 +202,13 @@
       // self._innerHTML = self.innerHTML;
       // self.innerHTML = '取消上传'
 
-      uploadFormData.call(this.parentNode, url);
+      submitFiles(inputEle, url)
+
     }
 
+    // alert('Trigger click')
     // Trigger input & alert system file-upload view
-    inputEle.click();
+    window.inputEle = inputEle;
   }
 
   // document.addEventListener('click', function(e) {

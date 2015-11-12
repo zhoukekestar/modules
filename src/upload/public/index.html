@@ -28,7 +28,7 @@
   </div>
   <div id='output'></div>
 
-  <input id='testFile' type='file'>
+  <input id='testFile' type='file' multiple>
   <button id='testBtn'>test</button>
   <script src="ajaxUpload.js"></script>
   <script src="ajaxUpload-single.test.js"></script>
@@ -50,28 +50,64 @@
 
   </script>
   <script type="text/javascript">
+
+    function pushSegment (oFREvt) {
+
+      var owner = this.owner;
+      owner.segments[this.segmentIdx] += oFREvt.target.result + "\r\n";
+      owner.status--;
+
+      if (owner.status > 0) {
+        return;
+      } else {
+
+        var xmlHttp = new XMLHttpRequest(),
+            sBoundary = "---------------------------" + Date.now().toString(16);
+
+        xmlHttp.open("POST", '/upload', true);
+        xmlHttp.setRequestHeader("Content-Type", "multipart\/form-data; boundary=" + sBoundary);
+
+        xmlHttp.onreadystatechange = function(){
+          if (xmlHttp.readyState === 4) {
+            alert(xmlHttp.responseText);
+          }
+        }
+
+        xmlHttp.sendAsBinary("--" + sBoundary + "\r\n" + owner.segments.join("--" + sBoundary + "\r\n") + "--" + sBoundary + "--\r\n");
+      }
+    }
+
+    var submitFiles = function(oField) {
+
+      if (!oField.files) {
+        return;
+      }
+
+      var oSegmReq,
+          oFile;
+
+      this.status = 0;
+      this.segments = [];
+
+
+      for (var i = 0; i < oField.files.length; i++) {
+        oFile = oField.files[i];
+        oSegmReq = new FileReader();
+        /* (custom properties:) */
+        oSegmReq.segmentIdx = this.segments.length;
+        oSegmReq.owner = this;
+        /* (end of custom properties) */
+        oSegmReq.onload = pushSegment;
+        this.segments.push("Content-Disposition: form-data; name=\"" + oField.name + "\"; filename=\""+ oFile.name + "\"\r\nContent-Type: " + oFile.type + "\r\n\r\n");
+        this.status++;
+        oSegmReq.readAsBinaryString(oFile);
+      }
+    }
+
     document.querySelector('#testBtn').onclick = function() {
       var input = document.querySelector('#testFile');
       if (input.files && input.files[0]) {
-        var file = input.files[0];
-
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-          var dataURL = reader.result;
-
-          var xmlHttp = new XMLHttpRequest()
-          xmlHttp.open("POST", '/upload', true);
-          xmlHttp.setRequestHeader('Content-Type', 'application/json');
-          xmlHttp.onreadystatechange = function(){
-            if (xmlHttp.readyState === 4) {
-              alert(xmlHttp.responseText);
-            }
-          }
-          xmlHttp.sendAsBinary(dataURL);
-        }
-
-        reader.readAsBinaryString(file);
+        submitFiles(input)
       }
     }
 
@@ -90,7 +126,7 @@
           ui8Data[nIdx] = sData.charCodeAt(nIdx) & 0xff;
         }
         /* send as ArrayBufferView...: */
-        this.send(ui8Data);
+        this.send(ui8Data.buffer);
         /* ...or as ArrayBuffer (legacy)...: this.send(ui8Data.buffer); */
       };
     }
