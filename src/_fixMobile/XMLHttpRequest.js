@@ -61,6 +61,11 @@
           request.onerror && request.onerror();
         };
       }
+
+      this.upload = {}
+      this.upload.addEventListener = function(event, fun, b) {
+        nativeRequest.upload.addEventListener(event, fun, b)
+      }
     };
 
     var XMLHttpRequestPrototype = global.XMLHttpRequest.prototype;
