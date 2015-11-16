@@ -6,7 +6,7 @@
   }
 }( function() {
 
-  var ajaxUpload = function(ele) {
+  var ajaxUpload = function(ele, indexEle) {
 
     var
         self              = (typeof ele === 'string') ? document.querySelector(ele) : ele,
@@ -170,7 +170,7 @@
           xmlHttp.sendAsBinary("--" + sBoundary + "\r\n" + oData.segments.join("--" + sBoundary + "\r\n") + "--" + sBoundary + "--\r\n");
 
         },
-        inputID = 'ajaxUpload-' + new Date().getTime(),
+        inputID = 'ajaxUpload-' + (Date.now() + indexEle),
         inputEle,
         url     = self.getAttribute('data-url'),
         form    = document.createElement('form');
@@ -232,8 +232,9 @@
 
       if (!eles[i].inited) {
         eles[i].inited = true;
-        ajaxUpload(eles[i]);
+        ajaxUpload(eles[i], i);
       }
+
     }
   }
 
