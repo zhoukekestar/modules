@@ -34,8 +34,10 @@ module.exports = function(grunt){
       },
 
       // javascript
-      modulesJS = [],
+      modulesJS = ['EventPath', 'logForBrowser', 'XMLHttpRequest'],
       uglifyJSTask = [],
+      jsBase = './src/',
+      externJS = [jsBase + '_fixMobile/EventPath.js', jsBase + 'baseUtils/logForBrowser.js', jsBase + '_fixDesktop/XMLHttpRequest.js'],
       requireJSTask = {},
       requireJSConfig = grunt.file.read('./requirejs.config.js', {encoding: 'utf8'}),
 
@@ -160,7 +162,7 @@ module.exports = function(grunt){
         concat: {
           debug: {
             files: {
-              "./dist/modules.min.js": uglifyJSTask
+              "./dist/modules.min.js": externJS.concat(uglifyJSTask)
             }
           }
         },
