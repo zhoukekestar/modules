@@ -81,7 +81,7 @@
 
       // Compare data-menu & href with sessionStorage.
       for (i = 0, max = links.length; i < max; i++) {
-        var m = ele.getAttribute('data-menu') || ele.getAttribute('href');
+        var m = links[i].getAttribute('data-menu') || links[i].getAttribute('href');
         if (m === sessionStorage['menu']) {
           links[i].parentNode.classList.add('active');
           links[i].parentNode.parentNode.classList.remove('collapse');
