@@ -43,7 +43,7 @@ require.config({
     template      : 'template/template',
 
     toast         : 'toast/toast',
-    ajaxUpload    : 'upload/public/ajaxUpload',
+    ajaxUpload    : 'upload/public/ajaxUpload.v2',
 
     'ajaxUpload-single' : 'upload/public/ajaxUpload-single'
   },
