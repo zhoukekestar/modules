@@ -103,6 +103,8 @@
           }
         },
 
+
+        // @see https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Submitting_forms_and_uploading_files
         // Upload form data
         // This function should call by `form` Element so that you can use `this` to get data.
         submitData = function(oData) {
@@ -206,26 +208,24 @@
 
     }
 
-    // alert('Trigger click')
-    // Trigger input & alert system file-upload view
-    window.inputEle = inputEle;
+    return inputEle;
   }
 
-  // document.addEventListener('click', function(e) {
 
-  //   alert('hi,...')
-  //   var target = e.target;
-  //   if (target.getAttribute('data-role') === 'ajaxUpload') {
+  // Lazy init...
+  document.addEventListener('click', function(e) {
 
-  //     if (target.inited === undefined) {
-  //       target.inited = true;
-  //       alert('ajaxUpload init')
-  //       ajaxUpload(target)
-  //       // target.click();
-  //     }
-  //   }
-  // })
+    var target = e.target;
+    if (target.getAttribute('data-role') === 'ajaxUpload') {
 
+      if (!target.inited) {
+        target.inited = true;
+        ajaxUpload(target, Date.now()).click();
+      }
+    }
+  })
+
+  // Doc init...
   var init = function() {
     var eles = document.querySelectorAll('[data-role=ajaxUpload]');
     for (var i = 0, max = eles.length; i < max; i++) {
