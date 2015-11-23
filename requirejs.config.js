@@ -16,7 +16,10 @@ require.config({
     baseUtils     : 'baseUtils/baseUtils',
 
     citySelect    : 'citySelect/citySelect',
+    clearable     : 'clearable/clearable',
     confirm       : 'confirm/confirm',
+
+    events        : 'events/events',
 
     formJSON      : 'formJSON/formJSON',
     formOnInvalid : 'formValidator/formOnInvalid',

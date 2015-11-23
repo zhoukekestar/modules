@@ -23,7 +23,10 @@ module.exports = function(grunt){
         baseUtils     : false,
 
         citySelect    : true,
+        clearable     : true,
         confirm       : false,
+
+        events        : true,
 
         formJSON      : true,
         formValidator : true,

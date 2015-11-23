@@ -14,6 +14,7 @@ module.exports = function(grunt){
         jweixin       : true,
 
         // AMD
+        confirm       : true,
         toast         : true,
         lazyload      : true,
         citySelect    : true,
