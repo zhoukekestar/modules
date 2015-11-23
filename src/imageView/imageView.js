@@ -33,7 +33,7 @@
 
       imageView.querySelector('.img').style.backgroundImage = 'url(' + target.getAttribute('src') + ')';
       imageView.style.opacity = 1;
-      imageView.style.zIndex = 200;
+      imageView.style.zIndex = 1001;
     }
   })
 
