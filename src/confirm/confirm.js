@@ -16,7 +16,7 @@
       var dialog =
       '<div class="system-confirm-wrapper"><div class="system-confirm"><div class="content">' +
       msg +
-      '</div><div class="foot"><button class="ok">确定</button><button class="cancel">取消</button></div></div></div>';
+      '</div><div class="foot"><button class="cancel">取消</button><button class="ok">确定</button></div></div></div>';
 
       // String to dom.
       temp = temp === undefined ? document.createElement("div") : temp;

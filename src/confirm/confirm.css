@@ -16,37 +16,39 @@
 
 .system-confirm {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 250px;
-  margin-left: -125px;
-  margin-top: -100px;
-  border-radius: 10px;
-  transition: all 1s;
-  background-color: rgba(53, 51, 51, 0.77);
-  color: #fff;
-  text-align: right;
-  animation: system-confirm .5s;
-  -webkit-animation: system-confirm .5s; }
+      left: 50%;
+      top: 50%;
+      width: 16em;
+      margin-left: -8em;
+      margin-top: -100px;
+      border-radius: 10px;
+      transition: all 1s;
+      background-color: rgb(255, 255, 255);
+      color: #fff;
+      text-align: right;
+      font-size: 14px;
+      animation: system-confirm .5s;
+      -webkit-animation: system-confirm .5s; }
   .system-confirm > .content {
-    padding: 20px;
-    color: #FFF;
+    padding: 20px 12px;
+    color: #6D6D6D;
     text-align: center;
-    word-break: break-all; }
+    word-break: break-all;
+    border-bottom: solid 1px; }
   .system-confirm > .foot > .ok, .system-confirm > .foot > .cancel {
     padding: 10px;
-    border: none;
-    color: #FFF;
-    background-color: #FFB100;
-    font-size: 14px;
-    display: block;
-    width: 50%;
-    cursor: pointer;
-    float: left; }
-  .system-confirm > .foot > .ok {
-    border-radius: 0 0 0 10px;
-    border-right: solid 1px #fff; }
+        border: none;
+        background-color: rgb(255, 255, 255);
+        font-size: 12px;
+        display: block;
+        width: 50%;
+        cursor: pointer;
+        float: left;
+        color: #6D6D6D; }
   .system-confirm > .foot > .cancel {
+    border-radius: 0 0 0 10px;
+        border-right: solid 1px #6D6D6D; }
+  .system-confirm > .foot > .ok {
     border-radius: 0 0 10px 0; }
 
 @-webkit-keyframes system-confirm {
