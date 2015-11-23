@@ -23,6 +23,17 @@ Select city for China.<br>
 * radio <br>  ![radio](./CSS-Controls/radio/demo.png)
 * switch-ios <br> ![switch](./CSS-Controls/switch/demo.gif)
 
+### clearable
+* Support input element that it can be clear by a button <br> ![clearable](./clearable/demo.gif)
+
+### events
+* Support taphold event
+* Support swipeleft event
+* Support swiperight event <br> ![events](./events/demo.gif)
+
+### lazyload
+* Lazy load image <br> ![lazyload](./lazyload/demo.gif)
+
 ### loadpage
 * Load page <br> ![loadpage](./loadpage/demo.gif)
 * You can also see [This project](https://github.com/zhoukekestar/mobilebone).
