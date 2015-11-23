@@ -16,79 +16,56 @@
  }
 }(function( ){
 
-  var init = function() {
-    var $q = function(q, res){
-          if (document.querySelectorAll) {
-            res = document.querySelectorAll(q);
-          } else {
-            var d=document
-              , a=d.styleSheets[0] || d.createStyleSheet();
-            a.addRule(q,'f:b');
-            for(var l=d.all,b=0,c=[],f=l.length;b<f;b++)
-              l[b].currentStyle.f && c.push(l[b]);
+  // All images.
+  var images = [];
+  function loadImage (el, i, fn) {
+    var img = new Image()
+      , src = el.getAttribute('data-src');
+    img.onload = function() {
+      if (!! el.parent)
+        el.parent.replaceChild(img, el)
+      else
+        el.src = src;
 
-            a.removeRule(0);
-            res = c;
-          }
-          return res;
-        }
-      , addEventListener = function(evt, fn){
-          window.addEventListener
-            ? this.addEventListener(evt, fn, false)
-            : (window.attachEvent)
-              ? this.attachEvent('on' + evt, fn)
-              : this['on' + evt] = fn;
-        }
-      , _has = function(obj, key) {
-          return Object.prototype.hasOwnProperty.call(obj, key);
-        }
-      ;
+      fn? fn.call(el, i) : null;
+    }
+    img.src = src;
+  }
 
-    function loadImage (el, fn) {
-      var img = new Image()
-        , src = el.getAttribute('data-src');
-      img.onload = function() {
-        if (!! el.parent)
-          el.parent.replaceChild(img, el)
-        else
-          el.src = src;
+  function elementInViewport(el) {
+    var rect = el.getBoundingClientRect()
 
-        fn? fn() : null;
+    return (
+       rect.top    >= 0
+    && rect.left   >= 0
+    && rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+    )
+  }
+
+  function processScroll() {
+
+    for (var i = 0; i < images.length; i++) {
+      if (!images[i].loaded && elementInViewport(images[i]) ) {
+        loadImage(images[i], i, function (i) {
+          this.loaded = true;
+        });
       }
-      img.src = src;
-    }
-
-    function elementInViewport(el) {
-      var rect = el.getBoundingClientRect()
-
-      return (
-         rect.top    >= 0
-      && rect.left   >= 0
-      && rect.top <= (window.innerHeight || document.documentElement.clientHeight)
-      )
-    }
-
-    var images = new Array()
-      , query = $q('img.lazy')
-      , processScroll = function(){
-          for (var i = 0; i < images.length; i++) {
-            if (elementInViewport(images[i])) {
-              loadImage(images[i], function () {
-                images.splice(i, i);
-              });
-            }
-          };
-        }
-      ;
-    // Array.prototype.slice.call is not callable under our lovely IE8
-    for (var i = 0; i < query.length; i++) {
-      images.push(query[i]);
     };
+  }
 
+  var init = function() {
+
+    images = document.querySelectorAll('img.lazy')
     processScroll();
     addEventListener('scroll',processScroll);
 
   }
+
+  // For dynamic dom. When inerst html to dom.
+  document.addEventListener('lazyload-reload', function() {
+    images = document.querySelectorAll('img.lazy')
+    processScroll();
+  })
 
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
