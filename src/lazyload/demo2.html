@@ -20,7 +20,14 @@
 
     var init = function () {
 
-      var imgs = ['https://img.alicdn.com/imgextra/i3/1801359203/TB2fB0khpXXXXXFXXXXXXXXXXXX_!!1801359203.jpg', 'https://img.alicdn.com/imgextra/i3/1801359203/TB24z4NhpXXXXXKXXXXXXXXXXXX_!!1801359203.jpg', 'https://img.alicdn.com/imgextra/i2/1801359203/TB2hEpJhpXXXXa5XXXXXXXXXXXX_!!1801359203.jpg',  'https://img.alicdn.com/imgextra/i2/1801359203/TB23H76hXXXXXXPXpXXXXXXXXXX_!!1801359203.jpg', 'https://img.alicdn.com/imgextra/i4/1801359203/TB2Xw73hXXXXXanXpXXXXXXXXXX_!!1801359203.jpg', 'https://img.alicdn.com/imgextra/i3/1801359203/TB2yutmhpXXXXXDXXXXXXXXXXXX_!!1801359203.jpg', 'https://img.alicdn.com/imgextra/i1/1801359203/TB2w0s9hXXXXXcNXXXXXXXXXXXX_!!1801359203.jpg'];
+      var imgs = [
+      'https://img.alicdn.com/imgextra/i3/1801359203/TB2fB0khpXXXXXFXXXXXXXXXXXX_!!1801359203.jpg',
+      'https://img.alicdn.com/imgextra/i3/1801359203/TB24z4NhpXXXXXKXXXXXXXXXXXX_!!1801359203.jpg',
+      'https://img.alicdn.com/imgextra/i2/1801359203/TB2hEpJhpXXXXa5XXXXXXXXXXXX_!!1801359203.jpg',
+      'https://img.alicdn.com/imgextra/i2/1801359203/TB23H76hXXXXXXPXpXXXXXXXXXX_!!1801359203.jpg',
+      'https://img.alicdn.com/imgextra/i4/1801359203/TB2Xw73hXXXXXanXpXXXXXXXXXX_!!1801359203.jpg',
+      'https://img.alicdn.com/imgextra/i3/1801359203/TB2yutmhpXXXXXDXXXXXXXXXXXX_!!1801359203.jpg',
+      'https://img.alicdn.com/imgextra/i1/1801359203/TB2w0s9hXXXXXcNXXXXXXXXXXXX_!!1801359203.jpg'];
       var div = document.createElement('div');
       for (var i = 0; i < imgs.length; i++) {
         div.innerHTML += '<img class="lazy" data-src="' + imgs[i] + '">'

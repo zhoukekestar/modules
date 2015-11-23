@@ -18,7 +18,7 @@
 
   // All images.
   var images = [];
-  function loadImage (el, i, fn) {
+  function loadImage (el, fn) {
     var img = new Image()
       , src = el.getAttribute('data-src');
     img.onload = function() {
@@ -27,7 +27,7 @@
       else
         el.src = src;
 
-      fn? fn.call(el, i) : null;
+      fn? fn.call(el) : null;
     }
     img.src = src;
   }
@@ -45,9 +45,9 @@
   function processScroll() {
 
     for (var i = 0; i < images.length; i++) {
-      if (!images[i].loaded && elementInViewport(images[i]) ) {
-        loadImage(images[i], i, function (i) {
-          this.loaded = true;
+      if (!images[i].lazyloaded && elementInViewport(images[i]) ) {
+        loadImage(images[i], function () {
+          this.lazyloaded = true;
         });
       }
     };
@@ -56,14 +56,22 @@
   var init = function() {
 
     images = document.querySelectorAll('img.lazy')
+
+    for (var i = 0; i < images.length; i++)
+      images[i].src = images[i].src || "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==";
+
     processScroll();
-    addEventListener('scroll',processScroll);
+    window.addEventListener('scroll',processScroll);
 
   }
 
   // For dynamic dom. When inerst html to dom.
   document.addEventListener('lazyload-reload', function() {
-    images = document.querySelectorAll('img.lazy')
+    images = document.querySelectorAll('img.lazy');
+
+    for (var i = 0; i < images.length; i++)
+      images[i].src = images[i].src || "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==";
+
     processScroll();
   })
 
