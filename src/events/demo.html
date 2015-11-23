@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>demo</title>
+  <meta name="viewport" content="width=device-width">
+  <meta charset='utf-8'>
+  <style type="text/css">
+    html, body{
+      margin: 0;
+      padding: 0;
+    }
+    p{
+      color: #999;
+    }
+    span {
+      width: 10em;
+      display: inline-block;
+    }
+    .touch {
+      height: 100px;
+      width: 200px;
+      background-color: #f00;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+<p>Please view this demo on mobile device.</p>
+<div class='touch'>a</div>
+<div class='touch'>b</div>
+<div class='touch'>c</div>
+<script src="events.js"></script>
+<script>
+  document.addEventListener('taphold', function(e) {
+    alert('taphold from ' + e.target.innerHTML)
+  })
+  document.addEventListener('swipeleft', function(e) {
+    alert('swipeleft from ' + e.target.innerHTML)
+  })
+  document.addEventListener('swiperight', function(e) {
+    alert('swiperight from ' + e.target.innerHTML)
+  })
+</script>
+</body>
+</html>
