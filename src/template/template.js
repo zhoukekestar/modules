@@ -69,7 +69,18 @@
             console.log("Can't select " + holder);
             return;
           }
-          holder.innerHTML += this[namespace + 'fn'](d);
+
+          var wrapper = this.getAttribute('data-wrapper');
+
+          if (wrapper) {
+            wrapper = document.createElement(wrapper)
+            wrapper.innerHTML = this[namespace + 'fn'](d);
+            while (wrapper.children.length > 0)
+              holder.appendChild(wrapper.children[0])
+          } else {
+            holder.innerHTML += this[namespace + 'fn'](d);
+          }
+
         } catch (e) {
           console.log(e);
         }
