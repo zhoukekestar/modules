@@ -20,28 +20,53 @@
 
   console._error = console.error;
   console.error = function(msg, url, line, col, err) {
-    msg = 'CUA:' + navigator.userAgent + '\nURL:' + location.href + '\nERR:' + (url || "local") + ':' + (line || -1) + ':' + (col || -1) + ' ' + msg + '\nSTACK:' + ((err && err.stack) || "");
-    console._error(msg);
+    url   = url   || 'local';
+    line  = line  || 1;
+    col   = col   || 1;
+    err   = (err  && err.stack) || "NO STACK";
+
+    var log = {
+      ua        : navigator.userAgent,
+      location  : location.href,
+      msg       : msg,
+      scripturl : url,
+      line      : line,
+      column    : col,
+      stack     : err
+    }
+
+    console._error(log);
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", '/log', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({
-      msg: msg
-    }));
+    xhr.send(JSON.stringify(log));
 
   }
 
   window.onerror = function(msg, url, line, col, err) {
-    msg = 'CUA:' + navigator.userAgent + '\nURL:' + location.href + '\nERR:' + (url || "local") + ':' + (line || -1) + ':' + (col || -1) + ' ' + msg + '\nSTACK:' + ((err && err.stack) || "");
-    console.log(msg);
+
+    url   = url   || 'local';
+    line  = line  || 1;
+    col   = col   || 1;
+    err   = (err  && err.stack) || "NO STACK";
+
+    var log = {
+      ua        : navigator.userAgent,
+      location  : location.href,
+      msg       : msg,
+      scripturl : url,
+      line      : line,
+      column    : col,
+      stack     : err
+    }
+
+    console.log(log);
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", '/log', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({
-      msg: msg
-    }));
+    xhr.send(JSON.stringify(log));
 
     if (msg.indexOf('pingpp') !== -1) {
       alert('支付模块未能加载，请尝试刷新网页');
