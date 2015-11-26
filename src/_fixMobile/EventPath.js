@@ -17,7 +17,7 @@
     }
   }
 
-  var events = ['click', 'taphold', 'swipeleft', 'swiperight'];
+  var events = ['click', 'taphold', 'swipeleft', 'swiperight', 'submit'];
   events.forEach(function(event) {
 
     document.body.addEventListener(event, pathFill)
