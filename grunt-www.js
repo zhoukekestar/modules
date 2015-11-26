@@ -37,9 +37,9 @@ module.exports = function(grunt){
 
       // javascript
       modulesJS = ['EventPath', 'logForBrowser', 'XMLHttpRequest'],
-      uglifyJSTask = [],
       jsBase = './src/',
       externJS = [jsBase + '_fixMobile/EventPath.js', jsBase + 'baseUtils/logForBrowser.js', jsBase + '_fixDesktop/XMLHttpRequest.js'],
+      uglifyJSTask = [],
       requireJSTask = {},
       requireJSConfig = grunt.file.read('./requirejs.config.js', {encoding: 'utf8'}),
 
@@ -47,7 +47,7 @@ module.exports = function(grunt){
       modulesCSS = [],
       cssBase = './src/',
       cssConfig = grunt.file.readJSON('css.config.json'),
-      cssTaskList = [
+      externCSS = [
         cssBase + 'CSS-Controls/switch/switch.css',
         cssBase + 'baseCSS/base.css'
       ];
@@ -90,7 +90,7 @@ module.exports = function(grunt){
 
         // stylesheet
         if (modulesConfig[name] === true && cssConfig[name] !== null) {
-          cssTaskList.push(cssBase + cssConfig[name]);
+          externCSS.push(cssBase + cssConfig[name]);
           modulesCSS.push(name);
         }
     }
@@ -102,7 +102,7 @@ module.exports = function(grunt){
         usebanner: {
           js: {
             options: {
-              position: 'top',
+              position: 'bottom',
               banner: '/*!\n' +
                         ' * web-moduels v<%= pkg.version %>\n' +
                         ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
@@ -112,17 +112,17 @@ module.exports = function(grunt){
                         ' */\n'
             },
             files: {
-              src: [ './dist/modules.min.js' ]
+              src: [ './dist/modules.js' ]
             }
           },
           css: {
             options: {
-              position: 'top',
+              position: 'bottom',
               banner: '/*!\n' +
                         ' * web-moduels v<%= pkg.version %>\n' +
                         ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
                         ' * Licensed under <%= pkg.license %>\n' +
-                        ' * Include base.css, switch.css, ' + modulesCSS.toString() + ' \n' +
+                        ' * Include base.css, CSS-Controls/radio, ' + modulesCSS.toString() + ' \n' +
                         ' * Update on <%= grunt.template.today("yyyy-mm-dd HH:MM;ss") %> \n' +
                         ' */\n'
             },
@@ -133,14 +133,18 @@ module.exports = function(grunt){
         },
 
         copy: {
-          js: {
+          jsmin: {
             src: "./dist/modules.min.js",
             dest: copyto + "/js/modules.min.js"
           },
-          // map: {
-          //   src: "./dist/modules.min.map",
-          //   dest: copyto + "/js/modules.min.map"
-          // },
+          js: {
+            src: "./dist/modules.js",
+            dest: copyto + "/js/modules.js"
+          },
+          map: {
+            src: "./dist/modules.min.map",
+            dest: copyto + "/js/modules.min.map"
+          },
           css: {
             src: "./dist/modules.min.css",
             dest: copyto + "/css/modules.min.css"
@@ -150,13 +154,13 @@ module.exports = function(grunt){
 
         // javascript
         uglify: {
-            // options: {
-            //     sourceMap: true,
-            //     sourceMapName: './dist/modules.min.map'
-            // },
+            options: {
+                sourceMap: true,
+                sourceMapName: './dist/modules.min.map'
+            },
             release: {
                 files: {
-                    "./dist/modules.min.js": uglifyJSTask
+                    "./dist/modules.min.js": './dist/modules.js'
                 }
             }
         },
@@ -164,7 +168,7 @@ module.exports = function(grunt){
         concat: {
           debug: {
             files: {
-              "./dist/modules.min.js": externJS.concat(uglifyJSTask)
+              "./dist/modules.js": externJS.concat(uglifyJSTask)
             }
           }
         },
@@ -184,7 +188,7 @@ module.exports = function(grunt){
         cssmin: {
             minifyCore: {
                 files:{
-                    "dist/modules.min.css": cssTaskList
+                    "dist/modules.min.css": externCSS
                 }
             }
         }
@@ -205,7 +209,5 @@ module.exports = function(grunt){
 
 
     // 默认任务
-    grunt.registerTask('release', ['less', 'requirejs', 'uglify', 'clean', 'cssmin', 'usebanner', 'copy']);
-    grunt.registerTask('default', ['less', 'requirejs', 'concat', 'clean', 'cssmin', 'usebanner', 'copy']);
-    // grunt.registerTask('default', ['less', 'requirejs', 'concat', 'clean', 'cssmin', 'usebanner', 'copy']);
+    grunt.registerTask('default', ['less', 'requirejs', 'concat', 'uglify', 'usebanner', 'clean', 'cssmin', 'copy']);
 };
