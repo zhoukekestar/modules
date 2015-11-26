@@ -324,12 +324,13 @@
    * <form data-role='formJSON'>
    * </form>
    */
-  document.addEventListener('submit', function(e) {
+  var submitListener = function(e) {
 
     var target = e.target;
     if (target.getAttribute('data-role') === 'formJSON') {
 
       e.preventDefault();
+      e.stopPropagation();
 
       var temp = (temp = target.getAttribute('data-target')) && document.querySelector(temp);
       var parseInteger = target.getAttribute('data-parseInteger') === 'false' ? false : true;
@@ -346,7 +347,9 @@
 
     }
 
-  })
+  }
+  document.addEventListener('submit', submitListener)
+  document.addEventListener('formJSON-submit', submitListener)
 
   // Fix.
   // Submit a form by javascript won't fire submit event.
@@ -356,7 +359,7 @@
   HTMLFormElement.prototype.submit = function() {
 
     if (this.getAttribute('data-role') === 'formJSON') {
-      this.dispatchEvent(new Event('submit', {bubbles: true}));
+      this.dispatchEvent(new Event('formJSON-submit', {bubbles: true}));
     } else {
       _submit.call(this);
     }
