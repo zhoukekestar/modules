@@ -51,15 +51,28 @@
     };
   }
 
+
   /* Fix */
-  document.addEventListener('webkitAnimationEnd', function(e) {
+  if (document.body.style.animation !== '') {
+    var _addEventListener = HTMLElement.prototype.addEventListener;
+    HTMLElement.prototype.addEventListener = function() {
 
-    if (!e._fix) {
-      var eve = new Event('animationend', {bubbles: true});
-      eve._fix = true;
+      var type = arguments[0]
+        , func = arguments[1]
+        , capture = arguments[2];
 
-      e.target.dispatchEvent(eve);
+      if (type === 'animationend') {
+
+        _addEventListener.call(this, 'webkitAnimationEnd', func, capture)
+
+      } else if (type === 'animationstart') {
+
+        _addEventListener.call(this, 'webkitAnimationStart', func, capture)
+
+      } else {
+        _addEventListener.call(this, type, func, capture)
+      }
     }
-  })
+  }
 
 })(window);
