@@ -159,6 +159,9 @@
 
       options.afterLoadPage();
 
+      /* Reload module after get 'reload' event */
+      document.dispatchEvent(new Event('reload'));
+
       this.removeEventListener('animationend', utils.newPageEnd)
     },
 
@@ -198,10 +201,6 @@
         newPage.addEventListener('animationend', utils.newPageEnd);
 
         document.querySelector('html > body').appendChild(newPage);
-
-
-        /* Reload module after get 'reload' event */
-        document.dispatchEvent(new Event('reload'));
 
         // Save current animation & push state into history.
         if (pushState) {
