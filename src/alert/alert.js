@@ -6,31 +6,37 @@
   }
 }( function() {
 
-  var _alert = window.alert,
-      temp;
-  window.alert = function(msg, option) {
+  var _alert  = window.alert
+    , temp    = null
+    , dialog  = '<div class="system-alert-wrapper"><div class="system-alert"><div class="content"></div><button class="close" onclick="">确定</button></div></div>'
+    , option;
+  window.alert = function(msg, o) {
+
+    option = o;
+
+    // If not inited, just init it.
+    if (typeof dialog === 'string') {
+      temp = document.createElement("div");
+      temp.innerHTML = dialog
+      dialog = temp.firstChild;
+      dialog.style.display = 'none';
+      document.body.appendChild(dialog);
+
+      dialog.addEventListener('click', function(e) {
+        if (e.target.className === 'close') {
+          this.style.display = 'none';
+          typeof option === 'function' && option();
+        }
+      });
+
+    }
+
 
     // Use custom alert
     if ((typeof option === 'boolean' && option === false) || typeof option === 'function') {
 
-      var dialog = '<div class="system-alert-wrapper"><div class="system-alert"><div class="content">' + msg + '</div><button class="close" onclick="">确定</button></div></div>';
-      //dialog = (new DOMParser()).parseFromString(dialog, "text/xml").firstChild;
-
-      // String to dom.
-      temp = temp === undefined ? document.createElement("div") : temp;
-      temp.innerHTML = dialog
-      dialog = temp.firstChild;
-      temp.innerHTML = '';
-
-      document.getElementsByTagName('body')[0].appendChild(dialog);
-
-      dialog.addEventListener('click', function(e) {
-        if (e.target.className === 'close') {
-          this.remove();
-
-          typeof option === 'function' && option();
-        }
-      });
+      dialog.style.display = 'block'
+      dialog.firstChild.firstChild.innerHTML = msg;
 
     // Use system alert
     } else {
