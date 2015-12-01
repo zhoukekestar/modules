@@ -64,7 +64,7 @@
         for (i = count + 1, max = eles.length; i < max; i++) {
 
           var ops = eles[i].querySelectorAll('option');
-          eles[i].removeEventListener(changeHandler);
+          eles[i].removeEventListener('change', changeHandler);
 
           [].slice.call(ops).forEach(function(ele){
             ele.remove();
