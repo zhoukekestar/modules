@@ -104,6 +104,9 @@
     init(true)
   })
 
+  document.addEventListener('reload', function () {
+    init(true)
+  })
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     init()
