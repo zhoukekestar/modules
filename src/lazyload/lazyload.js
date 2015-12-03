@@ -80,12 +80,14 @@
       images[i].src = images[i].src || defaultImg;
 
     // For: <img class='lazy delay' src='http://abc.com'>
-    var imagesDelay = document.querySelectorAll('img.lazy.delay');
-    for (var i = 0; i < imagesDelay.length; i++) {
-      imagesDelay[i].setAttribute('data-src', imagesDelay[i].src)
-      imagesDelay[i].src = defaultImg;
-      images.push(imagesDelay[i])
-    }
+    // You should do it manualy before document trigger complete event.
+    //
+    // var imagesDelay = document.querySelectorAll('img.lazy.delay');
+    // for (var i = 0; i < imagesDelay.length; i++) {
+    //   imagesDelay[i].setAttribute('data-src', imagesDelay[i].src)
+    //   imagesDelay[i].src = defaultImg;
+    //   images.push(imagesDelay[i])
+    // }
 
     // For: <div class='lazy' data-background-image=''>
     backgroundImages = Array.prototype.slice.apply(document.querySelectorAll('.lazy[data-backgroundimage]'))
@@ -108,11 +110,12 @@
     init(true)
   })
 
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // Image should load after document is completed, not AS SOON AS POSSIBLE.
+  if (document.readyState === 'complete') {
     init()
   } else {
     document.addEventListener('readystatechange', function(e) {
-      if (document.readyState === 'interactive') {
+      if (document.readyState === 'complete') {
         init();
       }
     })
