@@ -36,9 +36,9 @@ module.exports = function(grunt){
       },
 
       // javascript
-      modulesJS = ['EventPath', 'logForBrowser', 'XMLHttpRequest'],
+      modulesJS = ['EventPath', 'logForBrowser', 'XMLHttpRequest', 'onended'],
       jsBase = './src/',
-      externJS = [jsBase + '_fixMobile/EventPath.js', jsBase + 'baseUtils/logForBrowser.js', jsBase + '_fixDesktop/XMLHttpRequest.js'],
+      externJS = [jsBase + '_fixMobile/EventPath.js', jsBase + 'baseUtils/logForBrowser.js', jsBase + '_fixDesktop/XMLHttpRequest.js', jsBase + '_fixDesktop/onended.js'],
       uglifyJSTask = [],
       requireJSTask = {},
       requireJSConfig = grunt.file.read('./requirejs.config.js', {encoding: 'utf8'}),
@@ -166,9 +166,14 @@ module.exports = function(grunt){
         },
 
         concat: {
-          debug: {
+          release: {
             files: {
               "./dist/modules.js": externJS.concat(uglifyJSTask)
+            }
+          },
+          debug: {
+            files: {
+              "./dist/modules.min.js": externJS.concat(uglifyJSTask)
             }
           }
         },
@@ -209,5 +214,6 @@ module.exports = function(grunt){
 
 
     // 默认任务
-    grunt.registerTask('default', ['less', 'requirejs', 'concat', 'uglify', 'usebanner', 'clean', 'cssmin', 'copy']);
+    grunt.registerTask('default', ['less', 'requirejs', 'concat:release', 'uglify', 'usebanner', 'clean', 'cssmin', 'copy']);
+    // grunt.registerTask('default', ['less', 'requirejs', 'concat:debug', 'usebanner', 'clean', 'cssmin', 'copy']);
 };

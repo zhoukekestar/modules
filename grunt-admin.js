@@ -165,9 +165,14 @@ module.exports = function(grunt){
       },
 
       concat: {
-        debug: {
+        release: {
           files: {
             "./dist/modules.js": externJS.concat(uglifyJSTask)
+          }
+        },
+        debug: {
+          files: {
+            "./dist/modules.min.js": externJS.concat(uglifyJSTask)
           }
         }
       },
@@ -208,5 +213,6 @@ module.exports = function(grunt){
 
 
   // 默认任务
-  grunt.registerTask('default', ['less', 'requirejs', 'concat', 'uglify', 'usebanner', 'clean', 'cssmin', 'copy']);
+  grunt.registerTask('default', ['less', 'requirejs', 'concat:release', 'uglify', 'usebanner', 'clean', 'cssmin', 'copy']);
+  // grunt.registerTask('default', ['less', 'requirejs', 'concat:debug', 'usebanner', 'clean', 'cssmin', 'copy']);
 };
