@@ -44,10 +44,18 @@
   function elementInViewport(el) {
     var rect = el.getBoundingClientRect()
 
+    // For invisible element.
+    if (rect.top + rect.bottom + rect.left + rect.right + rect.height + rect.width === 0) {
+      return false;
+    }
+
     return (
-       rect.top    >= 0
-    && rect.left   >= 0
-    && rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+       rect.top   >= 0
+    // Pre load.
+    && rect.top   <= ((window.innerHeight || document.documentElement.clientHeight) + 100)
+    && rect.left  >= 0
+    // Hide carousel except first image. Do not add equal sign.
+    && rect.left  < (window.innerWidth || document.documentElement.clientWidth)
     )
   }
 
@@ -60,7 +68,7 @@
           this.classList.remove('lazy');
         });
       }
-    };
+    }
 
     for (var i = 0; i < backgroundImages.length; i++) {
       if (!backgroundImages[i].lazyloaded && elementInViewport(backgroundImages[i]) ) {
@@ -69,7 +77,7 @@
           this.classList.remove('lazy');
         });
       }
-    };
+    }
   }
 
   var init = function(reload) {
@@ -96,8 +104,10 @@
 
     processScroll();
 
-    if (!reload)
-      window.addEventListener('scroll',processScroll);
+    if (!reload) {
+      window.addEventListener('scroll', processScroll);
+      window.addEventListener('touchend', processScroll);
+    }
 
   }
 
