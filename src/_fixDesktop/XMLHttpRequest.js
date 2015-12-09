@@ -15,6 +15,7 @@
 
   try {
     var xmlHttp = new XMLHttpRequest();
+    xmlHttp.timeout = 1000;
     xmlHttp.open('GET', '/', true);
     xmlHttp.responseType = 'json';
   } catch (e) {
