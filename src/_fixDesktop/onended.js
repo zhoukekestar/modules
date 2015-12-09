@@ -19,4 +19,7 @@
    })
   }
 
+  document.body.addEventListener('click', init);
+  document.body.addEventListener('touchend', init);
+
 })();
