@@ -308,8 +308,8 @@
   document.addEventListener('click', function(e) {
     var target = e.target;
 
-    if (target.type === 'submit' && target.formAction) {
-      formAction = target.formAction;
+    if (target.type === 'submit' && target.getAttribute('formAction')) {
+      formAction = target.getAttribute('formAction');
     }
 
     setTimeout(function() {
