@@ -26,6 +26,12 @@
       var active_content = active_tab.getAttribute('data-href');
       active_content = tabs.querySelector('.tabs-content > ' + active_content);
 
+      // Don't have active tab or don't have active content.
+      // Just return.
+      if (!active_tab || !active_content) {
+        return;
+      }
+
       slice.apply(tabs.querySelectorAll('.tabs-content > div')).forEach(function(content) {
         content.style.display = 'none';
       })
