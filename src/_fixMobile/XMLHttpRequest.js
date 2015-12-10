@@ -63,6 +63,12 @@
         };
       }
 
+      if ('onloadstart' in nativeRequest) {
+        nativeRequest.onloadstart = function() {
+          request.onloadstart && request.onloadstart();
+        }
+      }
+
       this.upload = {}
       this.upload.addEventListener = function(event, fun, b) {
         nativeRequest.upload.addEventListener(event, fun, b)
