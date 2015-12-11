@@ -10,6 +10,7 @@
     if (document.querySelector('.loadingPage')) return;
     var ele = document.createElement("div");
   	ele.setAttribute("class", "loadingPage");
+    ele.innerHTML = '<span></span>'
     try {
   	 document.querySelector("body").appendChild(ele);
     } catch (e) {
