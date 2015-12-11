@@ -106,7 +106,7 @@
 
     if (!reload) {
       window.addEventListener('scroll', processScroll);
-      window.addEventListener('touchend', processScroll);
+      window.addEventListener('touchmove', processScroll);
     }
 
   }
