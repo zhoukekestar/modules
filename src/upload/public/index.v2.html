@@ -5,8 +5,7 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
-    #upload-btn,
-    #upload-btn-2 {
+    #upload-btn {
       width: 80px;
       background-color: #6BC4FF;
       color: #fff;
@@ -21,19 +20,13 @@
     <link rel='stylesheet' href='ajaxUpload-single.css'>
 </head>
 <body>
-  <p>Perfect uplaod.</p>
-  <p>完美上传，兼容android4.2。<a href='./ajaxSubmit.html'>ajaxSubmit</a></p>
+  <p>上传，兼容android4.2。</p>
   <div id='upload-btn' data-url='http://server2.toomao.com:9000/1.1/images' data-role='ajaxUpload'>上传图片</div>
-  <div id='upload-btn-2' data-url='http://server2.toomao.com:9000/1.1/images' data-role='ajaxUpload'>上传图片2</div>
   <script src="ajaxUpload.v2.js"></script>
   <script src="XMLHttpRequest.js"></script>
   <script>
     var btn = document.querySelector('#upload-btn');
-    var btn2 = document.querySelector('#upload-btn-2');
 
-    // btn.onclick = function() {
-    //   alert('onclick')
-    // }
     btn.onprogress = function(p, e) {
       console.log(p)
       alert(p)
@@ -45,10 +38,6 @@
     btn.onended = function(d) {
       console.log(d);
       alert('btn' + JSON.stringify(d));
-    }
-
-    btn2.onended = function (d) {
-      alert('btn2' + JSON.stringify(d))
     }
 
   </script>
