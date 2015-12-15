@@ -1,5 +1,5 @@
-*,*:before,*:after {
-    box-sizing: border-box;
+*, *:before, *:after {
+  box-sizing: border-box;
 }
 html, body {
   font-family: '方正正纤黑简体', 'FZLTXHJW--GB1-0', 'Microsoft YaHei', sans-serif;
@@ -12,8 +12,8 @@ h1, h2, h3, h4, h5, h6, p, a, img {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none
+  -ms-user-select: none;
+  user-select: none
 }
 a {
   -webkit-tap-highlight-color: transparent
