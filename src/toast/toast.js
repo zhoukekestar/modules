@@ -17,7 +17,7 @@
     var callback
       , defaults = {
           width     : 160,
-          content   : "?",
+          content   : "显示信息为空",
           done      : null,
           time      : 1200,
           autohide  : true
@@ -79,4 +79,5 @@
 
   window.toast = window.toast || alertMsg;
 
+  return alertMsg;
 }));
