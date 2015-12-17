@@ -6,18 +6,6 @@
   }
   window.logForBrowser = true;
 
-  JSON._parse = JSON.parse;
-  JSON.parse = function(str) {
-    try {
-      return JSON._parse(str);
-    } catch (e) {
-      console.error('JSON.parse error, str:' + str, 'logForBrowser.js', 0, 0, e);
-      return {};
-    }
-  }
-
-  // console.log('logForBrowser init.')
-
   console._error = console.error;
   console.error = function(msg, url, line, col, err) {
     url   = url   || 'local';
@@ -35,7 +23,7 @@
       stack     : err
     }
 
-    console._error(log);
+    console.log(log);
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", '/log', true);
@@ -48,6 +36,18 @@
       }, 100)
     }
   }
+
+  // Safe JSON parser.
+  JSON._parse = JSON.parse;
+  JSON.parse = function(str) {
+    try {
+      return JSON._parse(str);
+    } catch (e) {
+      console.error('JSON.parse error, str:' + str, 'logForBrowser.js', 0, 0, e);
+      return {};
+    }
+  }
+
 
   var needReload = false;
   window.onerror = function(msg, url, line, col, err) {
