@@ -38,7 +38,7 @@
 
 
       if (startPage === 1) {
-        totalPage > (startPage + options.showitem) ? (endPage = startPage + options.showitem - 1) : (endPage = totalPage);
+        totalPage >= (startPage + options.showitem) ? (endPage = startPage + options.showitem - 1) : (endPage = totalPage);
       }
 
       if (endPage === totalPage) {
