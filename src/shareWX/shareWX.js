@@ -177,4 +177,8 @@
     init(true);
   })
 
+  document.addEventListener('shareWX-reload', function() {
+    init(true)
+  })
+
 }));
