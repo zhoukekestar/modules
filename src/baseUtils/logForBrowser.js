@@ -106,8 +106,10 @@
 
     } else if (msg.indexOf('Illegal constructor') !== -1) {
       alert('您的游览器可能过旧或异常，请刷新网页或请尝试其他游览器。');
+      console.error(msg, url, line, col, err)
     } else {
       alert('抱歉，您的游览器出现未知异常，请刷新网页或请尝试其他游览器。');
+      console.error(msg, url, line, col, err)
     }
   }
 
