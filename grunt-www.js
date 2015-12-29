@@ -36,9 +36,13 @@ module.exports = function(grunt){
       },
 
       // javascript
-      modulesJS = ['EventPath', 'logForBrowser', 'XMLHttpRequest', 'onended'],
+      modulesJS = ['EventPath', 'logForBrowser', 'XMLHttpRequest', 'onended', 'CustomEvent'],
       jsBase = './src/',
-      externJS = [jsBase + '_fixMobile/EventPath.js', jsBase + 'baseUtils/logForBrowser.js', jsBase + '_fixDesktop/XMLHttpRequest.js', jsBase + '_fixDesktop/onended.js'],
+      externJS = [jsBase + '_fixMobile/EventPath.js',
+                  jsBase + 'baseUtils/logForBrowser.js',
+                  jsBase + '_fixDesktop/XMLHttpRequest.js',
+                  jsBase + '_fixDesktop/onended.js',
+                  jsBase + '_fixMobile/CustomEvent.js'],
       uglifyJSTask = [],
       requireJSTask = {},
       requireJSConfig = grunt.file.read('./requirejs.config.js', {encoding: 'utf8'}),
