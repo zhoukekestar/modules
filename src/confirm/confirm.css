@@ -53,22 +53,19 @@
 
 @-webkit-keyframes system-confirm {
   from {
-    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+            transform: scale(1.5);
     opacity: 0; }
   to {
-    transform: scale(1);
-    opacity: 1; } }
-@-moz-keyframes system-confirm {
-  from {
-    transform: scale(1.5);
-    opacity: 0; }
-  to {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
     opacity: 1; } }
 @keyframes system-confirm {
   from {
-    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+            transform: scale(1.5);
     opacity: 0; }
   to {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
     opacity: 1; } }
