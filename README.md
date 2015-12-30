@@ -61,12 +61,12 @@
 
 3、组件化看法
 
-  1、组件UI应独立于js之外，而不是由js提供各种接口去改变UI样式，也可以参考[这篇文章](http://isux.tencent.com/half-package-web-components-for-design.html)
+  1) 组件UI应独立于js之外，而不是由js提供各种接口去改变UI样式，也可以参考[这篇文章](http://isux.tencent.com/half-package-web-components-for-design.html)
 
-  2、 LESS JAVASCRIPT, MORE HTML, AUTO-INIT.
+  2) LESS JAVASCRIPT, MORE HTML, AUTO-INIT.
   组件高内聚，在组件之外少写组件相关代码（包括初始化，所以，组件需要自动初始化），也需要有重新初始化接口。只需标明元素使用哪种组件，组件就应自动初始化该元素。
 
-  3、元素中心化
+  3) 元素中心化
   为了方便调用，更自然地去写js代码，同时将原生js代码中的各种原有属性加以利用（跟RESTful中，将HTTP status加以利用类似），
   也可以省去组件初始化的显示调用。一个是以组件为中心，元素为辅助，另一个是以元素为中心，组件为辅助，这两者，我更喜欢后者，将元素从组件边缘移至组件中心。
 
