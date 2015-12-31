@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> </title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <style media="screen">
+        html, body {
+          overflow-x: hidden;
+          margin: 0;
+          padding: 0;
+        }
+        ul {
+          list-style: none;
+          padding: 0;
+        }
+        ul li {
+          background-color: #ff0;
+          padding: 10px;
+          margin: 10px 0;
+          height: 50px;
+        }
+      </style>
+      <link rel="stylesheet" href="deletable.css">
+    </head>
+    <body>
+    <ul>
+      <li data-role='deletable'>a</li>
+      <li data-role='deletable'>b</li>
+      <li data-role='deletable'>c</li>
+      <li data-role='deletable'>d</li>
+    </ul>
+    <script src='/events/events.js'></script>
+    <script src="deletable.js"></script>
+    <script>
+      document.addEventListener('deletable-deleted', function(e) {
+        console.log(this);
+        e.target.remove()
+      })
+    </script>
+    </body>
+</html>

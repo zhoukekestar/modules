@@ -8,6 +8,7 @@
 * clearable   : 输入框清空按钮
 * confirm     : 确定框选择
 * CSS-Controls: 选择框、点赞按钮、单选框、开关按钮样式优化
+* deletable   : ios样式的删除按钮
 * editor      : 富文本编辑器
 * events      : 增加手机端事件（左划、右划、长按）
 * formJSON    : json表单，以json格式ajax提交表单

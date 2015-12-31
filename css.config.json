@@ -20,6 +20,7 @@
   "clearable"     : "clearable/clearable.css",
   "confirm"       : "confirm/confirm.css",
 
+  "deletable"     : "deletable/deletable.css",
   "events"        : null,
 
   "formJSON"      : null,

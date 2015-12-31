@@ -19,6 +19,7 @@ require.config({
     clearable     : 'clearable/clearable',
     confirm       : 'confirm/confirm',
 
+    deletable     : "deletable/deletable",
     events        : 'events/events',
 
     formJSON      : 'formJSON/formJSON',
