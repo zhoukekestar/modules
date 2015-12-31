@@ -17,6 +17,7 @@ module.exports = function(grunt){
       citySelect    : true,
       clearable     : true,
 
+      deletable     : true,
       events        : true,
 
       formJSON      : true,

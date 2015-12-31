@@ -29,6 +29,7 @@ if (HTMLElement && !HTMLElement.prototype.click) {
 
   try {
     var xmlHttp = new XMLHttpRequest();
+    xmlHttp.timeout = 1000;
     xmlHttp.open('GET', '/', true);
     xmlHttp.responseType = 'json';
   } catch (e) {
@@ -74,6 +75,12 @@ if (HTMLElement && !HTMLElement.prototype.click) {
           // request.dispatchEvent(new Event('error'));
           request.onerror && request.onerror();
         };
+      }
+
+      if ('onloadstart' in nativeRequest) {
+        nativeRequest.onloadstart = function() {
+          request.onloadstart && request.onloadstart();
+        }
       }
 
       this.upload = {}
@@ -277,46 +284,8 @@ if (HTMLElement && !HTMLElement.prototype.click) {
   }
   window.logForBrowser = true;
 
-  JSON._parse = JSON.parse;
-  JSON.parse = function(str) {
-    try {
-      return JSON._parse(str);
-    } catch (e) {
-      console.error('JSON.parse error, str:' + str, 'logForBrowser.js', 0, 0, e);
-      return {};
-    }
-  }
-
-  // console.log('logForBrowser init.')
-
   console._error = console.error;
   console.error = function(msg, url, line, col, err) {
-    url   = url   || 'local';
-    line  = line  || 1;
-    col   = col   || 1;
-    err   = (err  && err.stack) || "NO STACK";
-
-    var log = {
-      ua        : navigator.userAgent,
-      location  : location.href,
-      msg       : msg,
-      scripturl : url,
-      line      : line,
-      column    : col,
-      stack     : err
-    }
-
-    console._error(log);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/log', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(log));
-
-  }
-
-  window.onerror = function(msg, url, line, col, err) {
-
     url   = url   || 'local';
     line  = line  || 1;
     col   = col   || 1;
@@ -339,11 +308,75 @@ if (HTMLElement && !HTMLElement.prototype.click) {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(log));
 
+    if (needReload) {
+      setTimeout(function(){
+        location.reload();
+      }, 100)
+    }
+  }
+
+  // Safe JSON parser.
+  JSON._parse = JSON.parse;
+  JSON.parse = function(str) {
+    try {
+      return JSON._parse(str);
+    } catch (e) {
+      console.error('JSON.parse error, str:' + str, 'logForBrowser.js', 0, 0, e);
+      return {};
+    }
+  }
+
+
+  var needReload = false;
+  window.onerror = function(msg, url, line, col, err) {
+
+    var logForBrowserObj = (localStorage['logForBrowser'] && JSON.parse(localStorage['logForBrowser'])) || ({retry : 1, time: Date.now()});
+    needReload = false;
+
+    // Last error was shown 10 seconds ago.
+    // Reset retry.
+    if (Date.now() - logForBrowserObj.time > 30000) {
+      logForBrowserObj = {retry : 1, time: Date.now()}
+    }
+
     if (msg.indexOf('pingpp') !== -1) {
-      alert('支付模块未能加载，请尝试刷新网页');
+      if (logForBrowserObj.retry < 4) {
+
+        msg += ' retry:' + logForBrowserObj.retry;
+        logForBrowserObj.retry++;
+        localStorage['logForBrowser'] = JSON.stringify(logForBrowserObj)
+
+        needReload = true;
+        console.error(msg, url, line, col, err)
+        return;
+      }
+      alert('支付模块未能加载，请稍后重试');
     } else if (msg.indexOf('WeixinJSBridge') !== -1) {
-      alert('微信游览器初始化错误，请尝试刷新网页');
-    } else if (msg.indexOf('Script error') !== -1 || url === ':0') {
+
+      if (logForBrowserObj.retry < 4) {
+
+        msg += ' retry:' + logForBrowserObj.retry;
+        logForBrowserObj.retry++;
+        localStorage['logForBrowser'] = JSON.stringify(logForBrowserObj)
+
+        needReload = true;
+        console.error(msg, url, line, col, err)
+        return;
+      }
+
+      alert('微信游览器初始化错误，请稍后重试');
+    } else if (msg.indexOf('Script error') !== -1) {
+
+      if (logForBrowserObj.retry < 4) {
+
+        msg += ' retry:' + logForBrowserObj.retry;
+        logForBrowserObj.retry++;
+        localStorage['logForBrowser'] = JSON.stringify(logForBrowserObj)
+
+        needReload = true;
+        console.error(msg, url, line, col, err)
+        return;
+      }
 
       if (confirm('网页加载过慢，建议刷新一下')) {
         location.reload();
@@ -351,8 +384,10 @@ if (HTMLElement && !HTMLElement.prototype.click) {
 
     } else if (msg.indexOf('Illegal constructor') !== -1) {
       alert('您的游览器可能过旧或异常，请刷新网页或请尝试其他游览器。');
+      console.error(msg, url, line, col, err)
     } else {
       alert('抱歉，您的游览器出现未知异常，请刷新网页或请尝试其他游览器。');
+      console.error(msg, url, line, col, err)
     }
   }
 
@@ -4456,6 +4491,69 @@ else if (typeof define === 'function' && define.amd) {
 }));
 
 
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define('deletable',factory);
+  } else {
+    factory();
+  }
+}(function() {
+
+  var
+    showDeletable = function() {
+      this.classList.add('deletable-show');
+    },
+    hideDeletable = function() {
+      this.classList.remove('deletable-show');
+    },
+    init = function() {
+      var eles = document.querySelectorAll('[data-role="deletable"]');
+
+      for (var i = 0; i < eles.length; i++) {
+
+        if (!eles[i]._inited) {
+          eles[i]._inited = true;
+
+          eles[i].classList.add('deletable');
+
+          var deleteEle = document.createElement('div');
+          deleteEle.classList.add('deletable-btn')
+          eles[i].appendChild(deleteEle)
+
+          if (eles[i].style.position === '') {
+            eles[i].style.position = 'relative';
+          }
+
+          deleteEle.onclick = function() {
+            this.parentNode.dispatchEvent(new Event('deletable-deleted', {
+              bubbles: true
+            }))
+          }
+
+          eles[i].addEventListener('taphold', showDeletable)
+          eles[i].addEventListener('swipeleft', showDeletable)
+          eles[i].addEventListener('swiperight', hideDeletable)
+        }
+      }
+    };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    init()
+  } else {
+    document.addEventListener('readystatechange', function(e) {
+      if (document.readyState === 'interactive') {
+        init();
+      }
+    })
+  }
+
+  document.addEventListener('deletable-reload', init)
+
+  return null;
+
+}));
+
+
 !( function( factory ){
   if (typeof define === "function" && define.amd ) {
     define( 'events',factory );
@@ -4844,8 +4942,8 @@ else if (typeof define === 'function' && define.amd) {
   document.addEventListener('click', function(e) {
     var target = e.target;
 
-    if (target.type === 'submit' && target.formAction) {
-      formAction = target.formAction;
+    if (target.type === 'submit' && target.getAttribute('formAction')) {
+      formAction = target.getAttribute('formAction');
     }
 
     setTimeout(function() {
@@ -5211,10 +5309,18 @@ else if (typeof define === 'function' && define.amd) {
   function elementInViewport(el) {
     var rect = el.getBoundingClientRect()
 
+    // For invisible element.
+    if (rect.top + rect.bottom + rect.left + rect.right + rect.height + rect.width === 0) {
+      return false;
+    }
+
     return (
-       rect.top    >= 0
-    && rect.left   >= 0
-    && rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+       rect.top   >= 0
+    // Pre load.
+    && rect.top   <= ((window.innerHeight || document.documentElement.clientHeight) + 100)
+    && rect.left  >= 0
+    // Hide carousel except first image. Do not add equal sign.
+    && rect.left  < (window.innerWidth || document.documentElement.clientWidth)
     )
   }
 
@@ -5227,7 +5333,7 @@ else if (typeof define === 'function' && define.amd) {
           this.classList.remove('lazy');
         });
       }
-    };
+    }
 
     for (var i = 0; i < backgroundImages.length; i++) {
       if (!backgroundImages[i].lazyloaded && elementInViewport(backgroundImages[i]) ) {
@@ -5236,7 +5342,7 @@ else if (typeof define === 'function' && define.amd) {
           this.classList.remove('lazy');
         });
       }
-    };
+    }
   }
 
   var init = function(reload) {
@@ -5247,12 +5353,14 @@ else if (typeof define === 'function' && define.amd) {
       images[i].src = images[i].src || defaultImg;
 
     // For: <img class='lazy delay' src='http://abc.com'>
-    var imagesDelay = document.querySelectorAll('img.lazy.delay');
-    for (var i = 0; i < imagesDelay.length; i++) {
-      imagesDelay[i].setAttribute('data-src', imagesDelay[i].src)
-      imagesDelay[i].src = defaultImg;
-      images.push(imagesDelay[i])
-    }
+    // You should do it manualy before document trigger complete event.
+    //
+    // var imagesDelay = document.querySelectorAll('img.lazy.delay');
+    // for (var i = 0; i < imagesDelay.length; i++) {
+    //   imagesDelay[i].setAttribute('data-src', imagesDelay[i].src)
+    //   imagesDelay[i].src = defaultImg;
+    //   images.push(imagesDelay[i])
+    // }
 
     // For: <div class='lazy' data-background-image=''>
     backgroundImages = Array.prototype.slice.apply(document.querySelectorAll('.lazy[data-backgroundimage]'))
@@ -5261,8 +5369,11 @@ else if (typeof define === 'function' && define.amd) {
 
     processScroll();
 
-    if (!reload)
-      window.addEventListener('scroll',processScroll);
+    if (!reload) {
+      window.addEventListener('scroll', processScroll);
+      window.addEventListener('touchend', processScroll);
+      window.addEventListener('touchmove', processScroll);
+    }
 
   }
 
@@ -5275,11 +5386,12 @@ else if (typeof define === 'function' && define.amd) {
     init(true)
   })
 
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // Image should load after document is completed, not AS SOON AS POSSIBLE.
+  if (document.readyState === 'complete') {
     init()
   } else {
     document.addEventListener('readystatechange', function(e) {
-      if (document.readyState === 'interactive') {
+      if (document.readyState === 'complete') {
         init();
       }
     })
@@ -5364,7 +5476,7 @@ else if (typeof define === 'function' && define.amd) {
       setTimeout(function(){
         if (loaded === false)
           loadingPageLoading();
-      }, 2000);
+      }, 800);
 
       /**
        * AJAX request
@@ -5388,7 +5500,7 @@ else if (typeof define === 'function' && define.amd) {
               time: new Date().getTime()
             }
             // Cache it.
-            sessionStorage['cache_' + url] = JSON.stringify(data)
+            // sessionStorage['cache_' + url] = JSON.stringify(data)
 
             callback(data)
 
@@ -5553,10 +5665,10 @@ else if (typeof define === 'function' && define.amd) {
     } else {
 
       // Cache loaded page when loaded.
-      sessionStorage['cache_' + location.href] = JSON.stringify({
-        doc: document.querySelector('html').outerHTML,
-        time: new Date().getTime()
-      })
+      // sessionStorage['cache_' + location.href] = JSON.stringify({
+      //   doc: document.querySelector('html').outerHTML,
+      //   time: new Date().getTime()
+      // })
       history.replaceState('', '', location.href);
     }
 
@@ -5654,6 +5766,7 @@ else if (typeof define === 'function' && define.amd) {
     if (document.querySelector('.loadingPage')) return;
     var ele = document.createElement("div");
   	ele.setAttribute("class", "loadingPage");
+    ele.innerHTML = '<span></span>'
     try {
   	 document.querySelector("body").appendChild(ele);
     } catch (e) {
@@ -5870,6 +5983,10 @@ else if (typeof define === 'function' && define.amd) {
     init(true);
   })
 
+  document.addEventListener('shareWX-reload', function() {
+    init(true)
+  })
+
 }));
 
 
@@ -5900,6 +6017,12 @@ else if (typeof define === 'function' && define.amd) {
 
       var active_content = active_tab.getAttribute('data-href');
       active_content = tabs.querySelector('.tabs-content > ' + active_content);
+
+      // Don't have active tab or don't have active content.
+      // Just return.
+      if (!active_tab || !active_content) {
+        return;
+      }
 
       slice.apply(tabs.querySelectorAll('.tabs-content > div')).forEach(function(content) {
         content.style.display = 'none';
@@ -6117,7 +6240,7 @@ else if (typeof define === 'function' && define.amd) {
     var callback
       , defaults = {
           width     : 160,
-          content   : "?",
+          content   : "显示信息为空",
           done      : null,
           time      : 1200,
           autohide  : true
@@ -6179,6 +6302,7 @@ else if (typeof define === 'function' && define.amd) {
 
   window.toast = window.toast || alertMsg;
 
+  return alertMsg;
 }));
 
 
@@ -6441,6 +6565,6 @@ else if (typeof define === 'function' && define.amd) {
  * web-moduels v1.0.0
  * Copyright 2014-2015 
  * Licensed under MIT
- * Include HTMLElement,XMLHttpRequest,CustomEvent,EventPath,logForBrowser,swiper,jweixin,citySelect,clearable,events,formJSON,formValidator,formOnInvalid,lazyload,loadpage,loadingPage,shareWX,tabs,template,toast,ajaxUpload 
- * Update on 2015-11-30 17:30;24 
+ * Include HTMLElement,XMLHttpRequest,CustomEvent,EventPath,logForBrowser,swiper,jweixin,citySelect,clearable,deletable,events,formJSON,formValidator,formOnInvalid,lazyload,loadpage,loadingPage,shareWX,tabs,template,toast,ajaxUpload 
+ * Update on 2015-12-30 18:20;57 
  */
