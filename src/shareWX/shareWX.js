@@ -148,9 +148,9 @@
       var data = {
         api: role.getAttribute('data-api') || '/wechat/sdk/sign',
         hide: !!role.getAttribute('data-hide'),
-        title: role.getAttribute('data-title'),
-        desc: role.getAttribute('data-desc'),
-        link: role.getAttribute('data-link'),
+        title: role.getAttribute('data-title') || document.title,
+        desc: role.getAttribute('data-desc') || location.href,
+        link: role.getAttribute('data-link') || location.href,
         imgUrl: role.getAttribute('data-imgUrl'),
         debug: !!role.getAttribute('data-debug'),
         success: role[namespace + 'success'],
