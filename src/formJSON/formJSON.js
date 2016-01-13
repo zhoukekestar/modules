@@ -253,7 +253,7 @@
      * before you send it.
      * */
     var session = document.cookie.match(/sessionToken=([^;]*)(;|$)/);
-    action = (action === undefined ? self.getAttribute('action') : action);
+    action = (action === undefined ? (self.getAttribute('action') || location.href) : action);
 
     if (method === 'GET') {
       action += action.indexOf('?') === -1 ? ('?' + res) : ( '&' + res);
