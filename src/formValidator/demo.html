@@ -4,13 +4,25 @@
   <meta charset='utf-8'>
   <title></title>
   <link rel="stylesheet" type="text/css" href="./formValidator.css">
+  <style>
+  .scroll {
+    height: 250px;
+    overflow: scroll;
+  }
+  </style>
 </head>
 <body>
-  <p>form example:</p>
+  <p>Default form.</p>
+  <form action="">
+    <input type="text" required>
+    <input type="text" pattern="abc">
+    <input type="submit">
+  </form>
+  <p>Form example:</p>
   <form novalidate>
-    <input type='email' data-role='formValidator'>
-    <input type='cellphone' data-role='formValidator'>
-    <input type='integer' data-role='formValidator'>
+    <input type='email' data-role='formValidator' placeholder="email">
+    <input type='cellphone' data-role='formValidator' placeholder="cellphone">
+    <input type='integer' data-role='formValidator' placeholder="integer">
     <input type='url' data-role='formValidator'>
     <input type='date' data-role='formValidator'>
 
@@ -22,6 +34,25 @@
 
     <input type='submit'>
   </form>
+  <p>Scroll Form Validator:</p>
+  <div class="scroll">
+    <form action="">
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>4</p>
+      <input type="text" required data-role='formValidator' data-errorMsgBoxHolder='.scroll'>
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>You can set defaultHolder by:</p>
+      <code>
+        var e = new Event('formOnInvalid-setDefaultHolder');
+        e.value = '.scroll';
+        document.dispatchEvent(e);
+      </code>
+    </form>
+  </div>
   <p>REC form style:</p>
   <form novalidate>
     <div class="form-group">
