@@ -133,3 +133,10 @@
 
   })
   ```
+
+## 共鸣文章
+* 声明：很多观点自己想出来的，然后在网上一找，诶~还真有类似想法的人和公司，不错，至少这条路是对的。
+* [面向设计的半封装web组件开发](http://isux.tencent.com/half-package-web-components-for-design.html)
+* [顺势而为，HTML发展与UI组件设计进化](http://isux.tencent.com/development-of-ui-components-based-on-native-html.html)，该文章我也非常赞同，
+不过我对js的封装不太一样，我觉得这种ui初始化对开发人员透明，对于给出的[demo](http://isux.tencent.com/wp-content/uploads/2015/12/20151221162207754.html)，开发人员只需要引入js就行了，后续如何初始化，初始化的参数有哪些，开发人员都不用关心。
+这也是我设计组件时为何一定要自动初始化的原因。
