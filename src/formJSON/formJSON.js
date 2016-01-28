@@ -264,7 +264,10 @@
     if (session) {
       xmlHttp.setRequestHeader('X-AVOSCloud-Session-Token', session[1])
     }
-
+    if (self.getAttribute('data-void-repeat') === 'true') {
+      self._voidRepeatID = self._voidRepeatID || Date.now();
+      xmlHttp.setRequestHeader('X-TRANSACTION-ID', self._voidRepeatID);
+    }
     xmlHttp.responseType = 'json';
 
     xmlHttp.onreadystatechange = function() {
