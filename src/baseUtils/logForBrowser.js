@@ -52,6 +52,11 @@
   var needReload = false;
   window.onerror = function(msg, url, line, col, err) {
 
+    // chrome browser's error. Ignore it.
+    if (msg.indexOf("Uncaught TypeError: Cannot read property 'description' of undefined") !== -1) {
+      return;
+    }
+
     var logForBrowserObj = (localStorage['logForBrowser'] && JSON.parse(localStorage['logForBrowser'])) || ({retry : 1, time: Date.now()});
     needReload = false;
 
@@ -73,6 +78,7 @@
         return;
       }
       alert('支付模块未能加载，请稍后重试');
+      console.error(msg, url, line, col, err)
     } else if (msg.indexOf('WeixinJSBridge') !== -1) {
 
       if (logForBrowserObj.retry < 4) {
@@ -87,6 +93,7 @@
       }
 
       alert('微信游览器初始化错误，请稍后重试');
+      console.error(msg, url, line, col, err)
     } else if (msg.indexOf('Script error') !== -1) {
 
       if (logForBrowserObj.retry < 4) {
@@ -103,12 +110,24 @@
       if (confirm('网页加载过慢，建议刷新一下')) {
         location.reload();
       }
-
+      console.error(msg, url, line, col, err)
     } else if (msg.indexOf('Illegal constructor') !== -1) {
-      alert('您的游览器可能过旧或异常，请刷新网页或请尝试其他游览器。');
+      alert('好吧...您的游览器可能有点旧了,有空更新一下吧~');
       console.error(msg, url, line, col, err)
     } else {
-      alert('抱歉，您的游览器出现未知异常，请刷新网页或请尝试其他游览器。');
+      // 未知异常，减少重试次数
+      if (logForBrowserObj.retry < 3) {
+
+        msg += ' retry:' + logForBrowserObj.retry;
+        logForBrowserObj.retry++;
+        localStorage['logForBrowser'] = JSON.stringify(logForBrowserObj)
+
+        needReload = true;
+        console.error(msg, url, line, col, err)
+        return;
+      }
+
+      alert('不会吧~页面不可能发生错误的！一定是你的打开方式不对,用其他游览器打开看看咯~');
       console.error(msg, url, line, col, err)
     }
   }
