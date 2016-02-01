@@ -19,7 +19,9 @@ module.exports = function(grunt){
       lazyload      : true,
       citySelect    : true,
       formJSON      : true,
-      shareWX       : true
+      shareWX       : true,
+      swiper        : true,
+      template      : true,
     },
 
     // javascript
