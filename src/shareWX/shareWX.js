@@ -138,7 +138,22 @@
     });
   }
 
+  var tryCount = 0;
   var init = function(force) {
+
+    // WeixinJSBridge should be loaded before init function.
+    if (!window.WeixinJSBridge) {
+      if (tryCount > 100) {
+        return;
+      }
+      setTimeout(function(){
+        init();
+        tryCount++;
+        // console.log('WeixinJSBridge not defined, retry.')
+      }, 300)
+      return;
+    }
+
     var namespace = '_';
     var role = document.querySelector('[data-role=shareWX]');
 
