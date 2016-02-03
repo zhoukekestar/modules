@@ -185,13 +185,27 @@
       } else if (type === 'datetime') {
 
         // For +08 Beijing Time
-        value = new Date(value + ':00+08:00').getTime()
-        Number.isNaN(value) && (value = '')
+        // value = new Date(value + ':00+08:00')
+        value = new Date(value.replace('T', ' '));
+        if (value.toString() === 'Invalid Date') {
+          value = '';
+        } else {
+          value = value.getTime();
+        }
 
-      } else if (type === 'time') {
+      } else if (type === 'time' || type === 'date') {
 
-        value = new Date(value).getTime();
-        Number.isNaN(value) && (value = '')
+        if (type === 'time') {
+          console.wran('请使用date属性,time属性已被弃用')
+        }
+        value = new Date(value);
+        if (value.toString() === 'Invalid Date') {
+          value = '';
+        } else {
+          // Default time-zone is +8
+          value.setHours(0);
+          value = value.getTime();
+        }
 
       } else if (type === 'bool' || type === 'boolean') {
         if (value === 'false')
