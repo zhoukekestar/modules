@@ -19,6 +19,7 @@ require.config({
     clearable     : 'clearable/clearable',
     confirm       : 'confirm/confirm',
 
+    datetime      : "datetime/datetime",
     deletable     : "deletable/deletable",
     events        : 'events/events',
 
@@ -80,7 +81,8 @@ require.config({
 
     baseUtils     : ['jquery'],
 
-    citySelect    : ['jquery'],
+    datetime      : [],
+    citySelect    : [],
     confirm       : [],
 
     formJSON      : [],

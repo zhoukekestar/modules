@@ -1,0 +1,24 @@
+<html>
+  <head></head>
+  <style>
+  </style>
+  <bod>
+    <form data-role='formJSON'>
+      <input type="datetime-local" name='datetime:datetime' value='2015-12-28T17:29'>
+      <input type="date" name='date:time' value='2015-12-28'>
+      <button>确定</button>
+    </form>
+    <script type="text/javascript" src='../formJSON/formJSON.js'></script>
+    <script>
+      document.querySelector('form')._data = function(d) {
+        console.log(d)
+        return null;
+      }
+    </script>
+    <script type="text/javascript" src='./datetime.js'></script>
+    <script>
+      var input1 = document.querySelector('input')
+      var input2 = document.querySelector('input + input')
+    </script>
+  </bod>
+</html>

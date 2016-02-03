@@ -17,6 +17,7 @@ module.exports = function(grunt){
 
         citySelect    : true,
 
+        // datetime      : true,
         formJSON      : true,
         formValidator : true,
         formOnInvalid : true,
