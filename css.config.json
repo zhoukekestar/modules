@@ -46,6 +46,8 @@
   "tabs"          : "tabs/tabs.css",
   "template"      : null,
 
+  "webcom"        : null,
+
   "toast"         : "toast/toast.css",
   "ajaxUpload"    : "upload/public/ajaxUpload.css",
   "ajaxUpload-single" : "upload/public/ajaxUpload-single.css"

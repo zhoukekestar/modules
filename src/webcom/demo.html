@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>demo</title>
+  <meta charset='utf-8'>
+</head>
+<body>
+  <p>webcom-test</p>
+  <div data-role='webcom' data-rel='list.html'></div>
+  
+  <script src='../_fixMobile/CustomEvent.js'></script>
+  <script src='../_fixMobile/HTMLElement.js'></script>
+  <script src='../_fixMobile/XMLHttpRequest.js'></script>
+
+  <script src="../template/template.js"></script>
+  <script src='./webcom.js'></script>
+  <script type="text/javascript">
+    document.addEventListener('webcom-inited', function() {
+
+      window.webcom = document.querySelector('[data-role="webcom"]');
+      webcom._bind({list:['a','b', 'c']})
+    })
+    window.onerror = function(e) {
+      alert(e)
+    }
+  </script>
+</body>
+</html>

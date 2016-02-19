@@ -1,0 +1,20 @@
+<div class='list'>
+  <div id="list-holder"></div>
+  <script type='text/html' data-role='template' data-holder='#list-holder'>
+    <ul>
+      <% list.forEach(function(li) { %>
+        <li><%=li%></li>
+      <% }) %>
+    </ul>
+  </script>
+  <style>
+    #list-holder {
+      color: #f00;
+    }
+  </style>
+  <link rel="stylesheet" href="a.css">
+  <script>
+    console.log('This message comes form list.html')
+  </script>
+  <script src='a.js'></script>
+</div>

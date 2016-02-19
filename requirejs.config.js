@@ -50,6 +50,7 @@ require.config({
     toast         : 'toast/toast',
     ajaxUpload    : 'upload/public/ajaxUpload.v2',
 
+    webcom        : 'webcom/webcom',
     'ajaxUpload-single' : 'upload/public/ajaxUpload-single'
   },
   shim: {
@@ -109,6 +110,8 @@ require.config({
 
     toast         : [],
     ajaxUpload    : [],
+
+    webcom        : [],
 
     'ajaxUpload-single' : []
   }

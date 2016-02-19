@@ -34,7 +34,9 @@ module.exports = function(grunt){
       template      : true,
       toast         : true,
 
-      ajaxUpload    : true
+      ajaxUpload    : true,
+
+      webcom        : true
     },
 
     // javascript
