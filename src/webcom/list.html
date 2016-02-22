@@ -1,6 +1,5 @@
-<div class='list'>
-  <div id="list-holder"></div>
-  <script type='text/html' data-role='template' data-holder='#list-holder'>
+<div data-register='list'>
+  <script type='text/html' data-role='template'>
     <ul>
       <% list.forEach(function(li) { %>
         <li><%=li%></li>
@@ -17,4 +16,9 @@
     console.log('This message comes form list.html')
   </script>
   <script src='a.js'></script>
+</div>
+<div data-register='list2'>
+  <p>
+    hello list2!
+  </p>
 </div>

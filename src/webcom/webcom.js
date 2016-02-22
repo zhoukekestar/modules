@@ -7,84 +7,153 @@
 }(function(){
   var namespace = '_';
   var webComponentsCount = 0;
+  window.customElements = {};
+  var customElementsLoaded = {};
 
-  var initWebComponent = function(ele) {
+  var initCustomElement = function(role) {
+    console.log('init customElement :' + role);
+    customElementsLoaded[role] = true;
+
+    var customElement = customElements[role];
+
+    document.body.appendChild(customElement);
+    customElement.style.display = 'none';
 
     // Init web component's template.
-    var tmpl = ele.querySelector('[data-role="template"]');
+    var tmpl = customElement.querySelector('[data-role="template"]');
     tmpl && tmpl.dispatchEvent(new Event('template-reload-it', {bubbles: true}));
 
     // Execute script
-    var scripts = ele.querySelectorAll('script');
+    var scripts = customElement.querySelectorAll('script');
     for (var i = 0; i < scripts.length; i++) {
       if (scripts[i].type === '' || scripts[i].type === 'text/javascript') {
         var s = document.createElement('script');
+        s.setAttribute('data-script', 'this script executed by webcom')
         scripts[i].src ? (s.src = scripts[i].src) : (s.innerHTML = scripts[i].innerHTML);
         scripts[i].remove();
-        ele.appendChild(s);
+        customElement.appendChild(s);
+      }
+    }
+  }
+
+  var initWebComponents = function() {
+    console.log('initWebComponents...')
+    var eles = document.querySelectorAll('[data-is]');
+    for (var i = 0; i < eles.length; i++) {
+
+      // Inited flag.
+      if (eles[i][namespace + 'inited']) return;
+      eles[i][namespace + 'inited'] = true;
+
+      // Get its role.
+      var role = eles[i].getAttribute('data-is');
+      customElementsLoaded[role] ? 1: initCustomElement(role);
+
+      // Bind function for template.
+      eles[i].setAttribute = function(name, value) {
+
+        if (name === 'data-bind') {
+          try {
+
+            var tmpl = customElements[role].querySelector('[data-role="template"]');
+            tmpl[namespace + 'holder'] = this;
+            tmpl[namespace + 'updateBy'](JSON.parse(value));
+          } catch (e) {
+            console.log(e)
+          }
+        }
+
+        Element.prototype.setAttribute.call(this, name, value);
+      }
+      if (eles[i].getAttribute('data-bind')) {
+        eles[i].setAttribute('data-bind', eles[i].getAttribute('data-bind'));
+      }
+
+      // Execute _loaded function.
+      ;(typeof eles[i][namespace + 'loaded'] === 'function') && eles[i][namespace + 'loaded']();
+
+
+      // Clone html to instance except CSS & JS.
+      var children = customElements[role].children;
+      for (var j = 0; j < children.length; j++) {
+        if (children[j].nodeName !== 'SCRIPT' && children[j].nodeName !== 'STYLE' && children[j].nodeName !== 'LINK')
+          eles[i].appendChild(children[j].cloneNode(true))
       }
     }
 
-    // Export bind method on element.
-    ele[namespace + 'bind'] = function(d) {
-      try {
-        tmpl._updateBy(d);
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-    // Inited all web components.
-    if (webComponentsCount == 0) {
-      document.dispatchEvent(new Event('webcom-inited'));
-    }
+    // Trigger webcom-inited event on document.
+    document.dispatchEvent(new Event('webcom-inited'));
   }
 
   var init = function() {
 
     var i         = 0,
-        eles      = document.querySelectorAll('[data-role="webcom"]'),
-        max       = eles.length,
-        ele;
+        links     = document.querySelectorAll('link[rel="import-webcom"]'),
+        link;
 
-    for (;i < max; i++) {
-      ele = eles[i];
+    for (;i < links.length; i++) {
+      link = links[i];
 
-      if (ele[namespace + 'inited'] === undefined) {
-        ele[namespace + 'inited'] = true;
-        webComponentsCount++;
+      // Inited flag
+      if (link[namespace + 'inited']) return;
+      link[namespace + 'inited'] = true;
 
-        // load html & init it.
-        (function(ele){
-          var url = ele.getAttribute('data-rel');
-          if (!url) {
-            webComponentsCount--;
-            return;
+      webComponentsCount++;
+
+      // load html & init it.
+      (function(link){
+
+        var url = link.href;
+        // No extern html should be loaded.
+        if (!url) {
+          webComponentsCount--;
+          // All links is loaded.
+          if (webComponentsCount === 0) {
+            initWebComponents();
           }
+          return;
+        }
 
-          var xmlHttp = new XMLHttpRequest()
-          xmlHttp.open("GET", url, true);
-          xmlHttp.onreadystatechange = function(){
-            if (xmlHttp.readyState === 4) {
-              webComponentsCount--;
+        var xmlHttp = new XMLHttpRequest()
+        xmlHttp.open("GET", url, true);
+        xmlHttp.onreadystatechange = function(){
 
-              if (xmlHttp.status !== 200) {
-                console.log('request error');
-                return;
-              }
+          // Extern html is loaded
+          if (xmlHttp.readyState === 4) {
 
+            if (xmlHttp.status !== 200) {
+              console.log('request error');
+            } else {
               try {
-                ele.innerHTML = xmlHttp.responseText;
-                initWebComponent(ele);
+                var doc = document.createDocumentFragment();
+                var wrapper = document.createElement("div");
+                wrapper.innerHTML = xmlHttp.responseText;
+                doc.appendChild(wrapper);
+                link[namespace + 'doc'] = doc;
+
+                // Mount all "data-register" element to customElements.
+                var eles = doc.querySelectorAll('[data-register]');
+                for (var j = 0; j < eles.length; j++) {
+                  var register = eles[j].getAttribute('data-register');
+                  customElements[register] = eles[j];
+                }
+
               } catch (e) {
                 console.log(e)
               }
             }
-          }
-          xmlHttp.send(null);
 
-        })(ele)
-      }
+            webComponentsCount--;
+            // All links is loaded.
+            if (webComponentsCount === 0) {
+              initWebComponents();
+            }
+          }
+        }
+        xmlHttp.send(null);
+
+      })(link)
+
     }
   }
 

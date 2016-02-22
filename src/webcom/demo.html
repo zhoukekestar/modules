@@ -3,11 +3,14 @@
 <head>
   <title>demo</title>
   <meta charset='utf-8'>
+  <link rel="import-webcom" href="list.html">
 </head>
 <body>
   <p>webcom-test</p>
-  <div data-role='webcom' data-rel='list.html'></div>
-  
+  <div data-is='list'></div>
+  <div data-is='list2'></div>
+  <div data-is='list' data-bind='{"list": ["aa", "bb", "cc"]}'></div>
+
   <script src='../_fixMobile/CustomEvent.js'></script>
   <script src='../_fixMobile/HTMLElement.js'></script>
   <script src='../_fixMobile/XMLHttpRequest.js'></script>
@@ -15,14 +18,13 @@
   <script src="../template/template.js"></script>
   <script src='./webcom.js'></script>
   <script type="text/javascript">
-    document.addEventListener('webcom-inited', function() {
+    window.webcom = document.querySelector('[data-is="list"]');
 
-      window.webcom = document.querySelector('[data-role="webcom"]');
-      webcom._bind({list:['a','b', 'c']})
-    })
-    window.onerror = function(e) {
-      alert(e)
-    }
+    webcom.setAttribute('data-bind', JSON.stringify({list:['a','b', 'c']}))
+
+    setTimeout(function(){
+      webcom.setAttribute('data-bind', JSON.stringify({list: ['aaa', 'bbb', 'ccc']}))
+    }, 5000)
   </script>
 </body>
 </html>
