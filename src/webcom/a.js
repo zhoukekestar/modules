@@ -1,1 +1,1 @@
-console.log('This message comes form a.js')
+console.log('This message comes from a.js.')

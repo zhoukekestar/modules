@@ -42,14 +42,9 @@
   var namespace = '_',
       updateBy = function(d) {
         try {
-          var holder = this.getAttribute('data-holder');
+          var holder = this[namespace + 'holder'] || ( this.getAttribute('data-holder') && document.querySelector(this.getAttribute('data-holder')) );
           if (!holder) {
             console.log('Holder is empty.')
-            return;
-          }
-          holder = document.querySelector(holder)
-          if (!holder) {
-            console.log("Can't select " + holder);
             return;
           }
           holder.innerHTML = this[namespace + 'fn'](d);
@@ -59,14 +54,9 @@
       },
       appendBy = function(d) {
         try {
-          var holder = this.getAttribute('data-holder');
+          var holder = this[namespace + 'holder'] || ( this.getAttribute('data-holder') && document.querySelector(this.getAttribute('data-holder')) );
           if (!holder) {
             console.log('Holder is empty.')
-            return;
-          }
-          holder = document.querySelector(holder)
-          if (!holder) {
-            console.log("Can't select " + holder);
             return;
           }
 
@@ -127,6 +117,18 @@
   }
 
   document.addEventListener('reload', init)
+  document.addEventListener('template-reload-it', function(e) {
+
+    if (e.target.getAttribute('data-role') === 'template') {
+      e.target[namespace + 'inited'] = true;
+      // Cache function code
+      e.target[namespace + 'fn'] = fn(e.target.innerHTML);
+
+      e.target[namespace + 'updateBy'] = updateBy.bind(e.target);
+      e.target[namespace + 'appendBy'] = appendBy.bind(e.target);
+      e.target[namespace + 'htmlBy']   = htmlBy.bind(e.target);
+    }
+  })
 
   return null;
 }));

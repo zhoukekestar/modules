@@ -5,13 +5,19 @@
     factory( );
   }
 }(function(){
-  var namespace = '_';
-  var webComponentsCount = 0;
+  var debug                 = false
+    , namespace             = '_'
+    , webComponentsCount    = 0
+    , customElementsLoaded  = {};
+
   window.customElements = {};
-  var customElementsLoaded = {};
 
   var initCustomElement = function(role) {
-    console.log('init customElement :' + role);
+
+    debug && console.log('init customElement :' + role);
+
+    // Inited flag.
+    if (customElementsLoaded[role]) return;
     customElementsLoaded[role] = true;
 
     var customElement = customElements[role];
@@ -28,7 +34,7 @@
     for (var i = 0; i < scripts.length; i++) {
       if (scripts[i].type === '' || scripts[i].type === 'text/javascript') {
         var s = document.createElement('script');
-        s.setAttribute('data-script', 'this script executed by webcom')
+        s.setAttribute('data-runner', 'this-script-executed-by-webcom')
         scripts[i].src ? (s.src = scripts[i].src) : (s.innerHTML = scripts[i].innerHTML);
         scripts[i].remove();
         customElement.appendChild(s);
@@ -37,7 +43,7 @@
   }
 
   var initWebComponents = function() {
-    console.log('initWebComponents...')
+    debug && console.log('initWebComponents...')
     var eles = document.querySelectorAll('[data-is]');
     for (var i = 0; i < eles.length; i++) {
 
