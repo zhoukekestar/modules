@@ -22,6 +22,10 @@
 
     var customElement = customElements[role];
 
+    if (!customElement) {
+      console.log('customElement ' + role + ' not Found.')
+      return;
+    }
     document.body.appendChild(customElement);
     customElement.style.display = 'none';
 
@@ -33,6 +37,13 @@
     var scripts = customElement.querySelectorAll('script');
     for (var i = 0; i < scripts.length; i++) {
       if (scripts[i].type === '' || scripts[i].type === 'text/javascript') {
+
+        // Skip the script only executed after template is updated.
+        if (scripts[i].getAttribute('data-run') === 'template-updated') {
+          continue;
+        }
+
+        // Execute the normal script.
         var s = document.createElement('script');
         s.setAttribute('data-runner', 'this-script-executed-by-webcom')
         scripts[i].src ? (s.src = scripts[i].src) : (s.innerHTML = scripts[i].innerHTML);
@@ -64,6 +75,29 @@
             var tmpl = customElements[role].querySelector('[data-role="template"]');
             tmpl[namespace + 'holder'] = this;
             tmpl[namespace + 'updateBy'](JSON.parse(value));
+
+            // Execute template-updated script.
+            var scripts = customElements[role].querySelectorAll('script[data-run="template-updated"]');
+            for (var j = 0; j < scripts.length; j++) {
+              var s = document.createElement('script');
+              s.setAttribute('data-runner', 'this-script-executed-by-webcom');
+              s.setAttribute('data-run', 'template-updated-by-webcom');
+
+              // export current var to global
+              var tempName = '_webcom' + Date.now() + (Math.random() + '').substr(2, 6);
+              window[tempName] = this;
+
+              // Execute it with current this.
+              s.innerHTML = '(function(){' + scripts[j].innerHTML + '}).bind(window["' + tempName + '"])();'
+
+              // execute it.
+              this.appendChild(s);
+
+              // Clear var.
+              setTimeout(function(){
+                delete window[tempName];
+              }, 1000)
+            }
           } catch (e) {
             console.log(e)
           }
@@ -80,6 +114,10 @@
 
 
       // Clone html to instance except CSS & JS.
+      if (!customElements[role]) {
+        console.log('customElement ' + role + ' not Found.')
+        return;
+      }
       var children = customElements[role].children;
       for (var j = 0; j < children.length; j++) {
         if (children[j].nodeName !== 'SCRIPT' && children[j].nodeName !== 'STYLE' && children[j].nodeName !== 'LINK')
