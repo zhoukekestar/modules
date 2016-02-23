@@ -9,7 +9,7 @@
   var fn = function(html) {
     //var html = document.getElementById(id).innerHTML;
 
-    var code =  "var p = []; with(obj) { " +
+    var code =  "var p = [], print = Array.prototype.push.bind(p); with(obj) { " +
       "p.push('" +
       html
         .replace(/[\r\n\t]/g, "")
