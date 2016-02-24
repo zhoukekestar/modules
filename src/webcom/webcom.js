@@ -69,36 +69,41 @@
 
       // Bind function for template.
       eles[i].setAttribute = function(name, value) {
-
+        var currentRole = this.getAttribute('data-is');
         if (name === 'data-bind') {
           try {
 
-            var tmpl = customElements[role].querySelector('[data-role="template"]');
+            var tmpl = customElements[currentRole].querySelector('[data-role="template"]');
             tmpl[namespace + 'holder'] = this;
             tmpl[namespace + 'updateBy'](JSON.parse(value));
 
             // Execute template-updated script.
-            var scripts = customElements[role].querySelectorAll('script[data-run="template-updated"]');
+
+            // export current var to global
+            var tempName = '_webcom' + Date.now() + (Math.random() + '').substr(2, 6);
+            window[tempName] = this;
+
+            var scripts = customElements[currentRole].querySelectorAll('script[data-run="template-updated"]');
             for (var j = 0; j < scripts.length; j++) {
               var s = document.createElement('script');
               s.setAttribute('data-runner', 'this-script-executed-by-webcom');
               s.setAttribute('data-run', 'template-updated-by-webcom');
-
-              // export current var to global
-              var tempName = '_webcom' + Date.now() + (Math.random() + '').substr(2, 6);
-              window[tempName] = this;
 
               // Execute it with current this.
               s.innerHTML = '(function(){' + scripts[j].innerHTML + '}).bind(window["' + tempName + '"])();'
 
               // execute it.
               this.appendChild(s);
-
-              // Clear var.
-              setTimeout(function(){
-                delete window[tempName];
-              }, 1000)
             }
+
+            // Clear var.
+            setTimeout(function(){
+              delete window[tempName];
+              // The appended child (html) may include customElement, so, you should reload it again.
+              debug && console.log('dispatchEvent: webcom-reload.')
+              document.dispatchEvent(new Event('webcom-reload'));
+            }, 1000)
+
           } catch (e) {
             console.log(e)
           }
