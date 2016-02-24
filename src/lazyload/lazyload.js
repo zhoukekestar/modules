@@ -28,6 +28,10 @@
       el.src = src;
       fn? fn.call(el) : null;
     }
+    img.onerror = function() {
+      el.src = defaultImg;
+      fn? fn.call(el) : null;
+    }
     img.src = src;
   }
 
@@ -36,6 +40,10 @@
       , src = el.getAttribute('data-backgroundimage');
     img.onload = function() {
       el.style.backgroundImage = 'url(' + src + ')';
+      fn? fn.call(el) : null;
+    }
+    img.onerror = function() {
+      el.style.backgroundImage = 'url(' + defaultImg + ')';
       fn? fn.call(el) : null;
     }
     img.src = src;
@@ -108,6 +116,9 @@
       window.addEventListener('scroll', processScroll);
       window.addEventListener('touchend', processScroll);
       window.addEventListener('touchmove', processScroll);
+      setInterval(function(){
+        processScroll();
+      }, 1000)
     }
 
   }
