@@ -8,7 +8,8 @@
   var debug                 = false
     , namespace             = '_'
     , webComponentsCount    = 0
-    , customElementsLoaded  = {};
+    , customElementsLoaded  = {}
+    , webcomInited          = false;
 
   window.customElements = {};
 
@@ -59,7 +60,7 @@
     for (var i = 0; i < eles.length; i++) {
 
       // Inited flag.
-      if (eles[i][namespace + 'inited']) return;
+      if (eles[i][namespace + 'inited']) continue;
       eles[i][namespace + 'inited'] = true;
 
       // Get its role.
@@ -126,7 +127,7 @@
     }
 
     // Trigger webcom-inited event on document.
-    document.dispatchEvent(new Event('webcom-inited'));
+    ;(webcomInited === false) && document.dispatchEvent(new Event('webcom-inited')) && (webcomInited = true);
   }
 
   var init = function() {
@@ -139,7 +140,7 @@
       link = links[i];
 
       // Inited flag
-      if (link[namespace + 'inited']) return;
+      if (link[namespace + 'inited']) continue;
       link[namespace + 'inited'] = true;
 
       webComponentsCount++;
@@ -199,6 +200,11 @@
       })(link)
 
     }
+
+    // All links is loaded.
+    if (webComponentsCount === 0) {
+      initWebComponents();
+    }
   }
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
@@ -211,6 +217,7 @@
     })
   }
 
+  document.addEventListener('webcom-reload', init);
   document.addEventListener('reload', init)
 
   return null;
