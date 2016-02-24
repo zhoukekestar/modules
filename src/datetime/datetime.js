@@ -78,7 +78,7 @@
     script.src = js[i];
     document.head.appendChild(script);
     script.onload = function() {
-      console.log(script.src + ' loaded.')
+      // console.log(script.src + ' loaded.')
       loadJS(i + 1)
     }
   }
