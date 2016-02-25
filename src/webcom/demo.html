@@ -8,23 +8,23 @@
 <body>
   <p>webcom-test</p>
   <div data-is='list'></div>
+  <button onclick='update()'>Update</button>
   <div data-is='list2' data-bind-show='true'></div>
   <div data-is='list' data-bind='{"list": ["aa", "bb", "cc"]}'></div>
 
-  <script src='../_fixMobile/CustomEvent.js'></script>
+  <!-- <script src='../_fixMobile/CustomEvent.js'></script>
   <script src='../_fixMobile/HTMLElement.js'></script>
-  <script src='../_fixMobile/XMLHttpRequest.js'></script>
+  <script src='../_fixMobile/XMLHttpRequest.js'></script> -->
 
   <script src="../template/template.js"></script>
   <script src='./webcom.js'></script>
   <script type="text/javascript">
     window.webcom = document.querySelector('[data-is="list"]');
-
     webcom.setAttribute('data-bind', JSON.stringify({list:['a','b', 'c']}))
 
-    setTimeout(function(){
+    window.update = function() {
       webcom.setAttribute('data-bind', JSON.stringify({list: ['aaa', 'bbb', 'ccc']}))
-    }, 5000)
+    }
   </script>
 </body>
 </html>
