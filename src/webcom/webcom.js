@@ -5,13 +5,14 @@
     factory( );
   }
 }(function(){
+
+  window.customElements = {};
   var debug                 = false
     , namespace             = '_'
     , webComponentsCount    = 0
     , customElementsLoaded  = {}
     , webcomInited          = false;
 
-  window.customElements = {};
   var setAttributeFun = function(name, value) {
     var currentRole = this.getAttribute('data-is');
     if (name === 'data-bind') {
@@ -154,6 +155,57 @@
     ;(webcomInited === false) && document.dispatchEvent(new Event('webcom-inited')) && (webcomInited = true);
   }
 
+  var loadLink = function(link) {
+    var url = link.href;
+    // No extern html should be loaded.
+    if (!url) {
+      webComponentsCount--;
+      // All links is loaded.
+      if (webComponentsCount === 0) {
+        initWebComponents();
+      }
+      return;
+    }
+
+    var xmlHttp = new XMLHttpRequest()
+    xmlHttp.open("GET", url, true);
+    xmlHttp.onreadystatechange = function(){
+
+      // Extern html is loaded
+      if (xmlHttp.readyState === 4) {
+
+        if (xmlHttp.status !== 200) {
+          console.log('request error');
+        } else {
+          try {
+            var doc = document.createDocumentFragment();
+            var wrapper = document.createElement("div");
+            wrapper.innerHTML = xmlHttp.responseText;
+            doc.appendChild(wrapper);
+            link[namespace + 'doc'] = doc;
+
+            // Mount all "data-register" element to customElements.
+            var eles = doc.querySelectorAll('[data-register]');
+            for (var j = 0; j < eles.length; j++) {
+              var register = eles[j].getAttribute('data-register');
+              customElements[register] = eles[j];
+            }
+
+          } catch (e) {
+            console.log(e)
+          }
+        }
+
+        webComponentsCount--;
+        // All links is loaded.
+        if (webComponentsCount === 0) {
+          initWebComponents();
+        }
+      }
+    }
+    xmlHttp.send(null);
+  }
+
   var init = function() {
 
     var i         = 0,
@@ -163,66 +215,14 @@
     for (;i < links.length; i++) {
       link = links[i];
 
-      // Inited flag
+      // Skip inited link.
       if (link[namespace + 'inited']) continue;
       link[namespace + 'inited'] = true;
 
       webComponentsCount++;
 
       // load html & init it.
-      (function(link){
-
-        var url = link.href;
-        // No extern html should be loaded.
-        if (!url) {
-          webComponentsCount--;
-          // All links is loaded.
-          if (webComponentsCount === 0) {
-            initWebComponents();
-          }
-          return;
-        }
-
-        var xmlHttp = new XMLHttpRequest()
-        xmlHttp.open("GET", url, true);
-        xmlHttp.onreadystatechange = function(){
-
-          // Extern html is loaded
-          if (xmlHttp.readyState === 4) {
-
-            if (xmlHttp.status !== 200) {
-              console.log('request error');
-            } else {
-              try {
-                var doc = document.createDocumentFragment();
-                var wrapper = document.createElement("div");
-                wrapper.innerHTML = xmlHttp.responseText;
-                doc.appendChild(wrapper);
-                link[namespace + 'doc'] = doc;
-
-                // Mount all "data-register" element to customElements.
-                var eles = doc.querySelectorAll('[data-register]');
-                for (var j = 0; j < eles.length; j++) {
-                  var register = eles[j].getAttribute('data-register');
-                  customElements[register] = eles[j];
-                }
-
-              } catch (e) {
-                console.log(e)
-              }
-            }
-
-            webComponentsCount--;
-            // All links is loaded.
-            if (webComponentsCount === 0) {
-              initWebComponents();
-            }
-          }
-        }
-        xmlHttp.send(null);
-
-      })(link)
-
+      loadLink(link);
     }
 
     // All links is loaded.
