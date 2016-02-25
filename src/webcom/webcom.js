@@ -12,6 +12,59 @@
     , webcomInited          = false;
 
   window.customElements = {};
+  var setAttributeFun = function(name, value) {
+    var currentRole = this.getAttribute('data-is');
+    if (name === 'data-bind') {
+      try {
+
+        var tmpl = customElements[currentRole].querySelector('[data-role="template"]');
+        tmpl[namespace + 'holder'] = this;
+        tmpl[namespace + 'updateBy'](JSON.parse(value));
+
+        // Execute template-updated script.
+
+        // export current var to global
+        var tempName = '_webcom' + Date.now() + (Math.random() + '').substr(2, 6);
+        window[tempName] = this;
+
+        var scripts = customElements[currentRole].querySelectorAll('script[data-run="template-updated"]');
+        for (var j = 0; j < scripts.length; j++) {
+          var s = document.createElement('script');
+          s.setAttribute('data-runner', 'this-script-executed-by-webcom');
+          s.setAttribute('data-run', 'template-updated-by-webcom');
+
+          // Execute it with current this.
+          s.innerHTML = '(function(){' + scripts[j].innerHTML + '}).bind(window["' + tempName + '"])();'
+
+          // execute it.
+          this.appendChild(s);
+        }
+
+        // Clear var.
+        setTimeout(function(){
+          delete window[tempName];
+          // The appended child (html) may include customElement, so, you should reload it again.
+          debug && console.log('dispatchEvent: webcom-reload.')
+          document.dispatchEvent(new Event('webcom-reload'));
+        }, 1000)
+
+      } catch (e) {
+        console.log(e)
+      }
+
+      // Hide data-bind
+      if (this.getAttribute('data-bind-show') === 'true') {
+        Element.prototype.setAttribute.call(this, name, value);
+      } else {
+        Element.prototype.setAttribute.call(this, name, 'data-was-hidden-by-webcom');
+        this._dataBind = value;
+      }
+
+    } else {
+      Element.prototype.setAttribute.call(this, name, value);
+    }
+
+  }
 
   var initCustomElement = function(role) {
 
@@ -67,52 +120,18 @@
       var role = eles[i].getAttribute('data-is');
       customElementsLoaded[role] ? 1: initCustomElement(role);
 
-      // Bind function for template.
-      eles[i].setAttribute = function(name, value) {
-        var currentRole = this.getAttribute('data-is');
-        if (name === 'data-bind') {
-          try {
-
-            var tmpl = customElements[currentRole].querySelector('[data-role="template"]');
-            tmpl[namespace + 'holder'] = this;
-            tmpl[namespace + 'updateBy'](JSON.parse(value));
-
-            // Execute template-updated script.
-
-            // export current var to global
-            var tempName = '_webcom' + Date.now() + (Math.random() + '').substr(2, 6);
-            window[tempName] = this;
-
-            var scripts = customElements[currentRole].querySelectorAll('script[data-run="template-updated"]');
-            for (var j = 0; j < scripts.length; j++) {
-              var s = document.createElement('script');
-              s.setAttribute('data-runner', 'this-script-executed-by-webcom');
-              s.setAttribute('data-run', 'template-updated-by-webcom');
-
-              // Execute it with current this.
-              s.innerHTML = '(function(){' + scripts[j].innerHTML + '}).bind(window["' + tempName + '"])();'
-
-              // execute it.
-              this.appendChild(s);
-            }
-
-            // Clear var.
-            setTimeout(function(){
-              delete window[tempName];
-              // The appended child (html) may include customElement, so, you should reload it again.
-              debug && console.log('dispatchEvent: webcom-reload.')
-              document.dispatchEvent(new Event('webcom-reload'));
-            }, 1000)
-
-          } catch (e) {
-            console.log(e)
-          }
-        }
-
-        Element.prototype.setAttribute.call(this, name, value);
-      }
+      // Bind function for template. Override setAttribute function.
+      eles[i].setAttribute = setAttributeFun.bind(eles[i]);
       if (eles[i].getAttribute('data-bind')) {
         eles[i].setAttribute('data-bind', eles[i].getAttribute('data-bind'));
+      }
+
+      // Override getAttribute function.
+      eles[i].getAttribute = function(name) {
+        if (name === 'data-bind' && this.getAttribute('data-bind-show') !== 'true') {
+          return this._dataBind;
+        }
+        return Element.prototype.getAttribute.call(this, name);
       }
 
       // Execute _loaded function.
