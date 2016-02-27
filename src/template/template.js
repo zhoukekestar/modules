@@ -48,6 +48,9 @@
             return;
           }
           holder.innerHTML = this[namespace + 'fn'](d);
+
+          // Trigger Event for webcom
+          document.dispatchEvent(new Event('webcom-reload'));
         } catch (e) {
           console.log(e);
         }
@@ -71,6 +74,8 @@
             holder.innerHTML += this[namespace + 'fn'](d);
           }
 
+          // Trigger Event for webcom
+          document.dispatchEvent(new Event('webcom-reload'));
         } catch (e) {
           console.log(e);
         }
