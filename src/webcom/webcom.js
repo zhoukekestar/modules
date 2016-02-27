@@ -11,7 +11,8 @@
     , namespace             = '_'
     , webComponentsCount    = 0
     , customElementsLoaded  = {}
-    , webcomInited          = false;
+    , webcomInited          = false
+    , running               = false;
 
   var setAttributeFun = function(name, value) {
     var currentRole = this.getAttribute('data-is');
@@ -152,6 +153,7 @@
     }
 
     // Trigger webcom-inited event on document.
+    running = false;
     ;(webcomInited === false) && document.dispatchEvent(new Event('webcom-inited')) && (webcomInited = true);
   }
 
@@ -207,6 +209,8 @@
   }
 
   var init = function() {
+    if (running) return;
+    running = true;
 
     var i         = 0,
         links     = document.querySelectorAll('link[rel="import-webcom"]'),
