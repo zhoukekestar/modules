@@ -38,7 +38,7 @@
 * [polyfill-service](https://github.com/Financial-Times/polyfill-service)
 
 ## 个人观点
-1、对框架的看法：
+#### 1、对框架的看法：
 
   前端的js框架多种多样，最流行的莫过于angularjs和react了，还有kissy，YUI（有点走下坡路呢），不过，我觉得，这种框架都是对原有html标准的破坏，比如react有自己的jsx语法（虽然和html类似，但和标准相去甚远），还有angularjs有自己的好多属性，比如ng-app,ng-model之类的。
 
@@ -46,7 +46,7 @@
 
   我一直都不太喜欢框架，更倾向于js模块和组件（有点工具类的感觉，要用到什么，就加载什么），是那种低耦合，不依赖于框架本身的模块和组件，不是那种基于react、kissy的模块或组件，而是能够直接拿来就能在游览器上跑的组件（当然，可能会依赖requirejs等模块加载工具）
 
-2、对HTML标准的看法：
+#### 2、对HTML标准的看法：
 
   我希望我编写HTML的时候，我也能正常编码，而不靠各种兼容，这跟polyfill的思想是一样的
 
@@ -60,14 +60,18 @@
 
   `<input type="email" name="emial" placeholder="email" data-msg='{"email":"emial格式错了啦"}'>`
 
-3、组件化看法
+#### 3、组件化看法
 
-  1) 组件UI应独立于js之外，而不是由js提供各种接口去改变UI样式，也可以参考[这篇文章](http://isux.tencent.com/half-package-web-components-for-design.html)
+  **1) 组件UI的CSS化**
+  
+  组件UI应独立于js之外，而不是由js提供各种接口去改变UI样式，也可以参考[这篇文章](http://isux.tencent.com/half-package-web-components-for-design.html)
 
-  2) LESS JAVASCRIPT, MORE HTML, AUTO-INIT.
+  **2) LESS JAVASCRIPT, MORE HTML, AUTO-INIT.**
+  
   组件高内聚，在组件之外少写组件相关代码（包括初始化，所以，组件需要自动初始化），也需要有重新初始化接口。只需标明元素使用哪种组件，组件就应自动初始化该元素。
 
-  3)  LESS DEP-JS, MORE NAT-JS.
+  **3)  LESS DEP-JS, MORE NAT-JS.**
+  
   更少的依赖代码，更多的原生JS，弱化模块依赖。比如：src/webcom模块，组件内部使用setAttribute这个原生函数去设置组件绑定数据。这样做的好处是：
   1、当模块没有加载成功时，数据已加载时，调用setAttribute设置数据，这样会调用原生方法，代码不会报错，没有模块依赖，（模块加载后通过getAttribute获取数据来初始化）
   2、当模块加载完成，数据延时的情况（setAttribute后来才调用），模块内部需要重写setAttribute方法，这样，当调用setAttribute函数时就能及时更新组件内部数据了。
@@ -111,12 +115,13 @@
   ```
 
 
-  3) 元素中心化
+  **3) 元素中心化**
+  
   要说html,js,css哪个更强大，很多人都觉得js最强大，所以好多模块代码都需要js去做各种事情，但我觉得html更强大，html是一种融合剂，将本身、js和css结合起来。
   所以html是我的最佳，自然而然也觉得元素中心化是最好的，而且代码质量更容易掌控。
   元素为中心，所以的初始化和设置都围绕元素展开。
 
-  组件参数设置 VS 元素参数设置
+  **组件参数设置 VS 元素参数设置**
   将以下代码
   ```js
   <div id='upload-btn' data-url='/upload'></div>
@@ -130,7 +135,9 @@
   // 所有操作围绕ext变量展开
   // 需要显式调用组件的初始化，模块强依赖
   ```
-  改成
+  
+  VS
+  
   ```js
   <div data-url='/upload' data-role='ajaxUpload'>upload</div>
   
@@ -144,7 +151,8 @@
   ```
 
 
-  在写组件的过程中，从
+  **变量中心化组件 VS 元素中心化组件**
+  
   ```js
 
   var ajaxUpload = function(ele, o) {
@@ -158,7 +166,9 @@
   }
 
   ```
-  改成
+  
+  VS
+  
   ```js
   document.addEventListener('click', function(e) {
 
