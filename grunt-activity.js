@@ -22,6 +22,7 @@ module.exports = function(grunt){
       shareWX       : true,
       swiper        : true,
       template      : true,
+      webcom        : true,
     },
 
     // javascript
