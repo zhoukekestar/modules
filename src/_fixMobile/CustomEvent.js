@@ -53,26 +53,26 @@
 
 
   /* Fix */
-  if (document.body.style.animation !== '') {
-    var _addEventListener = HTMLElement.prototype.addEventListener;
-    HTMLElement.prototype.addEventListener = function() {
 
-      var type = arguments[0]
-        , func = arguments[1]
-        , capture = arguments[2];
+  var _addEventListener = HTMLElement.prototype.addEventListener;
+  HTMLElement.prototype.addEventListener = function() {
 
-      if (type === 'animationend') {
+    var type = arguments[0]
+      , func = arguments[1]
+      , capture = arguments[2];
 
-        _addEventListener.call(this, 'webkitAnimationEnd', func, capture)
+    if (type === 'animationend') {
 
-      } else if (type === 'animationstart') {
+      _addEventListener.call(this, 'webkitAnimationEnd', func, capture)
 
-        _addEventListener.call(this, 'webkitAnimationStart', func, capture)
+    } else if (type === 'animationstart') {
 
-      } else {
-        _addEventListener.call(this, type, func, capture)
-      }
+      _addEventListener.call(this, 'webkitAnimationStart', func, capture)
+
+    } else {
+      _addEventListener.call(this, type, func, capture)
     }
   }
+
 
 })(window);
