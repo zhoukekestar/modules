@@ -1,7 +1,9 @@
-{
+module.exports = {
   "_bootstrap"    : "baseCSS/bootstrap-extend.css",
   "_base"         : "baseCSS/base.css",
-
+  "ui-radio"      : "CSS-Controls/radio/ui-radio.css",
+  "ui-checkbox"   : "CSS-Controls/checkbox/ui-checkbox.css",
+  "ui-switch"     : "CSS-Controls/switch/ui-switch.css",
 
   "jquery"        : null,
 

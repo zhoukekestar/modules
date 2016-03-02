@@ -1,4 +1,4 @@
-require.config({
+module.exports = {
   baseUrl: './src/',
   paths: {
     jquery        : '_lib/jquery.min',
@@ -115,4 +115,4 @@ require.config({
 
     'ajaxUpload-single' : []
   }
-});
+};

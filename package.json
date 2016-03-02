@@ -6,6 +6,7 @@
     "grunt": "node -e \"require('grunt').tasks(['default']);\""
   },
   "dependencies": {
+    "clean-css": "^3.4.10",
     "express": "~4.12.2",
     "requirejs": "^2.1.22"
   },
