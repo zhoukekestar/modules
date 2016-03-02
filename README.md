@@ -63,15 +63,15 @@
 #### 3、组件化看法
 
   **1) 组件UI的CSS化**
-  
+
   组件UI应独立于js之外，而不是由js提供各种接口去改变UI样式，也可以参考[这篇文章](http://isux.tencent.com/half-package-web-components-for-design.html)
 
   **2) LESS JAVASCRIPT, MORE HTML, AUTO-INIT.**
-  
+
   组件高内聚，在组件之外少写组件相关代码（包括初始化，所以，组件需要自动初始化），也需要有重新初始化接口。只需标明元素使用哪种组件，组件就应自动初始化该元素。
 
   **3)  LESS DEP-JS, MORE NAT-JS.**
-  
+
   更少的依赖代码，更多的原生JS，弱化模块依赖。比如：src/webcom模块，组件内部使用setAttribute这个原生函数去设置组件绑定数据。这样做的好处是：
   1、当模块没有加载成功时，数据已加载时，调用setAttribute设置数据，这样会调用原生方法，代码不会报错，没有模块依赖，（模块加载后通过getAttribute获取数据来初始化）
   2、当模块加载完成，数据延时的情况（setAttribute后来才调用），模块内部需要重写setAttribute方法，这样，当调用setAttribute函数时就能及时更新组件内部数据了。
@@ -87,7 +87,8 @@
   根据上述原则后，大致这样：
   ```js
   getData(function(d) {
-    element.setAttribute(d); // NAT-JS, 由于1、自动初始化，2、无模块依赖，3、数据先行调getAttribute，数据后行重写setAttribute
+    element.setAttribute(d);
+    // NAT-JS, 由于1、自动初始化，2、无模块依赖，3、数据先行调getAttribute，数据后行重写setAttribute
   })
   ```
   ```js
@@ -116,13 +117,13 @@
 
 
   **3) 元素中心化**
-  
+
   要说html,js,css哪个更强大，很多人都觉得js最强大，所以好多模块代码都需要js去做各种事情，但我觉得html更强大，html是一种融合剂，将本身、js和css结合起来。
   所以html是我的最佳，自然而然也觉得元素中心化是最好的，而且代码质量更容易掌控。
+
   元素为中心，所以的初始化和设置都围绕元素展开。
 
   **组件参数设置 VS 元素参数设置**
-  将以下代码
   ```js
   <div id='upload-btn' data-url='/upload'></div>
 
@@ -135,12 +136,12 @@
   // 所有操作围绕ext变量展开
   // 需要显式调用组件的初始化，模块强依赖
   ```
-  
+
   VS
-  
+
   ```js
   <div data-url='/upload' data-role='ajaxUpload'>upload</div>
-  
+
   var btn = document.querySelector('#upload-btn');
   btn.onsuccess = function(d) {}
   btn.onabort = function() {}
@@ -152,7 +153,7 @@
 
 
   **变量中心化组件 VS 元素中心化组件**
-  
+
   ```js
 
   var ajaxUpload = function(ele, o) {
@@ -166,9 +167,9 @@
   }
 
   ```
-  
+
   VS
-  
+
   ```js
   document.addEventListener('click', function(e) {
 
