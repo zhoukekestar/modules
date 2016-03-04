@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> </title>
-    <meta charset="utf-8" />
-    </head>
-    <body>
-    <div data-role='citySelect'>
-      <select data-default='请选择省份'></select>
-      <select data-default='请选择'></select>
-      <select></select>
-    </div>
-    <script src="citySelect.js"></script>
-    <script>
-      setTimeout(function(){
-        document.querySelector('[data-role="citySelect"]')._selected([121,908,1210606]);
-      }, 1000)
-    </script>
-    </body>
+
+<head>
+  <title> </title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div data-role='citySelect' data-url='./city.min.json'>
+    <select data-default='请选择省份'></select>
+    <select data-default='请选择'></select>
+    <select></select>
+  </div>
+  <script src="citySelect.js"></script>
+  <script>
+    setTimeout(function() {
+      document.querySelector('[data-role="citySelect"]')._selected([121, 908, 1210606]);
+    }, 1000)
+  </script>
+</body>
+
 </html>
