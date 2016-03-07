@@ -146,6 +146,8 @@
       if (eles[i][namespace + 'inited']) continue;
       eles[i][namespace + 'inited'] = true;
 
+      eles[i]._innerHTML = eles[i].innerHTML || "";
+
       // Get its role.
       var role = eles[i].getAttribute('data-is');
       customElementsLoaded[role] ? 1: initCustomElement(role);
@@ -285,6 +287,7 @@
     }
 
   }
+
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     init()
