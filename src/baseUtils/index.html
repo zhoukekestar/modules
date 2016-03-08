@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src='./logForBrowser.js'></script>
+  </head>
+  <body>
+    <button onclick="triggerError();">error</button>
+    <script>
+      window.triggerError = function() {
+        throw new Error('CustomError')
+      }
+    </script>
+  </body>
+</html>

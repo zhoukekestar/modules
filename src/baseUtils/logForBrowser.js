@@ -1,4 +1,43 @@
 (function(){
+  /*
+  Uglify this css by: http://tool.lu/css
+  body > .log-for-browser-alert {
+    position: fixed;
+    top: -2em;
+    left: 0;
+    width: 100%;
+    background-color:rgba(217, 83, 79, 0.78);
+    font-size: 12px;
+    text-align: center;
+    transition: all 1s;
+    color: #fff;
+    box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.16);
+    z-index: 9999;
+    line-height: 1.8em;
+  }
+  */
+  var logForBrowserAlertCss = 'body>.log-for-browser-alert{position:fixed;top:-2em;left:0;width:100%;background-color:rgba(217,83,79,.78);font-size:12px;text-align:center;transition:all 1s;color:#fff;box-shadow:0 0 5px 1px rgba(255,255,255,.16);z-index:9999;line-height:1.8em}';
+  var logForBrowserAlertDiv = null;
+  window.logForBrowserAlert = function(msg) {
+
+    if (!logForBrowserAlertDiv) {
+      logForBrowserAlertDiv = document.createElement('div');
+      logForBrowserAlertDiv.classList.add('log-for-browser-alert');
+      document.body.appendChild(logForBrowserAlertDiv);
+
+      var style = document.createElement('style');
+      style.innerHTML = logForBrowserAlertCss;
+      document.head.appendChild(style)
+    }
+
+    logForBrowserAlertDiv.innerHTML = msg;
+    setTimeout(function(){
+      logForBrowserAlertDiv.style.top = '-4em';
+    }, 6000)
+    setTimeout(function(){
+      logForBrowserAlertDiv.style.top = 0;
+    }, 10)
+  }
 
   /* Make sure init function run once. */
   if (window.logForBrowser) {
@@ -25,10 +64,7 @@
 
     console.log(log);
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/log', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(log));
+    ;new Image().src = '//common.toomao.com/log?log=' + encodeURIComponent(JSON.stringify(log));
 
     if (needReload) {
       setTimeout(function(){
@@ -77,7 +113,7 @@
         console.error(msg, url, line, col, err)
         return;
       }
-      alert('支付模块未能加载，请稍后重试');
+      logForBrowserAlert('支付模块未能加载，请稍后重试');
       console.error(msg, url, line, col, err)
     } else if (msg.indexOf('WeixinJSBridge') !== -1) {
 
@@ -92,7 +128,7 @@
         return;
       }
 
-      alert('微信游览器初始化错误，请稍后重试');
+      logForBrowserAlert('微信游览器初始化错误，请稍后重试');
       console.error(msg, url, line, col, err)
     } else if (msg.indexOf('Script error') !== -1) {
 
@@ -112,7 +148,7 @@
       }
       console.error(msg, url, line, col, err)
     } else if (msg.indexOf('Illegal constructor') !== -1) {
-      alert('好吧...您的游览器可能有点旧了,有空更新一下吧~');
+      logForBrowserAlert('好吧...您的游览器可能有点旧了,有空更新一下吧~');
       console.error(msg, url, line, col, err)
     } else {
       // 未知异常，减少重试次数
@@ -127,7 +163,7 @@
         return;
       }
 
-      alert('不会吧~页面不可能发生错误的！一定是你的打开方式不对,用其他游览器打开看看咯~');
+      logForBrowserAlert('不会吧~页面不可能发生错误的！一定是你的打开方式不对,用其他游览器打开看看咯~');
       console.error(msg, url, line, col, err)
     }
   }
