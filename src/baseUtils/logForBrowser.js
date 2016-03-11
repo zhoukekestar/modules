@@ -55,7 +55,7 @@
     var log = {
       ua        : navigator.userAgent,
       location  : location.href,
-      msg       : msg,
+      msg       : msg + '',
       scripturl : url,
       line      : line,
       column    : col,
