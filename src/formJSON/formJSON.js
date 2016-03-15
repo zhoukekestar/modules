@@ -196,7 +196,7 @@
       } else if (type === 'time' || type === 'date') {
 
         if (type === 'time') {
-          console.wran('请使用date属性,time属性已被弃用')
+          console.warn('请使用date属性,time属性已被弃用')
         }
         value = new Date(value);
         if (value.toString() === 'Invalid Date') {
@@ -259,14 +259,6 @@
      */
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.timeout = 20000;
-    /**
-     * Add session header for cross-domain request.
-     * You can't set cookies for ajax
-     * and you have to response #options request# like:
-     * "Access-Control-Allow-Headers: X-AVOSCloud-Session-Token"
-     * before you send it.
-     * */
-    var session = document.cookie.match(/sessionToken=([^;]*)(;|$)/);
     action = (action === undefined ? (self.getAttribute('action') || location.href) : action);
 
     if (method === 'GET') {
@@ -275,13 +267,18 @@
 
     xmlHttp.open(method, action, true);
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
-    if (session) {
-      xmlHttp.setRequestHeader('X-AVOSCloud-Session-Token', session[1])
-    }
-    if (self.getAttribute('data-void-repeat') === 'true') {
-      self._voidRepeatID = self._voidRepeatID || Date.now();
-      xmlHttp.setRequestHeader('X-TRANSACTION-ID', self._voidRepeatID);
-    }
+
+    /**
+    * Add session header for cross-domain request.
+    * You can't set cookies for ajax
+    * and you have to response #options request# like:
+    * "Access-Control-Allow-Headers: X-CUSTOME-HEADERS"
+    * before you send it.
+    *
+    * Call beforeSend function before send xhr.
+    * */
+    self._beforeSend && self._beforeSend.call(self, xmlHttp);
+
     xmlHttp.responseType = 'json';
 
     xmlHttp.onreadystatechange = function() {

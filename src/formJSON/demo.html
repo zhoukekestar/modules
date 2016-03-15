@@ -37,7 +37,7 @@
 
   <input name="num:number" value="123"/>
 
-  <input type="date" name="time:time" value=""/>
+  <input type="date" name="date:date" value=""/>
 
   <input name="obj1:object" value='{"a":"aa", "b":{"bb":"cc"}}'/><br>
   <input name="obj2:object" value='["a", "b"]'/>
@@ -65,7 +65,7 @@
 <p id="result">...</p>
 
 <p>设置data-target属性，将处理函数移交给指定元素</p>
-<form class="form2" data-target='.form1' data-role='formJSON' action='/c'>
+<form class="form2" data-target='.form1' data-role='formJSON' action='/c' data-void-repeat='true'>
   <input name='name' value='value'>
   <button>submit it</button>
 </form>
@@ -103,6 +103,21 @@
     return d;
   }
 
+  (function(){
+    var beforeSend = function(xhr) {
+
+      if (this.getAttribute('data-void-repeat') === 'true') {
+        this._voidRepeatID = this._voidRepeatID || Date.now();
+        xhr.setRequestHeader('X-TRANSACTION-ID', this._voidRepeatID);
+      }
+    }
+    document.body.addEventListener('submit', function(e){
+      e.target._beforeSend = beforeSend;
+    })
+    document.body.addEventListener('formJSON-submit', function(e) {
+      e.target._beforeSend = beforeSend;
+    })
+  })();
 </script>
 </body>
 </html>
