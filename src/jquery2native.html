@@ -164,7 +164,7 @@
       <code>document.cookie = "name=value";</code>
       <p>OR</p>
       <code>$.cookie('name', 'value', { path: '/' });</code> to
-      <code>document.cookie = "name=value; path=/";</code>
+      <code>document.cookie = "name=value; domain=.abc.com; path=/; expires=" + (new Date(Date.now() + 60 * 1000)).toUTCString();</code>
     </li>
     <li>
       <code>$.cookie('name');</code> to
