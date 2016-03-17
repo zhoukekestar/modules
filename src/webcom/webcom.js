@@ -24,8 +24,14 @@
       try {
 
         var tmpl = customElements[currentRole].querySelector('[data-role="template"]');
+        if (!tmpl) {
+          console.warn('Attribute named data-bind is not affected as template is null.')
+          return;
+        }
         tmpl[namespace + 'holder'] = this;
         tmpl[namespace + 'updateBy'](JSON.parse(value));
+
+        ;(typeof this[namespace + 'updated'] === 'function') && this[namespace + 'updated']();
 
         // Execute template-updated script.
 
