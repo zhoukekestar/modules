@@ -64,5 +64,5 @@ app.all('/css', function(req, res) {
   res.end(result)
 })
 
-console.log('listen on 3000.')
+console.log('Listen on 3000. Visit it by http://localhost:3000')
 app.listen(3000);

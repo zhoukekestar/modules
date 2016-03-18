@@ -64,9 +64,9 @@
 
     console.log(log);
 
-    ;new Image().src = '//common.toomao.com/log?log=' + encodeURIComponent(JSON.stringify(log));
+    ;new Image().src = (console._logurl || '/log') + '?log=' + encodeURIComponent(JSON.stringify(log));
 
-    if (needReload) {
+    if (needReload && console._reloadWhenError !== false) {
       setTimeout(function(){
         location.reload();
       }, 100)

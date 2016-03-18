@@ -7,9 +7,14 @@
 </head>
 
 <body>
+  <ul>
+    <li>使用data-url指定json文件的路径</li>
+    <li>使用data-default指定未选择时显示的文字，默认为“--请选择--”</li>
+    <li>使用_selected方法，可以指定初始值</li>
+  </ul>
   <div data-role='citySelect' data-url='./city.min.json'>
     <select data-default='请选择省份'></select>
-    <select data-default='请选择'></select>
+    <select data-default='请选择，默认值在这边设置'></select>
     <select></select>
   </div>
   <script src="citySelect.js"></script>

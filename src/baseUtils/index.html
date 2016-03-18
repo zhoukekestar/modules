@@ -6,8 +6,11 @@
     <script src='./logForBrowser.js'></script>
   </head>
   <body>
+    <p>打开控制台，点击下面按钮后。有错误信息输出，并有一个用于记录错误的请求发出</p>
     <button onclick="triggerError();">error</button>
     <script>
+      console._logurl = '/your/log/path';
+      console._reloadWhenError = false;
       window.triggerError = function() {
         throw new Error('CustomError')
       }
