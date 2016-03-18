@@ -47,6 +47,7 @@ module.exports = {
 
   "tabs"          : "tabs/tabs.css",
   "template"      : null,
+  "tooltip"       : "tooltip/tooltip.css",
 
   "webcom"        : null,
 

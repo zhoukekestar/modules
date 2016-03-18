@@ -1,0 +1,76 @@
+/*! Hint.css - v2.2.0 - 2016-03-08
+* http://kushagragour.in/lab/hint/
+* Copyright (c) 2016 Kushagra Gour; Licensed  */
+
+
+/*-------------------------------------*	HINT.css - A CSS tooltip library
+\*-------------------------------------*/
+
+
+/**
+ * HINT.css is a tooltip library made in pure CSS.
+ *
+ * Source: https://github.com/chinchang/hint.css
+ * Demo: http://kushagragour.in/lab/hint/
+ *
+ * Release under The MIT License
+ *
+ */
+
+[data-tooltip] {
+  position: relative;
+  display: inline-block;
+}
+[data-tooltip]:before, [data-tooltip]:after {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1000000;
+  pointer-events: none;
+
+  top: 100%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  transform: translateX(-50%);
+
+  -webkit-transition: opacity 0.3s ease, visibility 0.3s ease, -webkit-transform 0.3s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+  -moz-transition: opacity 0.3s ease, visibility 0.3s ease, -moz-transform 0.3s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+}
+[data-tooltip]:hover:before, [data-tooltip]:hover:after {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transition-delay: 100ms;
+  -moz-transition-delay: 100ms;
+  transition-delay: 100ms;
+  -webkit-transform: translateX(-50%) translateY(8px);
+  -moz-transform: translateX(-50%) translateY(8px);
+  transform: translateX(-50%) translateY(8px);
+}
+[data-tooltip]:before {
+  content: '';
+  position: absolute;
+  background: transparent;
+  border: 6px solid transparent;
+  z-index: 1000001;
+  border-bottom-color: #383838;
+  margin-top: -12px;
+}
+[data-tooltip]:after {
+  content: attr(data-tooltip);
+  background: #383838;
+  color: white;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-shadow: 0 -1px 0px black;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+  line-height: 1.4em;
+  text-align: center;
+  white-space: normal;
+  width: 10em;
+}
+[data-tooltip='']:before, [data-tooltip='']:after {
+  display: none !important;
+}
