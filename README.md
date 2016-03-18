@@ -1,30 +1,32 @@
 ## 模块简介
-* _fixDesktop : 桌面端的游览器兼容
-* _fixMobile  : 手机端的游览器兼容
-* _lib        : 第三方库文件
-* alert       : 游览器alert增强
-* baseUtils.logForBrowser: 游览器异常日志记录
-* citySelect  : 城市多级联动选择
-* clearable   : 输入框清空按钮
-* confirm     : 确定框选择
-* CSS-Controls: 选择框、点赞按钮、单选框、开关按钮样式优化
-* deletable   : ios样式的删除按钮
-* editor      : 富文本编辑器
-* events      : 增加手机端事件（左划、右划、长按）
-* formJSON    : json表单，以json格式ajax提交表单
-* formValidator: 表单字段校验
-* imageView   : 无聊的图片放大功能
-* lazyload    : 图片的懒加载（包括背景图片）
-* loadingPage : “加载中”页面
-* loadpage    : 理想化的单页组件，受jquery mobile启发（还不够成熟）
-* menu        : 菜单组件
-* paging      : 分页组件
-* pull & pull-v2: 下拉刷新
-* shareWX     : 微信分享组件
-* tabs        : tab组件
-* template    : 模板组件
-* toast       : 提示消息组件
-* upload      : 上传组件
+| 文件名 | 说明 |
+| ----- | ----- |
+| _fixDesktop | 桌面端的游览器兼容 |
+| _fixMobile  | 手机端的游览器兼容 |
+| _lib        | 第三方库文件 |
+| alert       | 游览器alert增强 |
+| baseUtils.logForBrowser| 游览器异常日志记录 |
+| citySelect  | 城市多级联动选择 |
+| clearable   | 输入框清空按钮 |
+| confirm     | 确定框选择 |
+| CSS-Controls| 选择框、点赞按钮、单选框、开关按钮样式优化 |
+| deletable   | ios样式的删除按钮 |
+| editor      | 富文本编辑器 |
+| events      | 增加手机端事件（左划、右划、长按） |
+| formJSON    | json表单，以json格式ajax提交表单 |
+| formValidator| 表单字段校验 |
+| imageView   | 无聊的图片放大功能 |
+| lazyload    | 图片的懒加载（包括背景图片） |
+| loadingPage | “加载中”页面 |
+| loadpage    | 理想化的单页组件，受jquery mobile启发（还不够成熟） |
+| menu        | 菜单组件 |
+| paging      | 分页组件 |
+| pull & pull-v2| 下拉刷新 |
+| shareWX     | 微信分享组件 |
+| tabs        | tab组件 |
+| template    | 模板组件 |
+| toast       | 提示消息组件 |
+| upload      | 上传组件 |
 
 ## src
 * 模块源码，代码都是模块化的，
