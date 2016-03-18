@@ -6,4 +6,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./local.js')(app);
 
 app.listen(3000);
-console.log('listen on 3000.')
+console.log('Listen on 3000. Visit it by: http://localhost:3000')

@@ -1,18 +1,19 @@
-
-### _Fix( _fixDesktop & _fixMobile & _fixCSS)
-* Fix browser's compatibility.
-* Code your js as no IE exist. Code once by W3C api, run everywhere (include IE).
-* You can also see [This project(ieBetter.js)](https://github.com/zhoukekestar/ieBetter.js).
-
-### _lib
-Base libraries for modules like: jQuery.
+# DEMO
 
 ### alert
 ![alert](./alert/demo.gif)
 
 ### citySelect
-Select city for China.<br>
 ![citySelect](./citySelect/demo.gif)
+
+### confirm
+![confirm](./confirm/demo.gif)
+
+### clearable
+![clearable](./clearable/demo.gif)
+
+### confirm
+![confirm](./confirm/demo.gif)
 
 ### confirm
 ![confirm](./confirm/demo.gif)
@@ -23,16 +24,33 @@ Select city for China.<br>
 * radio <br>  ![radio](./CSS-Controls/radio/demo.png)
 * switch-ios <br> ![switch](./CSS-Controls/switch/demo.gif)
 
-### clearable
-* Support input element that it can be clear by a button <br> ![clearable](./clearable/demo.gif)
+### deatetime
+* ![deatetime](./deatetime/demo.png)
+
+### deletable
+* ![deletable](./deletable/demo.gif)
+
+### editor -> ueditor for nodejs
+
+* Step 1: `npm install`
+* Step 2: `node app.js` <br> ![ueditor](./editor/ueditor/demo.gif)
+* ueditor-local for local test.
+* ueditor-proxy for online project.
 
 ### events
-* Support taphold event
-* Support swipeleft event
-* Support swiperight event <br> ![events](./events/demo.gif)
+* ![events](./events/demo.gif)
+
+### formJSON
+* ![formJSON](./formJSON/demo.png)
+
+### formValidator
+* ![formValidator](./formValidator/demo.png)
+
+### imageView
+* ![imageView](./imageView/demo.png)
 
 ### lazyload
-* Lazy load image <br> ![lazyload](./lazyload/demo.gif)
+* ![lazyload](./lazyload/demo.gif)
 
 ### loadpage
 * Load page <br> ![loadpage](./loadpage/demo.gif)
@@ -45,22 +63,19 @@ Select city for China.<br>
 ![prompt](./prompt/demo.gif)
 
 ### pull
-* Pull to refresh. <br> ![pull](./pull/demo.gif)
+* ![pull](./pull/demo.gif)
 
 ### pull-v2
-* Pull to refresh `version 2`. <br> ![pull-v2](./pull-v2/demo.gif)
+* ![pull-v2](./pull-v2/demo.gif)
+
+### tabs
+* ![tabs](./tabs/demo.gif)
 
 ### toast
-Alert message.<br>
-![toast](./toast/demo.gif)
+* ![toast](./toast/demo.gif)
 
-### editor -> ueditor for nodejs
-
-* Step 1: `npm install`
-* Step 2: `node app.js` <br> ![ueditor](./editor/ueditor/demo.gif)
-* ueditor-local for local test.
-* ueditor-proxy for online project.
-
+### tooltip
+* ![tooltip](./tooltip/demo.gif)
 
 ### upload
 * Run command `node app.js`
@@ -68,6 +83,10 @@ Alert message.<br>
 * Demo is in `public` directory
 * Preview <br> ![upload](./upload/demo.gif)
 
+### webcom
+* 这是应用中的一个项目[//common.tooma.com](http://common.toomao.com/webcoms/)
+* 只需通过data-is指定使用哪个组件，组件将自动初始化，所有的组件依赖资源都由组件内部加载
+* ![webcom](./webcom/demo.png)
 
 ### jquery2navtive.html
 * jQuery to navtive list.
@@ -76,4 +95,3 @@ Alert message.<br>
 ### Modules' convention
 * Module SHOULD auto init after triggering window's `load` event.
 * Module SHOULD re-init after triggering window's `reload` event.
-

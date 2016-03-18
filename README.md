@@ -6,7 +6,7 @@
 | _lib        | 第三方库文件 | 3 |
 | alert       | 游览器alert增强 | 3 |
 | baseUtils.logForBrowser| 游览器异常日志记录 | 7 |
-| citySelect  | 城市多级联动选择 | 8 |
+| citySelect  | 城市多级联动选择 | **8** |
 | clearable   | 输入框清空按钮 | 7 |
 | confirm     | 确定框选择美化 | 3 |
 | CSS-Controls| 选择框、点赞按钮、单选框、开关按钮样式美化 | 4 |
@@ -14,28 +14,28 @@
 | deletable   | ios样式的删除按钮 | 5 |
 | editor      | 富文本编辑器 | 6 |
 | events      | 增加手机端事件（左划、右划、长按） | 5 |
-| formJSON    | JSON表单异步提交 | 9 |
-| formValidator| 表单字段校验 | 8 |
+| formJSON    | JSON表单异步提交 | **9** |
+| formValidator| 表单字段校验 | **8** |
 | imageView   | 图片全屏查看 | 4 |
-| lazyload    | 图片的懒加载（包括背景图片） | 9 |
+| lazyload    | 图片的懒加载（包括背景图片） | **9** |
 | loadingPage | “加载中”动画（屏蔽交互） | 7 |
 | loadpage    | 理想化的单页模块，受jquery mobile启发（还不够成熟） | 4 |
 | menu        | 菜单（未完善） | 4 |
-| paging      | 分页模块 | 8 |
+| paging      | 分页模块 | **8** |
 | panel       | panel（未完善） | 3 |
 | popup       | 全屏弹出 | 3 |
 | preview     | 图片预览 | 3 |
 | prompt      | 输入弹框 | 3 |
 | pull & pull-v2| 下拉刷新 | 3 |
-| shareWX     | 微信分享 | 8 |
+| shareWX     | 微信分享 | **8** |
 | sort        | 排序（未完成）  | 2 |
-| tabs        | tab模块 | 8 |
-| template    | 模板模块 | 9 |
+| tabs        | tab模块 | **8** |
+| template    | 模板模块 | **9** |
 | toast       | 提示消息模块 | 6 |
 | tooltip     | tooltip 提示模块 | 6 |
 | upload      | 图片上传 | 6 |
-| webcom      | 组件化框架 | 9 |
-| jquery2native | jquery转native参考列表 | 9 |
+| webcom      | 组件化框架 | **9** |
+| jquery2native | jquery转native参考列表 | **9** |
 
 ## src
 * 模块源码，代码都是模块化的，

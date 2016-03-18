@@ -20,16 +20,24 @@
     <link rel='stylesheet' href='ajaxUpload-single.css'>
 </head>
 <body>
-  <p>Perfect uplaod.</p>
+  <h3>Perfect uplaod.</h3>
   <p>完美上传，兼容android4.2。<a href='./ajaxSubmit.html'>ajaxSubmit</a></p>
+
+  <h3>多图上传按钮</h3>
   <div id='upload-btn' data-url='/upload' data-role='ajaxUpload'>上传图片</div>
+
+
+  <h3>单图上传按钮</h3>
   <div data-url='/upload' data-role='ajaxUpload' data-ajaxUpload-plugin='single'>
     <input type='hidden' name='img'>
   </div>
   <div id='output'></div>
 
+  <h3>点击才上传（非自动上传）</h3>
   <input id='testFile' type='file' multiple>
-  <button id='testBtn'>test</button>
+  <button id='testBtn'>上传</button>
+
+
   <script src="ajaxUpload.js"></script>
   <script src="ajaxUpload-single.test.js"></script>
   <script>
@@ -46,6 +54,7 @@
     }
     btn.onended = function(d) {
       console.log(d);
+      alert(JSON.stringify(d))
     }
 
   </script>
