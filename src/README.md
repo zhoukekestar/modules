@@ -15,17 +15,14 @@
 ### confirm
 ![confirm](./confirm/demo.gif)
 
-### confirm
-![confirm](./confirm/demo.gif)
-
 ### CSS-Controls
 * checkbox <br> ![checkbox](./CSS-Controls/checkbox/demo.gif)
 * like-weibo <br> ![like](./CSS-Controls/like/demo.gif)
 * radio <br>  ![radio](./CSS-Controls/radio/demo.png)
 * switch-ios <br> ![switch](./CSS-Controls/switch/demo.gif)
 
-### deatetime
-* ![deatetime](./deatetime/demo.png)
+### datetime
+* ![datetime](./datetime/demo.png)
 
 ### deletable
 * ![deletable](./deletable/demo.gif)
@@ -44,10 +41,10 @@
 * ![formJSON](./formJSON/demo.png)
 
 ### formValidator
-* ![formValidator](./formValidator/demo.png)
+* ![formValidator](./formValidator/demo.gif)
 
 ### imageView
-* ![imageView](./imageView/demo.png)
+* ![imageView](./imageView/demo.gif)
 
 ### lazyload
 * ![lazyload](./lazyload/demo.gif)
