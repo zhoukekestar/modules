@@ -122,6 +122,7 @@
   }
 
   document.addEventListener('reload', init)
+  document.addEventListener('template-reload', init);
   document.addEventListener('template-reload-it', function(e) {
 
     if (e.target.getAttribute('data-role') === 'template') {
