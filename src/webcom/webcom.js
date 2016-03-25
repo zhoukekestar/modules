@@ -66,6 +66,7 @@
         }, 1000)
 
       } catch (e) {
+        console.warn("Webcom can't update template successfully. Please check the data-bind value.")
         console.log(e)
       }
 
