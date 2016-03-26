@@ -201,8 +201,8 @@
     })
   }
 
-  document.addEventListener('reload', init)
-
+  document.addEventListener('reload', init);
+  document.addEventListener('citySelect-reload', init);
   return null;
 
 }));
