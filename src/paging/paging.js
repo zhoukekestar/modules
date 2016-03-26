@@ -135,7 +135,8 @@
     })
   }
 
-  document.addEventListener('reload', init)
+  document.addEventListener('reload', init);
+  document.addEventListener('paging-reload', init);
 
   return null;
 }));

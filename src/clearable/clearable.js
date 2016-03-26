@@ -55,6 +55,8 @@
     })
   }
 
+  document.addEventListener('reload', init);
+  document.addEventListener('clearable-reload', init);
   return null;
 
 }));

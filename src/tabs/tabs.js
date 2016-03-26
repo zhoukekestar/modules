@@ -89,7 +89,8 @@
     })
   }
 
-  document.addEventListener('reload', init)
+  document.addEventListener('reload', init);
+  document.addEventListener('tabs-reload', init);
   return null;
 
 }));
