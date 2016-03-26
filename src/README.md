@@ -81,7 +81,9 @@
 * Preview <br> ![upload](./upload/demo.gif)
 
 ### webcom
-* 这是应用中的一个项目[//common.tooma.com](http://common.toomao.com/webcoms/)
+* 借鉴[react](https://github.com/facebook/react-native)和[polymer](https://github.com/Polymer/polymer)的组件化思路，但不依赖于他们的tiny framework
+* 这是一个组件项目[//common.toomao.com](http://common.toomao.com/webcoms/)
+* 这是一个应用项目[//m.toomao.com/square](https://m.toomao.com/square)
 * 只需通过data-is指定使用哪个组件，组件将自动初始化，所有的组件依赖资源都由组件内部加载
 * ![webcom](./webcom/demo.png)
 
