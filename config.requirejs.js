@@ -9,6 +9,7 @@ module.exports = {
     jqueryCookie  : '_lib/jquery.cookie.min',
     jqueryLazyload: '_lib/jquery.lazyload.min',
     jweixin       : '_lib/jweixin-1.1.0',
+    sha1          : '_lib/sha1',
 
 
     alert         : 'alert/alert',
