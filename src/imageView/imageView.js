@@ -31,7 +31,13 @@
     if (target.getAttribute('data-role') === 'imageView') {
       if (!imageView) initImageView();
 
-      imageView.querySelector('.img').style.backgroundImage = 'url(' + target.getAttribute('src') + ')';
+      if (target.getAttribute('src')) {
+        imageView.querySelector('.img').style.backgroundImage = 'url(' + target.getAttribute('src') + ')';
+      } else if(target.style.backgroundImage) {
+        imageView.querySelector('.img').style.backgroundImage = target.style.backgroundImage;
+      } else {
+        imageView.querySelector('.img').style.backgroundImage = 'url(none)';
+      }
       imageView.style.opacity = 1;
       imageView.style.zIndex = 1001;
     }
