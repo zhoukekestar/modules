@@ -11,18 +11,35 @@
   opacity: 0;
   z-index: -1;
 }
+
 .imageView span {
   width: 38px;
-  font-size: 3em;
-  color: #fff;
+  font-size: 7em;
+  color: #fff !important;
   position: absolute;
   right: .5em;
-  padding-left: .2em;
   cursor: pointer;
   border-radius: 50%;
   font-weight: normal;
   -webkit-user-select: none;
+  font-family: cursive;
+  opacity: 1 !important;
+  text-shadow: #000 0 1px 1px;
+  line-height: 100%;
 }
+
+.imageView span.pre {
+  top: 50%;
+  left: 50px;
+  margin-top: -.5em;
+}
+
+.imageView span.next {
+  top: 50%;
+  right: 50px;
+  margin-top: -.5em;
+}
+
 .imageView .img {
   height: 100%;
   width: 100%;
