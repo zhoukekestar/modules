@@ -226,7 +226,7 @@
     // Stringify result object.
     if (method === "GET") {
 
-      var keys = Object.keys(res);
+      var keys = Object.keys(res || {});
       var arr = []
       for (var i = 0, max = keys.length; i < max; i ++) {
         if (typeof res[keys[i]] === 'string') {
