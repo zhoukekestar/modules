@@ -24,7 +24,7 @@
   -webkit-user-select: none;
   font-family: cursive;
   opacity: 1 !important;
-  text-shadow: #000 0 1px 1px;
+  text-shadow: #000 0 0 8px;
   line-height: 100%;
 }
 
