@@ -21,6 +21,18 @@
     var currentRole = this.getAttribute('data-is');
     if (name === 'data-bind') {
 
+      // Hide data-bind
+      if (this.getAttribute('data-bind-show') === 'true') {
+
+        Element.prototype.setAttribute.call(this, name, value);
+
+      } else {
+
+        Element.prototype.setAttribute.call(this, name, 'data-was-hidden-by-webcom');
+        this._dataBind = value;
+      }
+
+      // run template
       try {
 
         var tmpl = customElements[currentRole].querySelector('[data-role="template"]');
@@ -68,17 +80,6 @@
       } catch (e) {
         console.warn("Webcom can't update template successfully. Please check the data-bind value.")
         console.log(e)
-      }
-
-      // Hide data-bind
-      if (this.getAttribute('data-bind-show') === 'true') {
-
-        Element.prototype.setAttribute.call(this, name, value);
-
-      } else {
-
-        Element.prototype.setAttribute.call(this, name, 'data-was-hidden-by-webcom');
-        this._dataBind = value;
       }
 
     } else {
