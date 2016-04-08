@@ -6,13 +6,16 @@
   }
 }(function(){
 
-  var defaultHolder = 'body';
+  var defaultHolder = 'body'
+    , boxs = [];
 
   /**
   * Show only one message in one minute.
   */
   var showOnlyOneMessageInOneMinute = true;
   document.addEventListener('invalid', function(e) {
+
+    boxs.push(e.target);
 
     e.target.classList.add('formValidator-invalid');
     e.target.classList.remove('formValidator-valid');
@@ -81,6 +84,9 @@
   })
 
   document.addEventListener('valid', function(e) {
+    var index = boxs.indexOf(e.target);
+    (index !== -1) && boxs.splice(index, 1);
+
     e.target.classList.add('formValidator-valid');
     e.target.classList.remove('formValidator-invalid');
     if (e.target.errorMsgBox) {
@@ -88,4 +94,14 @@
       e.target.errorMsgBox = null;
     }
   })
+
+  setInterval(function(){
+    for (var i = boxs.length - 1; i >= 0; i--) {
+      var rect = boxs[i].getBoundingClientRect();
+      if (rect.bottom + rect.height + rect.left + rect.right + rect.top + rect.width === 0 && boxs[i].errorMsgBox) {
+        boxs[i].errorMsgBox.remove();
+        boxs[i].errorMsgBox = null;
+      }
+    }
+  }, 1000)
 }));
