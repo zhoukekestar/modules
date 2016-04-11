@@ -15,7 +15,7 @@ hs_err_pid*
 /.git
 /build
 /target
-node_modules
+node_modules/
 
 #output
 #build
