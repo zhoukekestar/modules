@@ -1,7 +1,7 @@
 (function(){
 
   if (localStorage.getItem('LOGFORBROWSER_ENABLE') === 'false') {
-    console.error = console._error;
+    console.error = function(){};
     window.onerror = function(){};
     return;
   }
