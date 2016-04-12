@@ -1,4 +1,9 @@
 (function(){
+
+  if (localStorage.getItem('LOGFORBROWSER_ENABLE') === 'false') {
+    return;
+  }
+
   /*
   Uglify this css by: http://tool.lu/css
   body > .log-for-browser-alert {
