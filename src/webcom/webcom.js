@@ -111,8 +111,9 @@
     customElement.style.display = 'none';
 
     // Init web component's template.
-    var tmpl = customElement.querySelector('[data-role="template"]');
-    tmpl && tmpl.dispatchEvent(new Event('template-reload-it', {bubbles: true}));
+    var tmpls = customElement.querySelectorAll('[data-role="template"]');
+    for (var i = tmpls.length - 1; i >= 0; i--)
+      tmpls[i].dispatchEvent(new Event('template-reload-it', {bubbles: true}));
 
     // Execute script
     var scripts = customElement.querySelectorAll('script');
