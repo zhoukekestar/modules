@@ -1,5 +1,13 @@
 (function(){
 
+  try {
+    localStorage.setItem('localStorage-test-available', 'a')
+    localStorage.removeItem('localStorage-test-available')
+  } catch (e) {
+    localStorage.setItem = function(){};
+    localStorage.getItem = function(){};
+  }
+  
   if (localStorage.getItem('LOGFORBROWSER_ENABLE') === 'false') {
     console.error = function(){};
     window.onerror = function(){};
