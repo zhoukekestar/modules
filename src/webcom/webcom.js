@@ -21,15 +21,13 @@
     var currentRole = this.getAttribute('data-is');
     if (name === 'data-bind') {
 
+      this._dataBind = value;
+
       // Hide data-bind
       if (this.getAttribute('data-bind-show') === 'true') {
-
         Element.prototype.setAttribute.call(this, name, value);
-
       } else {
-
         Element.prototype.setAttribute.call(this, name, 'data-was-hidden-by-webcom');
-        this._dataBind = value;
       }
 
       // run template
@@ -170,7 +168,7 @@
       // Override getAttribute function.
       eles[i].getAttribute = function(name) {
 
-        if (name === 'data-bind' && this.getAttribute('data-bind-show') !== 'true') {
+        if (name === 'data-bind') {
           return this._dataBind;
         }
         return Element.prototype.getAttribute.call(this, name);
