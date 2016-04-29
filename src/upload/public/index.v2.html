@@ -5,7 +5,7 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
-    #upload-btn {
+    [data-role=ajaxUpload] {
       width: 80px;
       background-color: #6BC4FF;
       color: #fff;
@@ -21,11 +21,13 @@
 </head>
 <body>
   <p>上传，兼容android4.2。</p>
-  <div id='upload-btn' data-url='http://server2.toomao.com:9000/1.1/images' data-role='ajaxUpload'>上传图片</div>
+  <div id='upload-btn' data-url='/upload' data-role='ajaxUpload'>上传图片</div>
+  <div id='upload-btn-2' data-url='/upload' data-role='ajaxUpload' data-max-height='1136' data-max-width='630' data-max-size='100k' data-accept='image/gif,image/jpeg,image/png'>上传图片(限制，长宽100*100，文件大小<1M)</div>
   <script src="ajaxUpload.v2.js"></script>
   <script src="XMLHttpRequest.js"></script>
   <script>
-    var btn = document.querySelector('#upload-btn');
+    var btn = document.querySelector('#upload-btn')
+      , btn2 = document.querySelector('#upload-btn-2');
 
     btn.onprogress = function(p, e) {
       console.log(p)
@@ -38,6 +40,13 @@
     btn.onended = function(d) {
       console.log(d);
       alert('btn' + JSON.stringify(d));
+    }
+
+    btn2.onFileSizeError = function(name, size, minSize, maxSize) {
+      console.log(name + ' ' + size + ' ' + minSize + ' ' + maxSize)
+    }
+    btn2.onImageSizeError = function(name, width, height) {
+      console.log(name + ' ' + width + ' ' + height )
     }
 
   </script>
