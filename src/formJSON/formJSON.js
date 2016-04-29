@@ -15,7 +15,7 @@
           result.push({ name: name, value: value })
         };
 
-    [].slice.apply(this.elements).forEach(function(field) {
+    [].slice.apply(this.elements || this.querySelectorAll('input,textarea')).forEach(function(field) {
 
       type = field.type, name = field.name
       if (name && field.nodeName.toLowerCase() !== 'fieldset' &&
