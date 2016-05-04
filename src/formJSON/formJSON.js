@@ -193,17 +193,18 @@
           value = value.getTime();
         }
 
-      } else if (type === 'time' || type === 'date') {
+      } else if (type === 'date') {
 
-        if (type === 'time') {
-          console.warn('请使用date属性,time属性已被弃用')
-        }
         value = new Date(value);
         if (value.toString() === 'Invalid Date') {
           value = '';
         } else {
           // Default time-zone is +8
           value.setHours(0);
+          value.setMinutes(0);
+          value.setSeconds(0);
+          value.setMilliseconds(0);
+
           value = value.getTime();
         }
 
