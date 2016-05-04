@@ -120,7 +120,7 @@
       if (scripts[i].type === '' || scripts[i].type === 'text/javascript') {
 
         // Skip the script only executed after template is updated.
-        if (scripts[i].getAttribute('data-run') === 'template-updated') {
+        if (scripts[i].dataset.run) {
           continue;
         }
 
