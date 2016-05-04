@@ -103,14 +103,22 @@
                 if (this.height === height && this.width === width) {
                   callback(oFile, oSegmReq);
                 } else {
-                  self.onImageSizeError && self.onImageSizeError(oFile.name, this.width, this.height);
+                  if (self.onImageSizeError) {
+                    self.onImageSizeError(oFile.name, this.width, this.height);
+                  } else {
+                    alert(oFile.name + ' 文件尺寸不符合要求');
+                  }
                 }
               // Specify height & width 's range.
               } else {
                 if (this.width >= minWidth && this.width <= maxWidth && this.height >= minHeight && this.height <= maxHeight) {
                   callback(oFile, oSegmReq)
                 } else {
-                  self.onImageSizeError && self.onImageSizeError(oFile.name, this.width, this.height);
+                  if (self.onImageSizeError) {
+                    self.onImageSizeError(oFile.name, this.width, this.height);
+                  } else {
+                    alert(oFile.name + ' 文件尺寸不符合要求');
+                  }
                 }
               }
 
@@ -145,7 +153,11 @@
           if (size >= minSize && size <= maxSize) {
             return true;
           } else {
-            self.onFileSizeError && self.onFileSizeError(oFile.name, size, minSize, maxSize);
+            if (self.onFileSizeError) {
+              self.onFileSizeError(oFile.name, size, minSize, maxSize);
+            } else {
+              alert(oFile.name + ' 文件大小不符合要求');
+            }
             return false;
           }
         },
@@ -249,7 +261,9 @@
               }
 
               (typeof self.onended === 'function') && (self.onended(response, xmlHttp));
-
+              self.response = response;
+              self.xmlHttp = xmlHttp;
+              self.dispatchEvent(new Event('ajaxUpload-finished', {bubbles: true}))
             }
           }
 
