@@ -6,7 +6,7 @@
   }
 }(function(){
 
-  window.customElements = {};
+  window.customElements = window.customElements || {};
 
   var debug                 = false
     , namespace             = '_'
