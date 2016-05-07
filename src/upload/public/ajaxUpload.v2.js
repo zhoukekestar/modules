@@ -87,7 +87,7 @@
             , widthHeight = +(self.dataset.widthHeight || '-1');
 
           // return if there is nothing to do.
-          if (maxHeight === 1000000 && minHeight === 0 && height == -1 && maxWidth === 1000000 && minWidth === 0 && width === -1) {
+          if (maxHeight === 1000000 && minHeight === 0 && height == -1 && maxWidth === 1000000 && minWidth === 0 && width === -1 && widthHeight === -1) {
             callback(oFile, oSegmReq)
             return;
           }
@@ -116,7 +116,12 @@
 
                 // Specify width / height value 指定高宽比例
                 if (widthHeight !== -1 && (this.width / this.height).toFixed(2) !== widthHeight.toFixed(2)) {
-                  self.onImageSizeError(oFile.name, this.width, this.height, (this.width / this.height).toFixed(2), widthHeight.toFixed(2));
+                  if (self.onImageSizeError) {
+                    self.onImageSizeError(oFile.name, this.width, this.height, (this.width / this.height).toFixed(2), widthHeight.toFixed(2));
+                  } else {
+                    alert(oFile.name + ' 文件尺寸不符合要求');
+                  }
+                  return;
                 }
 
                 if (this.width >= minWidth && this.width <= maxWidth && this.height >= minHeight && this.height <= maxHeight) {

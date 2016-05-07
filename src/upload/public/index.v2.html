@@ -23,11 +23,13 @@
   <p>上传，兼容android4.2。</p>
   <div id='upload-btn' data-url='/upload' data-role='ajaxUpload'>上传图片</div>
   <div id='upload-btn-2' data-url='/upload' data-role='ajaxUpload' data-max-height='1136' data-max-width='630' data-max-size='100k' data-accept='image/gif,image/jpeg,image/png'>上传图片(限制，长宽100*100，文件大小<1M)</div>
+  <div id='upload-btn-3' data-url='/upload' data-role='ajaxUpload' data-max-height='1136' data-width-height='1'>上传图片(指定比例)</div>
   <script src="ajaxUpload.v2.js"></script>
   <script src="XMLHttpRequest.js"></script>
   <script>
     var btn = document.querySelector('#upload-btn')
-      , btn2 = document.querySelector('#upload-btn-2');
+      , btn2 = document.querySelector('#upload-btn-2')
+      , btn3 = document.querySelector('#upload-btn-3');
 
     btn.onprogress = function(p, e) {
       console.log(p)
@@ -47,6 +49,10 @@
     }
     btn2.onImageSizeError = function(name, width, height) {
       console.log(name + ' ' + width + ' ' + height )
+    }
+
+    btn3.onImageSizeError = function(name, width, height) {
+      console.log(arguments)
     }
 
   </script>
