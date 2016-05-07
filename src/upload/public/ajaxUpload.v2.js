@@ -84,6 +84,7 @@
             , maxWidth = +(self.dataset.maxWidth || '1000000')
             , minWidth = +(self.dataset.minWidth || '0')
             , width = +(self.dataset.width || '-1')
+            , widthHeight = +(self.dataset.widthHeight || '-1');
 
           // return if there is nothing to do.
           if (maxHeight === 1000000 && minHeight === 0 && height == -1 && maxWidth === 1000000 && minWidth === 0 && width === -1) {
@@ -98,7 +99,7 @@
             image.src = theFile.target.result;
             image.onload = function() {
 
-              // Specify height & width
+              // Specify height & width 指定高度和宽度
               if (height !== -1 && width !== -1) {
                 if (this.height === height && this.width === width) {
                   callback(oFile, oSegmReq);
@@ -109,8 +110,15 @@
                     alert(oFile.name + ' 文件尺寸不符合要求');
                   }
                 }
-              // Specify height & width 's range.
+
+              // Specify height & width 's range. 指定高和宽的范围
               } else {
+
+                // Specify width / height value 指定高宽比例
+                if (widthHeight !== -1 && (this.width / this.height).toFixed(2) !== widthHeight.toFixed(2)) {
+                  self.onImageSizeError(oFile.name, this.width, this.height, (this.width / this.height).toFixed(2), widthHeight.toFixed(2));
+                }
+
                 if (this.width >= minWidth && this.width <= maxWidth && this.height >= minHeight && this.height <= maxHeight) {
                   callback(oFile, oSegmReq)
                 } else {
