@@ -284,20 +284,44 @@
 
     xmlHttp.onreadystatechange = function() {
       if (xmlHttp.readyState === 4) {
+
+        // xmlHttp.response is read-only. So we shoud copy it. xmlHttp.responseType is not accessiable.
+        // responseText' property from 'XMLHttpRequest': The value is only accessible if the object's 'responseType' is '' or 'text' (was 'json').
+        var fakeXMLHttp = {};
+        ["status", "response", "statusText", "readyState", "responseText"].forEach(function(i) {
+          try {
+            fakeXMLHttp[i] = xmlHttp[i];
+          } catch (e) {}
+        })
+
+
         self['_running'] = false;
         if (xmlHttp.status >= 200 && xmlHttp.status < 300) {
 
-          if (typeof xmlHttp.response === 'string')
-            options.ended.call(self, JSON.parse(xmlHttp.response), xmlHttp);
-          else
+          if (typeof xmlHttp.response === 'string') {
+            try {
+              fakeXMLHttp.response = JSON.parse(fakeXMLHttp.response);
+            } catch (e) {
+              fakeXMLHttp.response = {};
+            }
+            options.ended.call(self, fakeXMLHttp.response , fakeXMLHttp);
+          } else {
             options.ended.call(self, xmlHttp.response, xmlHttp);
+          }
 
         } else {
 
-          // xmlHttp.status == 0 timeout
-          // xmlHttp.status == 404 not found
-          xmlHttp.response = xmlHttp.response || {};
-          options.error.call(self, xmlHttp);
+          if (typeof xmlHttp.response === 'string') {
+            try {
+              fakeXMLHttp.response = JSON.parse(fakeXMLHttp.response);
+            } catch (e) {
+              fakeXMLHttp.response = {};
+            }
+            options.error.call(self, fakeXMLHttp);
+          } else {
+            options.error.call(self, xmlHttp);
+          }
+
         }
       }
     }
