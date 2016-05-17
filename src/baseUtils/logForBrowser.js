@@ -7,7 +7,7 @@
     localStorage.setItem = function(){};
     localStorage.getItem = function(){};
   }
-  
+
   if (localStorage.getItem('LOGFORBROWSER_ENABLE') === 'false') {
     console.error = function(){};
     window.onerror = function(){};
@@ -33,6 +33,8 @@
   */
   var logForBrowserAlertCss = 'body>.log-for-browser-alert{position:fixed;top:-2em;left:0;width:100%;background-color:rgba(217,83,79,.78);font-size:12px;text-align:center;transition:all 1s;color:#fff;box-shadow:0 0 5px 1px rgba(255,255,255,.16);z-index:9999;line-height:1.8em}';
   var logForBrowserAlertDiv = null;
+  var beginLogTime = Date.now();
+
   window.logForBrowserAlert = function(msg) {
 
     if (!logForBrowserAlertDiv) {
@@ -40,14 +42,20 @@
       logForBrowserAlertDiv.classList.add('log-for-browser-alert');
       document.body.appendChild(logForBrowserAlertDiv);
 
+
       var style = document.createElement('style');
       style.innerHTML = logForBrowserAlertCss;
       document.head.appendChild(style)
     }
 
+    if (logForBrowserAlertDiv.running) return;
+
+    logForBrowserAlertDiv.running = true;
+
     logForBrowserAlertDiv.innerHTML = msg;
     setTimeout(function(){
       logForBrowserAlertDiv.style.top = '-4em';
+      logForBrowserAlertDiv.running = false;
     }, 6000)
     setTimeout(function(){
       logForBrowserAlertDiv.style.top = 0;
@@ -81,10 +89,13 @@
 
     ;new Image().src = (console._logurl || '/log') + '?log=' + encodeURIComponent(JSON.stringify(log));
 
-    if (needReload && console._reloadWhenError !== false) {
+    // Disabled reload after user operation.
+    if (needReload && console._reloadWhenError !== false && Date.now() - beginLogTime < 5000) {
+
       setTimeout(function(){
         location.reload();
       }, 100)
+
     }
   }
 
@@ -163,7 +174,7 @@
       }
       console.error(msg, url, line, col, err)
     } else if (msg.indexOf('Illegal constructor') !== -1) {
-      logForBrowserAlert('好吧...您的游览器可能有点旧了,有空更新一下吧~');
+      logForBrowserAlert('您的游览器可能过旧，请尝试更新游览器');
       console.error(msg, url, line, col, err)
     } else {
       // 未知异常，减少重试次数
@@ -178,7 +189,7 @@
         return;
       }
 
-      logForBrowserAlert('不会吧~页面不可能发生错误的！一定是你的打开方式不对,用其他游览器打开看看咯~');
+      logForBrowserAlert('当前网页出现了些错误，请尝试重新操作或刷新页面');
       console.error(msg, url, line, col, err)
     }
   }
