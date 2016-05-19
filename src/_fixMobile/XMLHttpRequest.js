@@ -9,7 +9,7 @@
  *
  */
 
-(function(global, NativeXMLHttpRequest) {
+!(function(global, NativeXMLHttpRequest) {
 
   var testTypeJSON = true;
 

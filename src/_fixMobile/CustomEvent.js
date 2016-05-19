@@ -7,7 +7,7 @@
  *
  */
 
-(function(global){
+!(function(global){
 
   var ok = function() {
 
