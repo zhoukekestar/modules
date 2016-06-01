@@ -184,9 +184,20 @@
         value = +value;
       } else if (type === 'datetime') {
 
-        // For +08 Beijing Time
-        // value = new Date(value + ':00+08:00')
-        value = new Date(value.replace('T', ' '));
+        // var value = '2016-05-05 05:05:05';
+        // Not an UTC-time. Convert it to an UTC-time.
+        if (value.indexOf('T') === -1) {
+
+          value = value.replace(' ', 'T');
+          value = new Date(value);
+          value = new Date(value.getTime() + value.getTimezoneOffset() * 60 * 1000);
+
+        // var value = '2016-05-05T05:05:05';
+        // An UTC-time, just new it directly.
+        } else {
+          value = new Date(value);
+        }
+
         if (value.toString() === 'Invalid Date') {
           value = '';
         } else {
@@ -199,12 +210,6 @@
         if (value.toString() === 'Invalid Date') {
           value = '';
         } else {
-          // Default time-zone is +8
-          value.setHours(0);
-          value.setMinutes(0);
-          value.setSeconds(0);
-          value.setMilliseconds(0);
-
           value = value.getTime();
         }
 
