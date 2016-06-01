@@ -189,13 +189,13 @@
         if (value.indexOf('T') === -1) {
 
           value = value.replace(' ', 'T');
-          value = new Date(value);
+          value = new Date(value + 'Z');
           value = new Date(value.getTime() + value.getTimezoneOffset() * 60 * 1000);
 
         // var value = '2016-05-05T05:05:05';
         // An UTC-time, just new it directly.
         } else {
-          value = new Date(value);
+          value = new Date(value + 'Z');
         }
 
         if (value.toString() === 'Invalid Date') {
