@@ -10,8 +10,16 @@
 <script type="text/html" id="tmpl" data-holder="#t1" data-role='template'>
   <% obj.forEach(function(d){ %>
     <p><%=d%></p>
+    <p class='a' data-b="b"><%='a' + "b" + '"' + "'" %></p>
+    // Comments
+    /* Comments
+       MultiLines
+     */
+    <!-- Comments
+      MultiLines
+    -->
   <% }) %>
-  <% print("<h1>hi, ouput by push</h1>"), print("<h2 class='h2-class'>h2</h2>") %>
+  <% print("<h1>\"hi, ouput by push\"</h1>"), print("<h2 class='h2-class'>h2</h2>") %>
 </script>
 
 <script type="text/javascript">

@@ -7,36 +7,63 @@
 }(function(){
 
   var fn = function(html) {
-    //var html = document.getElementById(id).innerHTML;
 
     var code =  "var p = [], print = Array.prototype.push.bind(p); with(obj) { " +
-      "p.push('" +
+      "p.push(`" +
       html
-        .replace(/[\r\n\t]/g, "")
-        // Fix bug like: data-keyword='<%=JSON.stringify(obj)%>'
-        // Because ' is key word in this string.
-        .replace(/'/g, "\t")
-        .replace(/<%=(.*?)%>/g, "'); p.push($1); p.push('")
-        .replace(/<%/g, "');")
-        .replace(/%>/g, "; p.push('") +
-      "');}" +
+        .replace(/<!--[\s\S]*?-->/g, '') // Remove comments wrapped with <!--xxx-->
+        .replace(/\/\*[\s\S]*?\*\//g, '') // Remove comments wrapped with /*xxx*/
+        .replace(/\/\/.*?[\r\n]/g, '') // Remove comments wrapped with //
+
+        .replace(/[\r\n]/g, "\v")
+        .replace(/<%=(.*?)%>/g, function(a, b) {
+          return "`); p.push(" + b.replace(/'/g, '`') + "); p.push(`";
+        })
+        .replace(/<%/g, "`);")
+        .replace(/%>/g, "; p.push(`") +
+      "`);}" +
 
         // Fix bug
-      "return p.join('').replace(/\t/g, \"'\");";
+      "return p.join(``);";
+
+    code = code.replace(/'/g, "\\\'")
+    code = code.replace(/`/g, "'");
     var fn = new Function('obj', code);
+    return {
+      fn: fn,
+      code: code
+    };
+  }
 
-    // try {
-    //   html = fn(data);
-    // } catch (e) {
-    //   console.log(e.message);
-      // window.T = {};
-      // window.T.code = code
-      // window.T.fn = fn;
-      // window.T.data = data;
+  var showError = function(e) {
+    try {
 
-    //   html = ""
-    // }
-    return fn;
+      var n = +e.stack.match(/<anonymous>:3:(\d*)\)/)[1];
+      var code = this._code;
+      code = code.substring(0, n) + '__ERROR__' + code.substring(n);
+      code = code.replace("var p = [], print = Array.prototype.push.bind(p); with(obj) { p.push('", '')
+                .replace("');}return p.join('');", '')
+                .replace(/'\);\sp\.push\((.*?)\);\sp\.push\('/g, '<%=$1%>')
+                .replace(/;\sp\.push\('/g, "%>")
+                .replace(/'\);/g, "<%")
+
+      code = code.replace(/\v/g, '\r\n')
+      var index = code.indexOf('__ERROR__');
+      var len = code.length;
+      for (var i = index; i < len; i++) {
+        if (code[i] === '\r' || code[i] === '\n') {
+          index = i;
+          break;
+        }
+      }
+
+      code = code.substring(0, index) + '  ------------------------> ERROR' + code.substring(index);
+      code = code.replace('__ERROR__', '');
+      console.log(code)
+
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   var namespace = '_',
@@ -53,6 +80,7 @@
           document.dispatchEvent(new Event('webcom-reload'));
         } catch (e) {
           console.log(e);
+          showError.call(this, e);
         }
       },
       appendBy = function(d) {
@@ -78,6 +106,7 @@
           document.dispatchEvent(new Event('webcom-reload'));
         } catch (e) {
           console.log(e);
+          showError.call(this, e);
         }
       },
       htmlBy = function(d) {
@@ -85,6 +114,7 @@
           return this[namespace + 'fn'](d);
         } catch (e) {
           console.log(e);
+          showError.call(this, e)
         }
       };
 
@@ -102,7 +132,9 @@
         ele[namespace + 'inited'] = true;
 
         // Cache function code
-        ele[namespace + 'fn'] = fn(ele.innerHTML);
+        var fnRes = fn(ele.innerHTML);
+        ele[namespace + 'fn'] = fnRes.fn;
+        ele[namespace + 'code'] = fnRes.code;
 
         ele[namespace + 'updateBy'] = updateBy.bind(ele);
         ele[namespace + 'appendBy'] = appendBy.bind(ele);
@@ -128,7 +160,10 @@
     if (e.target.getAttribute('data-role') === 'template') {
       e.target[namespace + 'inited'] = true;
       // Cache function code
-      e.target[namespace + 'fn'] = fn(e.target.innerHTML);
+
+      var fnRes = fn(e.target.innerHTML);
+      e.target[namespace + 'fn'] = fnRes.fn;
+      e.target[namespace + 'code'] = fnRes.code;
 
       e.target[namespace + 'updateBy'] = updateBy.bind(e.target);
       e.target[namespace + 'appendBy'] = appendBy.bind(e.target);
