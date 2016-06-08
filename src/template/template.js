@@ -13,11 +13,13 @@
       html
         .replace(/<!--[\s\S]*?-->/g, '') // Remove comments wrapped with <!--xxx-->
         .replace(/\/\*[\s\S]*?\*\//g, '') // Remove comments wrapped with /*xxx*/
-        .replace(/\/\/.*?[\r\n]/g, '') // Remove comments wrapped with //
 
         .replace(/[\r\n]/g, "\v")
         .replace(/<%=(.*?)%>/g, function(a, b) {
           return "`); p.push(" + b.replace(/'/g, '`') + "); p.push(`";
+        })
+        .replace(/<%(.*?)%>/g, function(a, b) {
+          return "<%" + b.replace(/'/g, '`') + "%>";
         })
         .replace(/<%/g, "`);")
         .replace(/%>/g, "; p.push(`") +
