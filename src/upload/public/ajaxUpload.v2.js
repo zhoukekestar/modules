@@ -144,21 +144,20 @@
         isFileSizeCorrect = function(oFile) {
           var maxSize = self.dataset.maxSize || '5M'
             , minSize = self.dataset.minSize || '0K'
-            , size = oFile.size / 1024; // B --> KB
 
           maxSize = maxSize.toUpperCase();
           minSize = minSize.toUpperCase();
 
           if (minSize.indexOf('M') !== -1) {
             minSize = +minSize.substring(0, minSize.length - 1);
-            minSize *= 1024; // MB --> KB
+            minSize = minSize << 10; // MB --> KB
           } else {
             minSize = +minSize.substring(0, minSize.length - 1);
           }
 
           if (maxSize.indexOf('M') !== -1) {
             maxSize = +maxSize.substring(0, maxSize.length - 1);
-            maxSize *= 1024; // MB --> KB
+            maxSize = maxSize << 10; // MB --> KB
           } else {
             maxSize = +maxSize.substring(0, maxSize.length - 1);
           }
