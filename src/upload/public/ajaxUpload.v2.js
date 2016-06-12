@@ -144,6 +144,7 @@
         isFileSizeCorrect = function(oFile) {
           var maxSize = self.dataset.maxSize || '5M'
             , minSize = self.dataset.minSize || '0K'
+            , size = oFile.size >> 10; // B --> KB
 
           maxSize = maxSize.toUpperCase();
           minSize = minSize.toUpperCase();
