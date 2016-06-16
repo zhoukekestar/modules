@@ -13,7 +13,7 @@
   var initImageView = function() {
     imageView = document.createElement('div');
     imageView.classList.add('imageView');
-    imageView.innerHTML = '<span class="close">&times;</span><div class="img"><span class="pre"><</span><span class="next">></span></div>';
+    imageView.innerHTML = '<span class="close"></span><div class="img"><span class="pre"></span><span class="next"></span></div>';
     document.body.appendChild(imageView);
 
 

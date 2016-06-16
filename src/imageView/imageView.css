@@ -13,31 +13,34 @@
 }
 
 .imageView span {
-  width: 38px;
-  font-size: 7em;
   color: #fff !important;
   position: absolute;
-  right: .5em;
+  right: 30px;
   cursor: pointer;
   border-radius: 50%;
-  font-weight: normal;
   -webkit-user-select: none;
-  font-family: cursive;
   opacity: 1 !important;
-  text-shadow: #000 0 0 8px;
-  line-height: 100%;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAALVBMVEVHcEz////////////////////////////////////////////////////////NXt0CAAAADnRSTlMAYDDwoBDQz5DgQCCwgJ+31mYAAADeSURBVFjD7ZZLDsMgDAXNL6Fp6vsft01AkaiKMbxFusDbMCMRwH5Es2b9W1mrWraFGs9sFLznR12gMHiuCsgoDB/e1XfaNsj8aRC/t3iiKK5o8/KaqOAlg1HxdYNh3T2pGfT8b0MPnwwB4Il25jUAPIWlMHTzXwbbzxcG65hf/d3lMhy8H+lP2TDMZ8M2zicDAzzR02E8LAgrtoWDX4CfePLAMWZ++CJdfDJEgB96TAU/8pz3gu83oC0NbapoW0cHizjaGBmNuuGKjnc0YKARBw1ZcMyDgyYcdWfNurHeCh8NqydBSLMAAAAASUVORK5CYII=);
+  height: 50px;
+  width: 50px;
+  background-size: 90%;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 3px 1px rgba(255, 255, 255, 0.51);
 }
 
 .imageView span.pre {
   top: 50%;
   left: 50px;
-  margin-top: -.5em;
+  margin-top: -25px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAANlBMVEVHcEz///////////////////////////////////////////////////////////////////+GUsxbAAAAEXRSTlMA4LDw0GDvMBCgcG+AUMBAICMFhYMAAACUSURBVHhe7ZZBDoMwDAST4GBDgXb//9ki8YNOpUjgvc9edhK5PC6ZjDvju4QaFkkO+f47Hk2a3oC3k3fGV8D7LFmM4/vJL0gfxq+SNqrPOD4Oqg/j3ST7jNXvAHxUpk/ZIV82aUcFfn0AzMEZNUS7LIbv4IUaVtEpuqQWaItJMtZQ6Zxh/58z58w5nc7p+NC8bzKZLxNuCaK8mOeVAAAAAElFTkSuQmCC);
 }
 
 .imageView span.next {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAANlBMVEVHcEz///////////////////////////////////////////////////////////////////+GUsxbAAAAEXRSTlMAgO9Q0PCgEGAwQJCfIL/gr37WADQAAACNSURBVHhe7ZbLDcMwDMUU2fInTppy/2W7Q9/BQCsOQB8eYch+mSQ5u0kc+BQFqqEBY7NhAIdsuEyhBFzSnDOgbjb0Cs9UDa4ZGnjZnNSSDXpSuuEMeO+OssIyNSlT1+ziEo/4zVL29dxfEEUbIKaQgEO9hYxdi3AATZxv5Xw539fvRzFJEFM+NP+MJPkAvzcJauOx6EoAAAAASUVORK5CYII=);
   top: 50%;
   right: 50px;
-  margin-top: -.5em;
+  margin-top: -25px;
 }
 
 .imageView .img {
