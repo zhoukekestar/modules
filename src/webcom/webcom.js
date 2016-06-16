@@ -33,6 +33,8 @@
       // run template
       try {
 
+        this.classList.add(currentRole);
+
         var tmpl = customElements[currentRole].querySelector('[data-role="template"]');
         if (!tmpl) {
           console.warn('Attribute named data-bind is not affected as template is null.')
@@ -57,7 +59,7 @@
           s.setAttribute('data-run', 'template-updated-by-webcom');
 
           // Execute it with current this.
-          s.innerHTML = '(function(){' + scripts[j].innerHTML + '}).bind(window["' + tempName + '"])();'
+          s.innerHTML = '(function(webcom){' + scripts[j].innerHTML + '}).bind(window["' + tempName + '"])(window["' + tempName + '"]); //# sourceURL=' + currentRole + '-template-updated.js'
 
           // execute it.
           this.appendChild(s);

@@ -16,9 +16,8 @@
     console.log('This message comes from list.html.')
   </script>
   <script data-run='template-updated'>
-    console.log(this);
+    console.log(this, this === webcom);
     console.log('template-updated.');
-    this.classList.add('list');
   </script>
   <script src='a.js'></script>
 </div>
