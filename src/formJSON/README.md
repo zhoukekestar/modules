@@ -17,6 +17,7 @@ onended方法将在form表单异步提交后，成功返回时调用，返回参
 在数据发送之前，可自行再次处理请求的数据
 ##### Parameters
 * `data` 框架自动生成的data对象
+
 ##### Returns
 * `data` 处理后的data，返回null时，当前请求将会取消
 
