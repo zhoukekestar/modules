@@ -8,34 +8,34 @@
 
 ## onended(response, xhr)
 onended方法将在form表单异步提交后，成功返回时调用，返回参数
-### Parameters
+#### Parameters
 * response AJAX请求返回的response，json格式
 * xhr AJAX请求对象
 
 
 ## _data(data) -> data
 在数据发送之前，可自行再次处理请求的数据
-### Parameters
+#### Parameters
 * data 框架自动生成的data对象
-### Returns
+#### Returns
 * data 处理后的data，返回null时，当前请求将会取消
 
 
 ## onerror(xhr)
 在请求发生错误执行，即当前AJAX请求的HTTP-Code不是20x
-### Parameters
+#### Parameters
 * xhr AJAX请求对象
 
 
 ## _beforeSend(xhr)
 在请求发送之前，再次处理AJAX请求信息
-### Parameters
+#### Parameters
 * xhr AJAX请求对象
 
 
 ## 字段属性扩展
-* key1.key2 点语法，在属性之间，表示构建一个object对象，如*<input name='a.b' value='v'/>*将输出*{"a" : { "b" : "v" } }*
-* key1. 点语法，在属性末尾，表示构建一个数组对象，如*<input name='a.' value='v' />* 将输出 *{"a" : [ "v" ]}*
+* key1.key2 点语法，在属性之间，表示构建一个object对象，如`<input name='a.b' value='v'/>`将输出`{"a" : { "b" : "v" } }`
+* key1. 点语法，在属性末尾，表示构建一个数组对象，如`<input name='a.' value='v' />`将输出 `{"a" : [ "v" ]}`
 * :bool或:boolean 表示输出bool类型的数据
 * :number 表示输出number类型数据
 * :object 表示以object解析值
