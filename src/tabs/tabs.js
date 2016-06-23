@@ -53,7 +53,7 @@
         var temp_tab = target.getAttribute('data-href');
         var temp_content;
 
-        if (temp_tab && (tabs.onselected ? tabs.onselected(e) !== false : true)) {
+        if (target.parentNode.classList.contains('tabs-list') && temp_tab && (tabs.onselected ? tabs.onselected(e) !== false : true)) {
 
           // Hide
           active_tab.classList.remove('active');
