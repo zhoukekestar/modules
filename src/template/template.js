@@ -8,25 +8,25 @@
 
   var fn = function(html) {
 
-    var code =  "var p = [], print = Array.prototype.push.bind(p); with(obj) { " +
-      "p.push(`" +
+    var code =  "var _p = [], print = Array.prototype.push.bind(_p); with(obj) { " +
+      "_p.push(`" +
       html
         .replace(/<!--[\s\S]*?-->/g, '') // Remove comments wrapped with <!--xxx-->
         .replace(/\/\*[\s\S]*?\*\//g, '') // Remove comments wrapped with /*xxx*/
 
         .replace(/[\r\n]/g, "\v")
         .replace(/<%=(.*?)%>/g, function(a, b) {
-          return "`); p.push(" + b.replace(/'/g, '`') + "); p.push(`";
+          return "`); _p.push(" + b.replace(/'/g, '`') + "); _p.push(`";
         })
         .replace(/<%(.*?)%>/g, function(a, b) {
           return "<%" + b.replace(/'/g, '`') + "%>";
         })
         .replace(/<%/g, "`);")
-        .replace(/%>/g, "; p.push(`") +
+        .replace(/%>/g, "; _p.push(`") +
       "`);}" +
 
         // Fix bug
-      "return p.join(``);";
+      "return _p.join(``);";
 
     code = code.replace(/'/g, "\\\'")
     code = code.replace(/`/g, "'");
