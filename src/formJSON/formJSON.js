@@ -310,9 +310,12 @@
               fakeXMLHttp.response = {};
             }
             options.ended.call(self, fakeXMLHttp.response , fakeXMLHttp);
+            self['_XMLHttpRequest'] = fakeXMLHttp;
           } else {
             options.ended.call(self, xmlHttp.response, xmlHttp);
+            self['_XMLHttpRequest'] = xmlHttp;
           }
+          self.dispatchEvent(new Event('formJSON-ended', {bubbles: true}));
 
         } else {
 
@@ -323,10 +326,13 @@
               fakeXMLHttp.response = {};
             }
             options.error.call(self, fakeXMLHttp);
+            self['_XMLHttpRequest'] = fakeXMLHttp;
           } else {
             options.error.call(self, xmlHttp);
+            self['_XMLHttpRequest'] = xmlHttp;
           }
 
+          self.dispatchEvent(new Event('formJSON-error', {bubbles: true}));
         }
       }
     }

@@ -118,6 +118,13 @@
       e.target._beforeSend = beforeSend;
     })
   })();
+
+  document.body.addEventListener('formJSON-ended', function(e) {
+    console.log(e)
+  })
+  document.body.addEventListener('formJSON-error', function(e) {
+    console.log(e)
+  })
 </script>
 </body>
 </html>
