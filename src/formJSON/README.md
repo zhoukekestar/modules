@@ -33,6 +33,14 @@ onended方法将在form表单异步提交后，成功返回时调用，返回参
 ##### Parameters
 * `xhr` AJAX请求对象
 
+## _done(xhr)
+在请求完成后，优先处理xhr
+##### Parameters
+* `xhr` AJAX请求对象
+##### Returns
+* `null` 将跳过接下来的onended和onerror方法
+* `object` 改写后的xhr对象
+
 
 ## 字段属性扩展
 * `key1.key2` 点语法，在属性之间，表示构建一个object对象，如`<input name='a.b' value='v'/>`将输出`{"a" : { "b" : "v" } }`
@@ -42,3 +50,8 @@ onended方法将在form表单异步提交后，成功返回时调用，返回参
 * `:object` 表示以object解析值
 * `:datetime` 表示用时间输出时间戳
 * `:date` 表示用日期解析输出时间戳
+
+## 事件
+* `formJSON-submit`&`submit` 当表单提交时，触发该事件
+* `formJSON-ended` 请求正常返回时触发，具体的请求的信息，可查看`target._XMLHttpRequest`
+* `formJSON-error` 请求发生错误时触发，具体的请求的信息，可查看`target._XMLHttpRequest`

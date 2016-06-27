@@ -290,6 +290,13 @@
     xmlHttp.onreadystatechange = function() {
       if (xmlHttp.readyState === 4) {
 
+        var done  = self._done && self._done(xmlHttp);
+        if (done === null) {
+          return;
+        } else {
+          xmlHttp = done || xmlHttp;
+        }
+
         // xmlHttp.response is read-only. So we shoud copy it. xmlHttp.responseType is not accessiable.
         // responseText' property from 'XMLHttpRequest': The value is only accessible if the object's 'responseType' is '' or 'text' (was 'json').
         var fakeXMLHttp = {};
