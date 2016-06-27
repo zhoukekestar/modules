@@ -290,6 +290,8 @@
     xmlHttp.onreadystatechange = function() {
       if (xmlHttp.readyState === 4) {
 
+        self['_running'] = false;
+
         var done  = self._done && self._done(xmlHttp);
         if (done === null) {
           return;
@@ -306,8 +308,6 @@
           } catch (e) {}
         })
 
-
-        self['_running'] = false;
         if (xmlHttp.status >= 200 && xmlHttp.status < 300) {
 
           if (typeof xmlHttp.response === 'string') {
