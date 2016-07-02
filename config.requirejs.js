@@ -50,6 +50,8 @@ module.exports = {
 
     toast         : 'toast/toast',
     ajaxUpload    : 'upload/public/ajaxUpload.v2',
+    ajaxUploadV1  : 'upload/public/ajaxUpload',
+    ajaxUploadV2  : 'upload/public/ajaxUpload.v2',
 
     webcom        : 'webcom/webcom',
     'ajaxUpload-single' : 'upload/public/ajaxUpload-single'

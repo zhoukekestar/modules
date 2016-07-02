@@ -130,16 +130,25 @@
           xmlHttp.send(formData);
 
         },
-        inputID = 'ajaxUpload-' + new Date().getTime(),
+        inputID = 'ajaxUpload-' + new Date().getTime() + '' + (Math.random() + '').substring(3, 8),
         inputEle,
         url     = self.getAttribute('data-url'),
         form    = document.createElement('form');
 
+    // Bind current element
+    form._bind = self;
+
     // Add form element into body
-    form.innerHTML = '<input id="' + inputID + '" data-url="' + url + '" type="file" name="file" value="" multiple style="display:none !important">';
+    form.style.cssText = '    position: fixed;    left: 0px;    top: 0px;    width: 0;    height: 0;    overflow: hidden;';
+    form.innerHTML = '<input'
+      + ' id="' + inputID + '" '
+      + ' data-url="' + url + '" '
+      + ' type="file" name="file" value="" '
+      + (self.dataset.multiple === 'false' ? '' : ' multiple ')
+      + (self.dataset.accept ? ' accept="' + self.dataset.accept + '" ' : '')
+      + '>';
     document.querySelector('body').appendChild(form)
     inputEle = document.getElementById(inputID);
-
 
     // Bind current element's click event.
     self.addEventListener('click', function() {
@@ -148,15 +157,15 @@
       if (loading === false) {
         inputEle.click();
       } else {
-        xmlHttp.abort();
+        loading = false;
+        xmlHttp && xmlHttp.abort();
+        form.reset();
         alert('已取消上传');
       }
 
     })
 
     inputEle.onchange = function() {
-
-      loading = true;
 
       // self._innerHTML = self.innerHTML;
       // self.innerHTML = '取消上传'
@@ -166,22 +175,21 @@
 
     // Trigger input & alert system file-upload view
     inputEle.click();
+    return inputEle;
   }
 
-  // document.addEventListener('click', function(e) {
+  document.addEventListener('click', function(e) {
 
-  //   alert('hi,...')
-  //   var target = e.target;
-  //   if (target.getAttribute('data-role') === 'ajaxUpload') {
+    var target = e.target;
+    if (target.getAttribute('data-role') === 'ajaxUpload') {
 
-  //     if (target.inited === undefined) {
-  //       target.inited = true;
-  //       alert('ajaxUpload init')
-  //       ajaxUpload(target)
-  //       // target.click();
-  //     }
-  //   }
-  // })
+      if (target.inited === undefined) {
+        target.inited = true;
+        alert('ajaxUpload init')
+        ajaxUpload(target)
+      }
+    }
+  })
 
   var init = function() {
     var eles = document.querySelectorAll('[data-role=ajaxUpload]');
