@@ -53,5 +53,7 @@ module.exports = {
 
   "toast"         : "toast/toast.css",
   "ajaxUpload"    : "upload/public/ajaxUpload.css",
+  "ajaxUploadV1"  : "upload/public/ajaxUpload.css",
+  "ajaxUploadV2"  : "upload/public/ajaxUpload.css",
   "ajaxUpload-single" : "upload/public/ajaxUpload-single.css"
 }

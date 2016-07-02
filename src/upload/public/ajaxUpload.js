@@ -181,7 +181,7 @@
   document.addEventListener('click', function(e) {
 
     var target = e.target;
-    if (target.getAttribute('data-role') === 'ajaxUpload') {
+    if (target.getAttribute('data-role') === 'ajaxUpload' && target.dataset.version === '1.0') {
 
       if (target.inited === undefined) {
         target.inited = true;
@@ -195,7 +195,7 @@
     var eles = document.querySelectorAll('[data-role=ajaxUpload]');
     for (var i = 0, max = eles.length; i < max; i++) {
 
-      if (!eles[i].inited) {
+      if (!eles[i].inited && eles[i].dataset.version === '1.0') {
         eles[i].inited = true;
         ajaxUpload(eles[i]);
       }

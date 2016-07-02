@@ -113,6 +113,8 @@ module.exports = {
 
     toast         : [],
     ajaxUpload    : [],
+    ajaxUploadV1  : [],
+    ajaxUploadV2  : [],
 
     webcom        : [],
 
