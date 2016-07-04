@@ -40,11 +40,15 @@
 
       // Set line
       var line = tabs.querySelector('.line span');
-      if (line) {
-        line.style.width = width + '%';
-        line.style.left = (+active_tab.getAttribute('data-index')) * width + '%';
+      if (!line) {
+        line = document.createElement('div');
+        line.classList.add('line');
+        line.innerHTML = '<span></span>';
+        tabs.querySelector('.tabs-nav').appendChild(line);
+        line = tabs.querySelector('.line span');
       }
-
+      line.style.width = width + '%';
+      line.style.left = (+active_tab.getAttribute('data-index')) * width + '%';
 
       // Bind tab's click event.
       tabs.addEventListener('click', function(e){
