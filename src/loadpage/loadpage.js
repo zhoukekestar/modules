@@ -74,7 +74,7 @@
       setTimeout(function(){
         if (loaded === false)
           loadingPageLoading();
-      }, 2000);
+      }, 800);
 
       /**
        * AJAX request
@@ -98,7 +98,7 @@
               time: new Date().getTime()
             }
             // Cache it.
-            sessionStorage['cache_' + url] = JSON.stringify(data)
+            // sessionStorage['cache_' + url] = JSON.stringify(data)
 
             callback(data)
 
@@ -263,10 +263,10 @@
     } else {
 
       // Cache loaded page when loaded.
-      sessionStorage['cache_' + location.href] = JSON.stringify({
-        doc: document.querySelector('html').outerHTML,
-        time: new Date().getTime()
-      })
+      // sessionStorage['cache_' + location.href] = JSON.stringify({
+      //   doc: document.querySelector('html').outerHTML,
+      //   time: new Date().getTime()
+      // })
       history.replaceState('', '', location.href);
     }
 
