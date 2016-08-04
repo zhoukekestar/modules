@@ -1,0 +1,8 @@
+
+# Install Ruby. Steps for Windows.
+# 1、gem install jekyll
+# 2、gem install bundler
+# 3、bundle install
+# 4、jekyll serve
+
+include: [_fixDesktop, _fixMobile, _lib]
