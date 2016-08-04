@@ -1,8 +1,9 @@
 
 # Install Ruby. Steps for Windows.
-# 1、gem install jekyll
+# 1、gem install jekyll // v3.2.0
 # 2、gem install bundler
 # 3、bundle install
-# 4、jekyll serve
+# 4、Copy Ruby23-x64/lib/ruby/gems/2.3.0/gems/minima-1.0.1/_layouts/*.html TO Curent dir
+# 5、jekyll serve
 
 include: [_fixDesktop, _fixMobile, _lib]
