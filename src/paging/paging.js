@@ -102,24 +102,31 @@
   var init = function() {
 
     var namespace = '_';
-    var ele = document.querySelector('[data-role="paging"]');
-    if (ele && ele[namespace + 'inited'] === undefined ) {
+    var eles = document.querySelectorAll('[data-role="paging"]');
 
-      ele[namespace + 'inited'] = true;
+    for (var i = 0; i < eles.length; i++) {
 
-      var elep = paging(ele, {
-        current : +ele.getAttribute('data-current'),
-        onselect: function(n){
+      var ele = eles[i];
 
-          (typeof ele['onselect'] === 'function') && ele['onselect'](n);
+      if (ele && ele[namespace + 'inited'] === undefined ) {
 
-        },
-        total   : +ele.getAttribute('data-total'),
-        pagesize: +ele.getAttribute('data-pagesize')
-      })
+        ele[namespace + 'inited'] = true;
 
-      ele[namespace + 'select'] = elep.select;
-      ele[namespace + 'reBuild'] = elep.reBuild;
+        var elep = paging(ele, {
+          current : +ele.getAttribute('data-current'),
+          onselect: function(n){
+
+            (typeof ele['onselect'] === 'function') && ele['onselect'](n);
+
+          },
+          total   : +ele.getAttribute('data-total'),
+          pagesize: +ele.getAttribute('data-pagesize')
+        })
+
+        ele[namespace + 'select'] = elep.select;
+        ele[namespace + 'reBuild'] = elep.reBuild;
+      }
+      
     }
 
   };
