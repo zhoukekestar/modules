@@ -74,6 +74,9 @@
 ### tooltip
 * ![tooltip](./tooltip/demo.gif)
 
+### ui-like
+* ![ui-like](./ui-like/demo.gif)
+
 ### upload
 * Run command `node app.js`
 * Open browser & visit `localhost:3000`
