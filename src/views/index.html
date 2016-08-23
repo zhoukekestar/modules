@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>views</title>
+  </head>
+  <body>
+    <div data-role="view" id='view1'>
+      <p>view1</p>
+      <a href="#view2" data-href='view'>view2</a>
+      <a href="#view3" data-href='view'>view3</a>
+    </div>
+
+    <div data-role="view" id='view2'>
+      <p>view2</p>
+      <a href="#view1" data-href='view'>view1</a>
+      <a href="#view3" data-href='view'>view3</a>
+    </div>
+
+    <div data-role="view" id='view3'>
+      <p>view3</p>
+      <a href="#view1" data-href='view'>view1</a>
+      <a href="#view2" data-href='view'>view2</a>
+    </div>
+
+
+    <script src='./views.es6.js'></script>
+  </body>
+</html>
