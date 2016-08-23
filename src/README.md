@@ -77,8 +77,8 @@
 ### ui-like
 * ![ui-like](./ui-like/demo.gif)
 
-## ui-material-textfield
-* ![ui-material-textfield](./ui-material-textfield/demo.gif)
+## ui-input
+* ![ui-input](./ui-input/demo.gif)
 
 ### upload
 * Run command `node app.js`

@@ -53,6 +53,7 @@ module.exports = {
     ajaxUploadV1  : 'upload/public/ajaxUpload',
     ajaxUploadV2  : 'upload/public/ajaxUpload.v2',
 
+    views         : 'views/views.js',
     webcom        : 'webcom/webcom',
     'ajaxUpload-single' : 'upload/public/ajaxUpload-single'
   },
@@ -117,6 +118,7 @@ module.exports = {
     ajaxUploadV2  : [],
 
     webcom        : [],
+    views         : [],
 
     'ajaxUpload-single' : []
   }
