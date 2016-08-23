@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ui-material-textfield</title>
+  <link rel="stylesheet" href="./ui-material-textfield.css">
+  <link rel="stylesheet" href="./ui-input.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+  <p>From: <a href="https://github.com/you-dont-need/You-Dont-Need-Javascript">https://github.com/you-dont-need/You-Dont-Need-Javascript</a>, <a href="http://codepen.io/KtorZ/pen/ZOzdqG">http://codepen.io/KtorZ/pen/ZOzdqG</a></p>
+  <div class="material-textfield blue">
+    <input type="text" required/>
+    <label data-content="username">username</label>
+  </div>
+  <div class="material-textfield red">
+    <input type="password" required/>
+    <label data-content="password">password</label>
+  </div>
+
+  <p>以下为自有css（根据上述实现实现，由于需要valid属性，所以，input必须有require限制）</p>
+  <div>
+
+    <div class='ui-input'>
+      <input type="text" required>
+      <label name='Username'></label>
+    </div>
+    <div class='ui-input blue'>
+      <input type="text" required>
+      <label name='Note'></label>
+    </div>
+    <div class='ui-input red'>
+      <input type="password" required>
+      <label name='Password'></label>
+    </div>
+
+  </div>
+</body>
+
+</html>
