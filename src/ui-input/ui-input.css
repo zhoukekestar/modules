@@ -38,12 +38,38 @@
   color: #ccc;;
 }
 
+.ui-input.placeholder label::before {
+  content: attr(placeholder);
+}
+
 .ui-input input:valid + label:before,
 .ui-input input:focus + label:before {
+  content: attr(name);
   top: .5em;
   color: inherit;
   font-size: .8em;
 }
+
+/* valid is not enough */
+.ui-input.emptyable input:valid + label::before {
+  top: 1.7em;
+  color: #ccc;
+  font-size: 1em;
+}
+.ui-input.emptyable.placeholder input:valid + label::before {
+  content: attr(placeholder);
+}
+/* valid & focus can move up
+   valid & .not-empty can move up
+ */
+.ui-input.emptyable input:valid:focus + label::before,
+.ui-input.emptyable input.not-empty:valid + label::before {
+  content: attr(name);
+  top: .5em;
+  color: inherit;
+  font-size: .8em;
+}
+
 
 .ui-input label:after {
   content: '';

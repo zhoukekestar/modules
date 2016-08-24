@@ -31,12 +31,30 @@
       <input type="text" required>
       <label name='Note'></label>
     </div>
-    <div class='ui-input red'>
+    <div class='ui-input placeholder red'>
       <input type="password" required>
-      <label name='Password'></label>
+      <label name='Password' placeholder='This is a password'></label>
     </div>
-
+    <div class="ui-input emptyable">
+      <input type="text">
+      <label name='Not-required'></label>
+    </div>
+    <div class="ui-input emptyable placeholder">
+      <input type="text">
+      <label name='Not-required' placeholder="It's not required"></label>
+    </div>
   </div>
+
+  <script>
+    /* If you want to support empty input, you should add below codes. */
+    document.body.addEventListener('input', function(e) {
+      if (e.target.value.length > 0) {
+        e.target.classList.add('not-empty');
+      } else {
+        e.target.classList.remove('not-empty');
+      }
+    })
+  </script>
 </body>
 
 </html>
