@@ -1,50 +1,47 @@
-'use strict';
-
 !function () {
   var style = document.createElement('style');
-  style.innerHTML = '\n          html, body {\n            margin: 0;\n            padding: 0;\n            overflow: hidden;\n            height: 100%;\n            width: 100%;\n          }\n          [data-role=view] {\n            position: absolute;\n            display: none;\n            top: 0;\n            height: 100%;\n            width: 100%;\n            padding: 20px;\n            box-sizing: border-box;\n          }\n        ';
+  style.innerHTML = '\n    html, body {\n      margin: 0;\n      padding: 0;\n      overflow: hidden;\n      height: 100%;\n      width: 100%;\n      position: fixed;\n    }\n    [data-role=view] {\n      position: absolute;\n      display: none;\n      top: 0;\n      height: 100%;\n      width: 100%;\n      padding: 20px;\n      box-sizing: border-box;\n      transition: left .2s;\n    }\n  ';
   document.head.appendChild(style);
 
-  var views = document.querySelectorAll('[data-role=view]');
-  var VIEWWIDTH = document.body.clientWidth;
+  var views = {},
+      eles = document.querySelectorAll('[data-role=view]'),
+      currentIndex = 0;
 
-  // init views
-  for (var i = 0; i < views.length; i++) {
-    views[i].style.left = 100 * i + '%';
-    views[i].style.display = 'block';
+  for (var i = 0; i < eles.length; i++) {
+    eles[i].style.left = 100 * i + '%';
+    eles[i].style.display = 'block';
   }
 
-  setTimeout(function () {
-    location.hash === '' ? document.body.scrollLeft = 0 : null;
-  }, 0);
+  views.next = function () {
 
-  var TIME = 300;
-  var scrollTo = function scrollTo(targetLeft, callback) {
+    currentIndex++;
+    for (var i = 0; i < eles.length; i++) {
+      eles[i].style.left = 100 * (i - currentIndex) + '%';
+    }
+  };
 
-    var startT = Date.now(),
-        left = document.body.scrollLeft,
-        width = targetLeft - left;
+  views.skipTo = function (index) {
 
-    var interval = setInterval(function () {
-      var now = Date.now(),
-          t = now - startT;
+    currentIndex = index;
 
-      document.body.scrollLeft = left + width * t / TIME;
-      if (t >= TIME) {
-        document.body.scrollLeft = left + width;
-        clearInterval(interval);
-        callback && callback();
-      }
-    }, 16);
+    for (var i = 0; i < eles.length; i++) {
+      eles[i].style.left = 100 * (i - currentIndex) + '%';
+    }
   };
 
   document.body.addEventListener('click', function (e) {
     if (e.target.dataset.href === 'view') {
       e.preventDefault();
-      var ele = e.target.hash && document.querySelector(e.target.hash) || views[0];
-      scrollTo(ele.offsetLeft, function () {
-        location.href = e.target.href;
-      });
+      var ele = e.target.hash && document.querySelector(e.target.hash) || eles[0];
+
+      for (var i = 0; i < eles.length; i++) {
+        if (ele === eles[i]) {
+          views.skipTo(i);
+          break;
+        }
+      }
     }
   });
+
+  window.VIEWS = views;
 }();

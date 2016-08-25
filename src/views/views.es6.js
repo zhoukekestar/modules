@@ -7,6 +7,7 @@
       overflow: hidden;
       height: 100%;
       width: 100%;
+      position: fixed;
     }
     [data-role=view] {
       position: absolute;
@@ -16,52 +17,57 @@
       width: 100%;
       padding: 20px;
       box-sizing: border-box;
+      transition: left .2s;
     }
   `;
   document.head.appendChild(style);
 
-  var views = document.querySelectorAll('[data-role=view]');
-  var VIEWWIDTH = document.body.clientWidth;
+  var views = {}
+    , eles = document.querySelectorAll('[data-role=view]')
+    , currentIndex = 0;
 
-  // init views
-  for (var i = 0; i < views.length; i++) {
-    views[i].style.left = (100 * i) + '%';
-    views[i].style.display = 'block';
+  for (var i = 0; i < eles.length; i++) {
+    eles[i].style.left = (100 * i) + '%';
+    eles[i].style.display = 'block';
   }
 
-  setTimeout(() => {
-    location.hash === '' ? document.body.scrollLeft = 0 : null;
-  }, 0);
 
-  var TIME = 300;
-  var scrollTo = (targetLeft, callback) => {
+  views.next = function() {
 
-    var startT = Date.now()
-      , left = document.body.scrollLeft
-      , width = targetLeft - left;
-
-    var interval =  setInterval( () => {
-      var now = Date.now()
-        , t = now - startT;
-
-      document.body.scrollLeft = left + width * t / TIME;
-      if (t >= TIME) {
-        document.body.scrollLeft = left + width;
-        clearInterval(interval);
-        callback && callback();
-      }
-    }, 16);
+    currentIndex++;
+    for (var i = 0; i < eles.length; i++) {
+      eles[i].style.left = (100 * (i - currentIndex)) + '%';
+    }
 
   }
+
+  views.skipTo = function(index) {
+
+    currentIndex = index;
+
+    for (var i = 0; i < eles.length; i++) {
+      eles[i].style.left = (100 * (i - currentIndex)) + '%';
+    }
+  }
+
 
   document.body.addEventListener('click', (e) => {
     if (e.target.dataset.href === 'view') {
       e.preventDefault();
-      var ele = e.target.hash && document.querySelector(e.target.hash) || views[0];
-      scrollTo(ele.offsetLeft, () => {
-        location.href = e.target.href;
-      });
+      var ele = e.target.hash && document.querySelector(e.target.hash) || eles[0];
+
+      for (var i = 0; i < eles.length; i++) {
+        if (ele === eles[i]) {
+          views.skipTo(i);
+          break;
+        }
+      }
     }
   })
+
+  var a = () => {
+    a = '';
+  }
+  window.VIEWS = views;
 
 })();
