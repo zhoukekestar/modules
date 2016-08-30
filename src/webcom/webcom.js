@@ -203,6 +203,38 @@
 
   }
 
+  var loadFinished = function(link, text) {
+
+    try {
+
+      var doc = document.createDocumentFragment();
+      var wrapper = document.createElement("div");
+      wrapper.innerHTML = text;
+      doc.appendChild(wrapper);
+      link[namespace + 'doc'] = doc;
+
+      // Mount all "data-register" element to customElements.
+      var eles = doc.querySelectorAll('[data-register]');
+      for (var j = 0; j < eles.length; j++) {
+
+        var register = eles[j].getAttribute('data-register');
+        customElements[register] = eles[j];
+
+      }
+
+    } catch (e) {
+      console.log(e)
+    }
+
+
+    webComponentsCount--;
+
+    // All links is loaded.
+    if (webComponentsCount === 0) {
+      initWebComponents();
+    }
+  }
+
   var loadLink = function(link) {
 
     var url = link.href;
@@ -227,41 +259,46 @@
 
           console.log('request error');
 
+          webComponentsCount--;
+
+          // All links is loaded.
+          if (webComponentsCount === 0) {
+            initWebComponents();
+          }
+
         } else {
 
-          try {
-
-            var doc = document.createDocumentFragment();
-            var wrapper = document.createElement("div");
-            wrapper.innerHTML = xmlHttp.responseText;
-            doc.appendChild(wrapper);
-            link[namespace + 'doc'] = doc;
-
-            // Mount all "data-register" element to customElements.
-            var eles = doc.querySelectorAll('[data-register]');
-            for (var j = 0; j < eles.length; j++) {
-
-              var register = eles[j].getAttribute('data-register');
-              customElements[register] = eles[j];
-
+          if (link.dataset.cacheid) {
+            var obj = {
+              expires: (+link.dataset.cachetime || 8.64e7) + Date.now(), // DefaultTime 1 day = 8.64e7 = 1000 * 60 * 60 * 24 = 86400000
+              text: xmlHttp.responseText
             }
-
-          } catch (e) {
-            console.log(e)
+            localStorage.setItem("webcoms-" + link.dataset.cacheid, JSON.stringify(obj));
           }
-        }
 
-        webComponentsCount--;
-
-        // All links is loaded.
-        if (webComponentsCount === 0) {
-          initWebComponents();
+          loadFinished(link, xmlHttp.responseText);
         }
 
       }
     }
 
-    xmlHttp.send(null);
+    var cache = localStorage.getItem('webcoms-' + link.dataset.cacheid);
+    try {
+      cache = JSON.parse(cache);
+    } catch (e) {
+      cache = null;
+    }
+
+    if (cache) {
+      if (cache.expires >= Date.now()) {
+        loadFinished(link, cache.text);
+      } else {
+        localStorage.removeItem('webcoms-' + link.dataset.cacheid);
+        xmlHttp.send(null);
+      }
+    } else {
+      xmlHttp.send(null);
+    }
   }
 
 
