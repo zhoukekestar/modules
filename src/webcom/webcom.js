@@ -139,14 +139,17 @@
 
 
   /*
-  *  Init web components
+  *  After loading all links. Init all web components in current document.
   *  1: init custom element if necessary.
   *  2: override current element's setAttribute function
   *  3: override current element's getAttribute function
   */
   var initWebComponents = function() {
 
-    debug && console.log('initWebComponents...')
+    webComponentsCount--;
+    if (webComponentsCount > 0) return;
+
+    debug && console.log('initWebComponents...');
 
     var eles = document.querySelectorAll('[data-is]');
     for (var i = 0; i < eles.length; i++) {
@@ -226,25 +229,17 @@
       console.log(e)
     }
 
+    initWebComponents();
 
-    webComponentsCount--;
-
-    // All links is loaded.
-    if (webComponentsCount === 0) {
-      initWebComponents();
-    }
   }
 
   var loadLink = function(link) {
 
     var url = link.href;
+
     // No extern html should be loaded.
     if (!url) {
-      webComponentsCount--;
-      // All links is loaded.
-      if (webComponentsCount === 0) {
-        initWebComponents();
-      }
+      initWebComponents();
       return;
     }
 
@@ -258,13 +253,7 @@
         if (xmlHttp.status !== 200) {
 
           console.log('request error');
-
-          webComponentsCount--;
-
-          // All links is loaded.
-          if (webComponentsCount === 0) {
-            initWebComponents();
-          }
+          initWebComponents();
 
         } else {
 
@@ -310,28 +299,24 @@
     if (running) return;
     running = true;
 
-    var i         = 0,
-        links     = document.querySelectorAll('link[rel="import-webcom"]'),
+    var links     = document.querySelectorAll('link[rel="import-webcom"]'),
         link;
 
-    for (;i < links.length; i++) {
+    webComponentsCount = links.length;
+
+    for (var i = 0; i < links.length; i++) {
       link = links[i];
 
       // Skip inited link.
-      if (link[namespace + 'inited']) continue;
+      if (link[namespace + 'inited']) {
+        initWebComponents();
+        continue;
+      }
       link[namespace + 'inited'] = true;
-
-      webComponentsCount++;
 
       // load html & init it.
       loadLink(link);
     }
-
-    // All links is loaded.
-    if (webComponentsCount === 0) {
-      initWebComponents();
-    }
-
   }
 
 
