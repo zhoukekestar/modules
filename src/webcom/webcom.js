@@ -10,6 +10,7 @@
 
   var debug                 = false
     , namespace             = '_'
+    , webComponentLinks     = 0
     , webComponentsCount    = 0
     , customElementsLoaded  = {}
     , webcomInited          = false
@@ -18,7 +19,9 @@
   // Override setAttribute function.
   var setAttributeFun = function(name, value) {
 
-    var currentRole = this.getAttribute('data-is');
+    var currentRole = this.getAttribute('data-is')
+      , self = this;
+
     if (name === 'data-bind') {
 
       this._dataBind = value;
@@ -72,8 +75,10 @@
           delete window[tempName];
 
           // The appended child (html) may include customElement, so, you should reload it again.
-          debug && console.log('dispatchEvent: webcom-reload.')
-          document.dispatchEvent(new Event('webcom-reload'));
+          if (self.querySelector('[data-is]')) {
+            debug && console.log('dispatchEvent: webcom-reload.')
+            document.dispatchEvent(new Event('webcom-reload'));
+          }
 
         }, 1000)
 
@@ -93,7 +98,13 @@
   *  1: init template
   *  2: run scripts (except "template-updated" scripts)
   */
-  var initCustomElement = function(role) {
+  var initCustomElement = function(ele, callback) {
+
+    var role = ele.dataset.is;
+
+    if (customElementsLoaded[role]) {
+      return callback(ele);
+    }
 
     debug && console.log('init customElement :' + role);
 
@@ -101,39 +112,72 @@
     if (customElementsLoaded[role]) return;
     customElementsLoaded[role] = true;
 
-    var customElement = customElements[role];
+    var customElement   = customElements[role]
+      , tmplsInitCount  = 0
+      , tmpls
+      , scripts;
 
     if (!customElement) {
+
       console.log('customElement ' + role + ' not Found.')
-      return;
+      return callback();
     }
+
+    tmpls   = customElement.querySelectorAll('[data-role="template"]')
+    scripts = customElement.querySelectorAll('script');
+
     document.body.appendChild(customElement);
     customElement.style.display = 'none';
 
-    // Init web component's template.
-    var tmpls = customElement.querySelectorAll('[data-role="template"]');
-    for (var i = tmpls.length - 1; i >= 0; i--)
-      tmpls[i].dispatchEvent(new Event('template-reload-it', {bubbles: true}));
-
     // Execute script
-    var scripts = customElement.querySelectorAll('script');
-    for (var i = 0; i < scripts.length; i++) {
+    var executeScript = function() {
 
-      if (scripts[i].type === '' || scripts[i].type === 'text/javascript') {
+      for (var i = 0; i < scripts.length; i++) {
 
-        // Skip the script only executed after template is updated.
-        if (scripts[i].dataset.run) {
-          continue;
+        if (scripts[i].type === '' || scripts[i].type === 'text/javascript') {
+
+          // Skip the script only executed after template is updated.
+          if (scripts[i].dataset.run) {
+            continue;
+          }
+
+          // Execute the normal script.
+          var s = document.createElement('script');
+          s.setAttribute('data-runner', 'this-script-executed-by-webcom')
+          scripts[i].src ? (s.src = scripts[i].src) : (s.innerHTML = scripts[i].innerHTML);
+          scripts[i].remove();
+          customElement.appendChild(s);
+
         }
-
-        // Execute the normal script.
-        var s = document.createElement('script');
-        s.setAttribute('data-runner', 'this-script-executed-by-webcom')
-        scripts[i].src ? (s.src = scripts[i].src) : (s.innerHTML = scripts[i].innerHTML);
-        scripts[i].remove();
-        customElement.appendChild(s);
-
       }
+      return callback(ele);
+    }
+
+    // Init web component's templates.
+    for (var i = 0; i < tmpls.length; i++) {
+
+      // After all templates inited;
+      tmpls[i].addEventListener('template-inited', function() {
+        tmplsInitCount++;
+        if (tmplsInitCount === tmpls.length) {
+          executeScript();
+        }
+      })
+
+      tmpls[i].dispatchEvent(new Event('template-reload-it', {bubbles: true}));
+    }
+
+  }
+
+  var initWebComponentsFinished = function(ele) {
+
+    // All webComponents is loaded
+    if (webComponentsCount <= 0) {
+
+      // Trigger webcom-inited event on document.
+      running = false;
+      ;(webcomInited === false) && document.dispatchEvent(new Event('webcom-inited')) && (webcomInited = true);
+
     }
   }
 
@@ -146,67 +190,85 @@
   */
   var initWebComponents = function() {
 
-    webComponentsCount--;
-    if (webComponentsCount > 0) return;
+    webComponentLinks--;
+    if (webComponentLinks > 0) return;
 
-    debug && console.log('initWebComponents...');
 
     var eles = document.querySelectorAll('[data-is]');
+
+    webComponentsCount = eles.length;
+
+    debug && console.log('initWebComponents... count:' + webComponentsCount);
     for (var i = 0; i < eles.length; i++) {
 
-      // Inited flag.
-      if (eles[i][namespace + 'inited']) continue;
-      eles[i][namespace + 'inited'] = true;
 
+      // Inited flag.
+      if (eles[i][namespace + 'inited']) {
+        webComponentsCount--;
+        initWebComponentsFinished(eles[i]);
+        continue;
+      }
+
+
+      // init flag && save old html
+      eles[i][namespace + 'inited'] = true;
       eles[i]._innerHTML = eles[i].innerHTML || "";
 
-      // Get its role.
-      var role = eles[i].getAttribute('data-is');
-      customElementsLoaded[role] ? 1: initCustomElement(role);
 
-      // Bind function for template. Override setAttribute function.
-      eles[i].setAttribute = setAttributeFun.bind(eles[i]);
-      if (eles[i].getAttribute('data-bind')) {
-        eles[i].setAttribute('data-bind', eles[i].getAttribute('data-bind'));
-      }
+      // Current web component is not exist.
+      if (!customElements[eles[i].dataset.is]) {
 
-      // Override getAttribute function.
-      eles[i].getAttribute = function(name) {
-
-        if (name === 'data-bind') {
-          return this._dataBind;
-        }
-        return Element.prototype.getAttribute.call(this, name);
-
-      }
-
-      // Execute _loaded function.
-      ;(typeof eles[i][namespace + 'loaded'] === 'function') && eles[i][namespace + 'loaded']();
-
+        console.log('customElement ' + eles[i].dataset.is + ' not Found.')
 
       // Clone html to instance except CSS & JS.
-      if (!customElements[role]) {
-        console.log('customElement ' + role + ' not Found.')
-        return;
+      } else {
+
+        var children = customElements[eles[i].dataset.is].children;
+        for (var j = 0; j < children.length; j++) {
+
+          if (children[j].nodeName !== 'SCRIPT' && children[j].nodeName !== 'STYLE' && children[j].nodeName !== 'LINK') {
+            eles[i].appendChild(children[j].cloneNode(true))
+          }
+
+        }
       }
 
-      var children = customElements[role].children;
-      for (var j = 0; j < children.length; j++) {
 
-        if (children[j].nodeName !== 'SCRIPT' && children[j].nodeName !== 'STYLE' && children[j].nodeName !== 'LINK')
-          eles[i].appendChild(children[j].cloneNode(true))
+      // Init current customElement
+      debug && console.log('initCustomElement ' + eles[i].dataset.is);
+      initCustomElement(eles[i], function(ele) {
 
-      }
+        webComponentsCount--;
+        debug && console.log('webComponentsCount:' + webComponentsCount)
+
+        // Bind function for template. Override setAttribute function.
+        ele.setAttribute = setAttributeFun.bind(ele);
+        if (ele.getAttribute('data-bind')) {
+          ele.setAttribute('data-bind', ele.getAttribute('data-bind'));
+        }
+
+        // Override getAttribute function.
+        ele.getAttribute = function(name) {
+
+          if (name === 'data-bind') {
+            return this._dataBind;
+          }
+          return Element.prototype.getAttribute.call(this, name);
+
+        }
+
+        // Execute _loaded function.
+        ;(typeof ele[namespace + 'loaded'] === 'function') && ele[namespace + 'loaded']();
+
+        initWebComponentsFinished(ele);
+
+      });
 
     }
 
-    // Trigger webcom-inited event on document.
-    running = false;
-    ;(webcomInited === false) && document.dispatchEvent(new Event('webcom-inited')) && (webcomInited = true);
-
   }
 
-  var loadFinished = function(link, text) {
+  var loadLinkFinished = function(link, text) {
 
     try {
 
@@ -233,7 +295,7 @@
 
   }
 
-  var loadLink = function(link) {
+  var loadSingleLink = function(link) {
 
     var url = link.href;
 
@@ -265,12 +327,13 @@
             localStorage.setItem("webcoms-" + link.dataset.cacheid, JSON.stringify(obj));
           }
 
-          loadFinished(link, xmlHttp.responseText);
+          loadLinkFinished(link, xmlHttp.responseText);
         }
 
       }
     }
 
+    /* Get cache from localStorage. */
     var cache = localStorage.getItem('webcoms-' + link.dataset.cacheid);
     try {
       cache = JSON.parse(cache);
@@ -278,9 +341,17 @@
       cache = null;
     }
 
+    /* Cache is exitst*/
     if (cache) {
+
       if (cache.expires >= Date.now()) {
-        loadFinished(link, cache.text);
+        loadLinkFinished(link, cache.text);
+
+      /*
+       Cache is out of date.
+        1, remove cache
+        2, send new request.
+      */
       } else {
         localStorage.removeItem('webcoms-' + link.dataset.cacheid);
         xmlHttp.send(null);
@@ -302,7 +373,7 @@
     var links     = document.querySelectorAll('link[rel="import-webcom"]'),
         link;
 
-    webComponentsCount = links.length;
+    webComponentLinks = links.length;
 
     for (var i = 0; i < links.length; i++) {
       link = links[i];
@@ -315,7 +386,7 @@
       link[namespace + 'inited'] = true;
 
       // load html & init it.
-      loadLink(link);
+      loadSingleLink(link);
     }
   }
 
@@ -331,7 +402,9 @@
   }
 
   document.addEventListener('webcom-reload', init);
-  document.addEventListener('reload', init)
+  document.addEventListener('reload', init);
 
+  document.addEventListener('template-appended', init);
+  document.addEventListener('template-updated', init);
   return null;
 }));
