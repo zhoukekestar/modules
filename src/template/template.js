@@ -78,8 +78,7 @@
           }
           holder.innerHTML = this[namespace + 'fn'](d);
 
-          // Trigger Event for webcom
-          document.dispatchEvent(new Event('webcom-reload'));
+          this.dispatchEvent(new Event('template-updated', {bubbles: true}));
         } catch (e) {
           console.log(e);
           showError.call(this, e);
@@ -104,8 +103,7 @@
             holder.innerHTML += this[namespace + 'fn'](d);
           }
 
-          // Trigger Event for webcom
-          document.dispatchEvent(new Event('webcom-reload'));
+          this.dispatchEvent(new Event('template-appended', {bubbles: true}));
         } catch (e) {
           console.log(e);
           showError.call(this, e);
@@ -141,6 +139,8 @@
         ele[namespace + 'updateBy'] = updateBy.bind(ele);
         ele[namespace + 'appendBy'] = appendBy.bind(ele);
         ele[namespace + 'htmlBy']   = htmlBy.bind(ele);
+
+        ele.dispatchEvent(new Event('template-inited', {bubbles: true}));
       }
     }
   }
@@ -170,6 +170,8 @@
       e.target[namespace + 'updateBy'] = updateBy.bind(e.target);
       e.target[namespace + 'appendBy'] = appendBy.bind(e.target);
       e.target[namespace + 'htmlBy']   = htmlBy.bind(e.target);
+
+      e.target.dispatchEvent(new Event('template-inited', {bubbles: true}));
     }
   })
 
