@@ -56,7 +56,7 @@
       imageView.querySelector('.img').style.backgroundImage = 'url(none)';
     }
     imageView.style.opacity = 1;
-    imageView.style.zIndex = 1001;
+    imageView.style.zIndex = 10001;
   }
 
   document.addEventListener('click', function(e) {
