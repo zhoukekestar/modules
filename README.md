@@ -34,6 +34,7 @@
 | toast       | 提示消息模块 | 6 |
 | tooltip     | tooltip 提示模块 | 6 |
 | upload      | 图片上传 | 6 |
+| views       | 简单的单页应用框架 | 7 |
 | webcom      | 组件化框架（借鉴polymer（为主）和react的组件化思路） | **9** |
 | jquery2native | jquery转native参考列表 | **9** |
 
