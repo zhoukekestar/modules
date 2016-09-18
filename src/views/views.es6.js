@@ -40,11 +40,15 @@
 
       if (key === 'data-prev' || key === 'data-next') {
         _setAttribute.call(this, key, value);
+        if (key === 'data-next') {
+          nextView.style.display = 'none';
+        } else {
+          prevView.style.display = 'none';
+        }
         updatePreAndNextView();
       } else {
         _setAttribute.call(this, key, value);
       }
-
     }
   }
 
