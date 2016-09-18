@@ -169,7 +169,7 @@
 
   }
 
-  var initWebComponentsFinished = function(ele) {
+  var initWebComponentsFinished = function() {
 
     // All webComponents is loaded
     if (webComponentsCount <= 0) {
@@ -199,13 +199,16 @@
     webComponentsCount = eles.length;
 
     debug && console.log('initWebComponents... count:' + webComponentsCount);
+    if (webComponentsCount === 0)
+      initWebComponentsFinished();
+
     for (var i = 0; i < eles.length; i++) {
 
 
       // Inited flag.
       if (eles[i][namespace + 'inited']) {
         webComponentsCount--;
-        initWebComponentsFinished(eles[i]);
+        initWebComponentsFinished();
         continue;
       }
 
@@ -260,7 +263,7 @@
         // Execute _loaded function.
         ;(typeof ele[namespace + 'loaded'] === 'function') && ele[namespace + 'loaded']();
 
-        initWebComponentsFinished(ele);
+        initWebComponentsFinished();
 
       });
 
