@@ -244,24 +244,28 @@
         webComponentsCount--;
         debug && console.log('webComponentsCount:' + webComponentsCount)
 
-        // Bind function for template. Override setAttribute function.
-        ele.setAttribute = setAttributeFun.bind(ele);
-        if (ele.getAttribute('data-bind')) {
-          ele.setAttribute('data-bind', ele.getAttribute('data-bind'));
-        }
+        if (ele) {
 
-        // Override getAttribute function.
-        ele.getAttribute = function(name) {
-
-          if (name === 'data-bind') {
-            return this._dataBind;
+          // Bind function for template. Override setAttribute function.
+          ele.setAttribute = setAttributeFun.bind(ele);
+          if (ele.getAttribute('data-bind')) {
+            ele.setAttribute('data-bind', ele.getAttribute('data-bind'));
           }
-          return Element.prototype.getAttribute.call(this, name);
 
+          // Override getAttribute function.
+          ele.getAttribute = function(name) {
+
+            if (name === 'data-bind') {
+              return this._dataBind;
+            }
+            return Element.prototype.getAttribute.call(this, name);
+
+          }
+
+          // Execute _loaded function.
+          ;(typeof ele[namespace + 'loaded'] === 'function') && ele[namespace + 'loaded']();
+          
         }
-
-        // Execute _loaded function.
-        ;(typeof ele[namespace + 'loaded'] === 'function') && ele[namespace + 'loaded']();
 
         initWebComponentsFinished();
 
