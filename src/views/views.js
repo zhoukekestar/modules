@@ -75,7 +75,9 @@
     }
     running = true;
 
-    currentView != nextView ? (currentView.style.left = '-100%', nextView.style.left = '0') : null;
+    setTimeout(function () {
+      currentView != nextView ? (currentView.style.left = '-100%', nextView.style.left = '0') : null;
+    }, 1);
 
     setTimeout(function () {
 
@@ -95,7 +97,9 @@
     }
     running = true;
 
-    currentView != prevView ? (currentView.style.left = '100%', prevView.style.left = '0') : null;
+    setTimeout(function () {
+      currentView != prevView ? (currentView.style.left = '100%', prevView.style.left = '0') : null;
+    }, 1);
 
     setTimeout(function () {
 

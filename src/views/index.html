@@ -28,22 +28,27 @@
       <p>view1</p>
       <p>This is default view. You can specify it by <b>hash</b> OR <b>data-default=true</b>. <br /> Example: visit this page by:<a href='#view2'>#view2</a>.</p>
       <p>You can change next view dynamicly. <button onclick="view1.setAttribute('data-next', '#view5'); VIEWSCONTROL.next();">Change next view to #view5</button></p>
+      <img src="./steps.png" alt="">
     </div>
 
     <div data-role="view" id='view2' data-next='#view4'>
       <p>view2</p>
+      <img src="./steps.png" alt="">
     </div>
 
     <div data-role="view" id='view3' data-prev='#view1' data-default='true'>
       <p>view3</p>
+      <img src="./steps.png" alt="">
     </div>
 
     <div data-role="view" id='view4'>
       <p>view4</p>
+      <img src="./steps.png" alt="">
     </div>
 
     <div data-role="view" id='view5'>
       <p>view5</p>
+      <img src="./steps.png" alt="">
     </div>
 
     <script src='./views.js'></script>
