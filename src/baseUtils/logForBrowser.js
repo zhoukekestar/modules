@@ -1,16 +1,16 @@
-(function(){
+(function() {
 
   try {
     localStorage.setItem('localStorage-test-available', 'a')
     localStorage.removeItem('localStorage-test-available')
   } catch (e) {
-    localStorage.setItem = function(){};
-    localStorage.getItem = function(){};
+    localStorage.setItem = function() {};
+    localStorage.getItem = function() {};
   }
 
   if (localStorage.getItem('LOGFORBROWSER_ENABLE') === 'false') {
-    console.error = function(){};
-    window.onerror = function(){};
+    console.error = function() {};
+    window.onerror = function() {};
     return;
   }
 
@@ -53,11 +53,11 @@
     logForBrowserAlertDiv.running = true;
 
     logForBrowserAlertDiv.innerHTML = msg;
-    setTimeout(function(){
+    setTimeout(function() {
       logForBrowserAlertDiv.style.top = '-4em';
       logForBrowserAlertDiv.running = false;
     }, 6000)
-    setTimeout(function(){
+    setTimeout(function() {
       logForBrowserAlertDiv.style.top = 0;
     }, 10)
   }
@@ -87,12 +87,12 @@
 
     console.log(log);
 
-    ;new Image().src = (console._logurl || '/log') + '?log=' + encodeURIComponent(JSON.stringify(log));
+    new Image().src = (console._logurl || '/log') + '?log=' + encodeURIComponent(JSON.stringify(log));
 
     // Disabled reload after user operation.
     if (needReload && console._reloadWhenError !== false && Date.now() - beginLogTime < 5000) {
 
-      setTimeout(function(){
+      setTimeout(function() {
         location.reload();
       }, 100)
 

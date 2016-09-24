@@ -1,10 +1,10 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function(){
+}(function() {
 
   window.customElements = window.customElements || {};
 
@@ -46,7 +46,7 @@
         tmpl[namespace + 'holder'] = this;
         tmpl[namespace + 'updateBy'](JSON.parse(value));
 
-        ;(typeof this[namespace + 'updated'] === 'function') && this[namespace + 'updated']();
+        (typeof this[namespace + 'updated'] === 'function') && this[namespace + 'updated']();
 
         // Execute template-updated script.
 
@@ -70,7 +70,7 @@
         }
 
         // Clear var.
-        setTimeout(function(){
+        setTimeout(function() {
 
           delete window[tempName];
 
@@ -176,7 +176,7 @@
 
       // Trigger webcom-inited event on document.
       running = false;
-      ;(webcomInited === false) && document.dispatchEvent(new Event('webcom-inited')) && (webcomInited = true);
+      (webcomInited === false) && document.dispatchEvent(new Event('webcom-inited')) && (webcomInited = true);
 
     }
   }
@@ -264,7 +264,7 @@
 
           // Execute _loaded function.
           ;(typeof ele[namespace + 'loaded'] === 'function') && ele[namespace + 'loaded']();
-          
+
         }
 
         initWebComponentsFinished();
@@ -314,7 +314,7 @@
 
     var xmlHttp = new XMLHttpRequest()
     xmlHttp.open("GET", url, true);
-    xmlHttp.onreadystatechange = function(){
+    xmlHttp.onreadystatechange = function() {
 
       // Extern html is loaded
       if (xmlHttp.readyState === 4) {
@@ -378,7 +378,7 @@
     running = true;
 
     var links     = document.querySelectorAll('link[rel="import-webcom"]'),
-        link;
+      link;
 
     webComponentLinks = links.length;
 

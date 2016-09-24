@@ -1,10 +1,10 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function(){
+}(function() {
 
   var defaultHolder = 'body'
     , boxs = [];
@@ -95,7 +95,7 @@
     }
   })
 
-  setInterval(function(){
+  setInterval(function() {
     for (var i = boxs.length - 1; i >= 0; i--) {
       var rect = boxs[i].getBoundingClientRect();
       if (rect.bottom + rect.height + rect.left + rect.right + rect.top + rect.width === 0 && boxs[i].errorMsgBox) {

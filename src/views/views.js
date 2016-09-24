@@ -7,12 +7,12 @@
   document.head.appendChild(style);
 
   var CONTROL = {},
-      views = document.querySelectorAll('[data-role=view]'),
-      defautView = location.hash && document.querySelector(location.hash + '[data-role=view]') || document.querySelector('[data-role=view][data-default=true]') || document.querySelector('[data-role=view]'),
-      currentView = defautView,
-      nextView = null,
-      prevView = null,
-      running = false;
+    views = document.querySelectorAll('[data-role=view]'),
+    defautView = location.hash && document.querySelector(location.hash + '[data-role=view]') || document.querySelector('[data-role=view][data-default=true]') || document.querySelector('[data-role=view]'),
+    currentView = defautView,
+    nextView = null,
+    prevView = null,
+    running = false;
 
   var overrideSetAttribute = function () {
     var _setAttribute = this.setAttribute;

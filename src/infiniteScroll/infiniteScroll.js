@@ -1,10 +1,10 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define(factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function( ){
+}(function() {
 
   function elementInViewport(el) {
     var rect = el.getBoundingClientRect()
@@ -37,7 +37,7 @@
       window.addEventListener('scroll', processScroll);
       window.addEventListener('touchend', processScroll);
       window.addEventListener('touchmove', processScroll);
-      setInterval(function(){
+      setInterval(function() {
         processScroll();
       }, 1000)
     }

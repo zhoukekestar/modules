@@ -1,10 +1,10 @@
-!( function( factory ){
-  if (typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
     factory();
   }
-}( function() {
+}(function() {
 
   var clearable = function(ele) {
 

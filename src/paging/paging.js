@@ -1,5 +1,5 @@
 
-;(function(factory) {
+(function(factory) {
   if (typeof define === "function" && define.amd) {
     define(factory);
   } else {
@@ -108,13 +108,13 @@
 
       var ele = eles[i];
 
-      if (ele && ele[namespace + 'inited'] === undefined ) {
+      if (ele && ele[namespace + 'inited'] === undefined) {
 
         ele[namespace + 'inited'] = true;
 
         var elep = paging(ele, {
           current : +ele.getAttribute('data-current'),
-          onselect: function(n){
+          onselect: function(n) {
 
             (typeof ele['onselect'] === 'function') && ele['onselect'](n);
 
@@ -126,7 +126,7 @@
         ele[namespace + 'select'] = elep.select;
         ele[namespace + 'reBuild'] = elep.reBuild;
       }
-      
+
     }
 
   };

@@ -1,18 +1,18 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function(){
+}(function() {
 
-  var loading = function(){
+  var loading = function() {
     if (document.querySelector('.loadingPage')) return;
     var ele = document.createElement("div");
-  	ele.setAttribute("class", "loadingPage");
+    ele.setAttribute("class", "loadingPage");
     ele.innerHTML = '<span></span>'
     try {
-  	 document.querySelector("body").appendChild(ele);
+      document.querySelector("body").appendChild(ele);
     } catch (e) {
       alert('Please place #loadingPage# after body.')
     }
@@ -21,7 +21,7 @@
   loading();
 
 
-  document.addEventListener('loadingPageLoaded', function(e){
+  document.addEventListener('loadingPageLoaded', function(e) {
     var ele = document.querySelector('.loadingPage');
     if (ele) {
       try{
@@ -32,7 +32,7 @@
     }
   });
 
-  document.addEventListener('loadingPageLoading', function(){
+  document.addEventListener('loadingPageLoading', function() {
     loading();
   });
 

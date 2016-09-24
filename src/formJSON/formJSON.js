@@ -1,19 +1,19 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define(factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function( ){
+}(function() {
 
   // Code form Zepto.js
   // @see https://github.com/madrobby/zepto/blob/master/src/form.js#files
   var serializeArray = function() {
     var name, type, result = [],
-        add = function(value) {
-          if (value.forEach) return value.forEach(add)
-          result.push({ name: name, value: value })
-        };
+      add = function(value) {
+        if (value.forEach) return value.forEach(add)
+        result.push({ name: name, value: value })
+      };
 
     [].slice.apply(this.elements || this.querySelectorAll('input,textarea')).forEach(function(field) {
 
@@ -21,22 +21,22 @@
       if (name && field.nodeName.toLowerCase() !== 'fieldset' &&
         !field.disabled && type !== 'submit' && type !== 'reset' && type !== 'button' && type !== 'file' &&
         ((type !== 'radio' && type !== 'checkbox') || field.checked))
-          add(field.value)
+        add(field.value)
     })
     return result
   }
 
-  var serialize = function(){
+  var serialize = function() {
     var result = []
-    serializeArray.call(this).forEach(function(elm){
+    serializeArray.call(this).forEach(function(elm) {
       result.push(encodeURIComponent(elm.name) + '=' + encodeURIComponent(elm.value))
     })
     return result.join('&')
   }
 
-  var serializeJSONForGET = function(){
+  var serializeJSONForGET = function() {
     var result = []
-    serializeArray.call(this).forEach(function(elm){
+    serializeArray.call(this).forEach(function(elm) {
       result.push(encodeURIComponent(elm.name) + '=' + encodeURIComponent(elm.value))
     })
     return result.join('&')
@@ -162,7 +162,7 @@
       return;
     }
     res = {};
-    serializeArray.call(self).forEach(function(t){
+    serializeArray.call(self).forEach(function(t) {
       var keys  = t.name.split('.');
       var len   = keys.length - 1;
       var index = keys[len].indexOf(':');
@@ -234,12 +234,12 @@
 
       var keys = Object.keys(res || {});
       var arr = []
-      for (var i = 0, max = keys.length; i < max; i ++) {
+      for (var i = 0, max = keys.length; i < max; i++) {
         if (typeof res[keys[i]] === 'string') {
 
-          arr.push(encodeURIComponent(keys[i]) + '=' + encodeURIComponent( res[keys[i]]) )
+          arr.push(encodeURIComponent(keys[i]) + '=' + encodeURIComponent(res[keys[i]]))
         } else {
-          arr.push(encodeURIComponent(keys[i]) + '=' + encodeURIComponent( JSON.stringify(res[keys[i]])) );
+          arr.push(encodeURIComponent(keys[i]) + '=' + encodeURIComponent(JSON.stringify(res[keys[i]])));
         }
       }
       res = arr.join('&')
@@ -268,7 +268,7 @@
     action = (action === undefined ? (self.getAttribute('action') || location.href) : action);
 
     if (method === 'GET') {
-      action += action.indexOf('?') === -1 ? ('?' + res) : ( '&' + res);
+      action += action.indexOf('?') === -1 ? ('?' + res) : ('&' + res);
     }
 
     xmlHttp.open(method, action, true);
@@ -394,10 +394,10 @@
 
       var options = {
         parseInteger: parseInteger,
-        ended: target.onended || ( temp && temp.onended ) || function(){},
+        ended: target.onended || (temp && temp.onended) || function() {},
         // to change data
-        data: target._data || ( temp && temp._data ) || function(d){return d},
-        error: target.onerror || ( temp && temp.onerror ) || function(){}
+        data: target._data || (temp && temp._data) || function(d) {return d},
+        error: target.onerror || (temp && temp.onerror) || function() {}
       };
 
       submitHandler.call(target, e, options, formAction);

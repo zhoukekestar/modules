@@ -103,7 +103,7 @@
       var request = this;
 
       if (request.timeout) {
-        setTimeout(function(){
+        setTimeout(function() {
 
           // request.readyState = 4;
           // request.responseText = '';
@@ -125,7 +125,7 @@
   }
 
 
-  /*\
+  /* \
   |*|
   |*|  :: XMLHttpRequest.prototype.sendAsBinary() Polyfill ::
   |*|

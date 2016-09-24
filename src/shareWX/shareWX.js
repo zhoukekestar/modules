@@ -1,10 +1,10 @@
-;( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define(["jweixin" ], factory );
+(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["jweixin" ], factory);
   } else {
-    factory( wx );
+    factory(wx);
   }
-}( function(wx){
+}(function(wx) {
 
   var options = {
 
@@ -31,8 +31,8 @@
     desc    : "",
     link    : "",
     imgUrl  : "",
-    success : function(){},
-    cancel  : function(){},
+    success : function() {},
+    cancel  : function() {},
 
     jsApiList: [
       'checkJsApi',
@@ -73,13 +73,13 @@
   }
 
 
-  var shareWX= function(o) {
+  var shareWX = function(o) {
 
     for (var key in o) { options[key] = o[key]; }
 
     var xmlHttp = new XMLHttpRequest()
     xmlHttp.open("GET", options.api + '?url=' + encodeURIComponent(location.href.split('#')[0]), true);
-    xmlHttp.onreadystatechange = function(){
+    xmlHttp.onreadystatechange = function() {
       if (xmlHttp.readyState === 4) {
         var d = JSON.parse(xmlHttp.responseText);
 
@@ -87,7 +87,7 @@
 
         wx.config(options);
 
-        wx.ready(function(){
+        wx.ready(function() {
 
           if (options.hide) {
 
@@ -105,36 +105,36 @@
   function share(wx, options) {
 
     wx.onMenuShareTimeline({
-        title: options.title, // 分享标题
-        link: options.link, // 分享链接
-        imgUrl: options.imgUrl, // 分享图标
-        success: options.success,
-        cancel: options.cancel
+      title: options.title, // 分享标题
+      link: options.link, // 分享链接
+      imgUrl: options.imgUrl, // 分享图标
+      success: options.success,
+      cancel: options.cancel
     });
 
     wx.onMenuShareAppMessage({
-        title: options.title, // 分享标题
-        desc: options.desc, // 分享描述
-        link: options.link, // 分享链接
-        imgUrl: options.imgUrl, // 分享图标
-        success: options.success,
-        cancel: options.cancel
+      title: options.title, // 分享标题
+      desc: options.desc, // 分享描述
+      link: options.link, // 分享链接
+      imgUrl: options.imgUrl, // 分享图标
+      success: options.success,
+      cancel: options.cancel
     });
     wx.onMenuShareQQ({
       title: options.title, // 分享标题
-        desc: options.desc, // 分享描述
-        link: options.link, // 分享链接
-        imgUrl: options.imgUrl, // 分享图标
-        success: options.success,
-        cancel: options.cancel
+      desc: options.desc, // 分享描述
+      link: options.link, // 分享链接
+      imgUrl: options.imgUrl, // 分享图标
+      success: options.success,
+      cancel: options.cancel
     });
     wx.onMenuShareWeibo({
       title: options.title, // 分享标题
-        desc: options.desc, // 分享描述
-        link: options.link, // 分享链接
-        imgUrl: options.imgUrl, // 分享图标
-        success: options.success,
-        cancel: options.cancel
+      desc: options.desc, // 分享描述
+      link: options.link, // 分享链接
+      imgUrl: options.imgUrl, // 分享图标
+      success: options.success,
+      cancel: options.cancel
     });
   }
 
@@ -146,7 +146,7 @@
       if (tryCount > 100) {
         return;
       }
-      setTimeout(function(){
+      setTimeout(function() {
         init();
         tryCount++;
         // console.log('WeixinJSBridge not defined, retry.')
@@ -188,7 +188,7 @@
     })
   }
 
-  document.addEventListener('reload', function(){
+  document.addEventListener('reload', function() {
     init(true);
   })
 

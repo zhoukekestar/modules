@@ -1,10 +1,10 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define(factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function( ){
+}(function() {
 
   var imageView = null;
   var allImages = null;
@@ -19,7 +19,7 @@
 
     imageView.querySelector('span.close').onclick = function() {
       imageView.style.opacity = 0;
-      setTimeout(function(){
+      setTimeout(function() {
         imageView.style.zIndex = -1;
       }, 500)
     }

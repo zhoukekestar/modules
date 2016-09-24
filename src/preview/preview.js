@@ -1,10 +1,10 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define([ "jquery" ], factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define([ "jquery" ], factory);
   } else {
-    factory( jQuery );
+    factory(jQuery);
   }
-}( function( $ ) {
+}(function($) {
 
   $.fn.preview = function(o) {
 

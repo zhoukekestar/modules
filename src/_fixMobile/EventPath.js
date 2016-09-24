@@ -1,4 +1,4 @@
-!(function(global){
+!(function(global) {
 
   // For Android 4.3- (included)
   var pathFill = function() {

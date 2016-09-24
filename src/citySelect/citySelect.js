@@ -1,13 +1,13 @@
-!( function( factory ){
-  if (typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
     factory();
   }
-}( function() {
+}(function() {
 
   var cityData;
-  var initCitySelect = function( o ){
+  var initCitySelect = function(o) {
 
     var options = {
       eles: null,
@@ -36,13 +36,13 @@
 
 
       var defaultVal = eles[count].getAttribute('data-default') || '--请选择--',
-          html = '<option value="">' + defaultVal + '</option>',
-          i,
-          max;
+        html = '<option value="">' + defaultVal + '</option>',
+        i,
+        max;
 
       // Add current options & show it.
       for (i = 0, max = data.length; i < max; i++) {
-        html += '<option value="' + data[i][options.valname] + '">'+ data[i][options.showname] + '</option>';
+        html += '<option value="' + data[i][options.valname] + '">' + data[i][options.showname] + '</option>';
       }
 
       var temp = document.createElement("div");
@@ -55,9 +55,9 @@
 
       // Unbind old handler & Bind select change event.
       //
-      var changeHandler = function(){
+      var changeHandler = function() {
 
-        //$( eles[count] ).off();
+        // $( eles[count] ).off();
         // need to remove listener???
 
         // Remove the greater level elements
@@ -66,7 +66,7 @@
           var ops = eles[i].querySelectorAll('option');
           eles[i].removeEventListener('change', changeHandler);
 
-          [].slice.call(ops).forEach(function(ele){
+          [].slice.call(ops).forEach(function(ele) {
             ele.remove();
           })
           eles[i].style.display = 'none';
@@ -90,7 +90,7 @@
     };
 
     // Hide all elements.
-    [].slice.call(options.eles).forEach(function(ele){
+    [].slice.call(options.eles).forEach(function(ele) {
       ele.style.display = 'none';
     })
 
@@ -124,7 +124,7 @@
 
       var xhr = new XMLHttpRequest()
       xhr.open("GET", url, true);
-      xhr.onreadystatechange = function(){
+      xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
           var json = JSON.parse(xhr.responseText);
           cityData = json;
@@ -151,7 +151,7 @@
 
               if (!s[i]) return true;
 
-              var option = eles[i].querySelector('option[value="'+ s[i]+'"]')
+              var option = eles[i].querySelector('option[value="' + s[i] + '"]')
               option && (option.selected = true);
 
               eles[i].dispatchEvent(new Event('change', {bubbles: true}))
@@ -164,7 +164,7 @@
 
             if (!s[i]) return true;
 
-            var option = eles[i].querySelector('option[value="'+ s[i]+'"]')
+            var option = eles[i].querySelector('option[value="' + s[i] + '"]')
             option && (option.selected = true);
 
             eles[i].dispatchEvent(new Event('change', {bubbles: true}))

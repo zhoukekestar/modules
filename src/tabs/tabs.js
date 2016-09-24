@@ -1,10 +1,10 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function(){
+}(function() {
 
   var slice = [].slice;
   var init = function() {
@@ -51,7 +51,7 @@
       line.style.left = (+active_tab.getAttribute('data-index')) * width + '%';
 
       // Bind tab's click event.
-      tabs.addEventListener('click', function(e){
+      tabs.addEventListener('click', function(e) {
 
         var target = e.target;
         var temp_tab = target.getAttribute('data-href');

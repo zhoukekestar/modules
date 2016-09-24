@@ -1,45 +1,45 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function(){
+}(function() {
 
   // Dependencies
   var toast = window.toast || window.alert,
 
-      loadingPageLoading = function() {
-        document.dispatchEvent(new Event('loadingPageLoading'));
-      },
+    loadingPageLoading = function() {
+      document.dispatchEvent(new Event('loadingPageLoading'));
+    },
 
-      loadingPageLoaded = function() {
-        document.dispatchEvent(new Event('loadingPageLoaded'));
-      },
+    loadingPageLoaded = function() {
+      document.dispatchEvent(new Event('loadingPageLoaded'));
+    },
 
-      defaultOptions = {
-        debug           : false,
-        pageSelector    : '[data-role="page"]',
-        activeClass     : 'active',
-        pageClass       : 'page',
+    defaultOptions = {
+      debug           : false,
+      pageSelector    : '[data-role="page"]',
+      activeClass     : 'active',
+      pageClass       : 'page',
 
         // Cache pages' number.
-        cachePages      : 5,
+      cachePages      : 5,
 
-        animationClass  : 'animated',
-        inAnimation     : 'slideInRight',
-        outAnimation    : 'slideOutLeft',
+      animationClass  : 'animated',
+      inAnimation     : 'slideInRight',
+      outAnimation    : 'slideOutLeft',
 
         // Before/After load page, it will excute.
-        beforeLoadPage  : function(){return true},
-        afterLoadPage   : function(){return true}
-      };
+      beforeLoadPage  : function() {return true},
+      afterLoadPage   : function() {return true}
+    };
 
 
   var options           = defaultOptions,
-      sessionStorage    = window.sessionStorage ? window.sessionStorage : {},
-      inAnimation       = options.inAnimation;
-      outAnimation      = options.outAnimation;
+    sessionStorage    = window.sessionStorage ? window.sessionStorage : {},
+    inAnimation       = options.inAnimation;
+  outAnimation      = options.outAnimation;
 
   var utils   = {
 
@@ -71,7 +71,7 @@
       // Only if the content can't loaded in 1 second will show the loading view.
       // If you show it every time even if it have fast internet, you just break user experience (it will feels so terrible).
       var loaded = false;
-      setTimeout(function(){
+      setTimeout(function() {
         if (loaded === false)
           loadingPageLoading();
       }, 800);
@@ -152,7 +152,7 @@
       })
 
 
-      for (var i = 0, max = scripts.length; i < max; i++){
+      for (var i = 0, max = scripts.length; i < max; i++) {
         this.appendChild(scripts[i])
       }
 
@@ -224,7 +224,7 @@
     _reverseKey: [
       ['In', 'Out'],
       // ['Right', 'Left'],
-      //['X', 'Y'],
+      // ['X', 'Y'],
       ['Down', 'Up']
     ],
     reverseAnimate: function(str) {

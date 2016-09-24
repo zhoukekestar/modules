@@ -1,4 +1,4 @@
-(function(global){
+(function(global) {
 
   global.Date.prototype.format = function (str) {
     var d = this;
@@ -6,12 +6,12 @@
       return 'Date-error';
     }
     var res   = str + '',
-    year  = d.getFullYear(),     // yyyy yy
-    month = d.getMonth() + 1,    // MM M
-    day   = d.getDate(),         // dd d
-    hour  = d.getHours(),        // hh h
-    minite = d.getMinutes(),     // mm m
-    second = d.getSeconds();     // ss s
+      year  = d.getFullYear(),     // yyyy yy
+      month = d.getMonth() + 1,    // MM M
+      day   = d.getDate(),         // dd d
+      hour  = d.getHours(),        // hh h
+      minite = d.getMinutes(),     // mm m
+      second = d.getSeconds();     // ss s
 
     res = res
     .replace(/yyyy/, year)

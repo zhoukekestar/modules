@@ -1,8 +1,8 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
 }(function() {
 
@@ -40,7 +40,7 @@
     },
     // Form validation: required.
     required: function(ele, msg) {
-      if ( ele.getAttribute("required") !== null && !ele.value )
+      if (ele.getAttribute("required") !== null && !ele.value)
         return msg.required;
       return "";
     },
@@ -100,9 +100,9 @@
 
   var validIt = function() {
     var validMsg = JSON.parse(this.getAttribute('data-validMsg')),
-        key,
-        msg = {},
-        returnMsg;
+      key,
+      msg = {},
+      returnMsg;
 
     for (key in validator.defaultMsg) {
       msg[key] = validator.defaultMsg[key];

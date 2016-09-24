@@ -1,13 +1,13 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
     factory();
   }
-}( function() {
+}(function() {
 
   var _prompt = window.prompt,
-      temp;
+    temp;
   window.prompt = function(title, defaultText, callback) {
 
     // Use custom prompt.

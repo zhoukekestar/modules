@@ -1,4 +1,4 @@
-!(function(){
+!(function() {
 
   var ANIMATETIME = 0.2;
 
@@ -95,11 +95,11 @@
     }
     running = true;
 
-    setTimeout(function(){
+    setTimeout(function() {
       currentView != nextView ?  (currentView.style.left = '-100%', nextView.style.left = '0') : null;
     }, 1)
 
-    setTimeout(function(){
+    setTimeout(function() {
 
       prevView.style.display = 'none';
       currentView.style.display = 'none';
@@ -118,11 +118,11 @@
     }
     running = true;
 
-    setTimeout(function(){
+    setTimeout(function() {
       currentView != prevView ?  (currentView.style.left = '100%', prevView.style.left = '0') : null;
     }, 1)
 
-    setTimeout(function(){
+    setTimeout(function() {
 
       nextView.style.display = 'none';
       currentView.style.display = 'none';
@@ -160,9 +160,9 @@
       // Point to new view as prevView
       prevView = view;
       prevView.style.left = '-100%';
-      setTimeout(function(){
+      setTimeout(function() {
         prevView.style.display = 'block';
-        setTimeout(function(){
+        setTimeout(function() {
           CONTROL.prev();
         }, 100)
       }, 0)
@@ -173,9 +173,9 @@
 
       nextView = view;
       nextView.style.left = '100%';
-      setTimeout(function(){
+      setTimeout(function() {
         nextView.style.display = 'block';
-        setTimeout(function(){
+        setTimeout(function() {
           CONTROL.next();
         }, 100)
       }, 0)

@@ -1,10 +1,10 @@
-!( function( factory ){
-  if (typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
     factory();
   }
-}( function() {
+}(function() {
 
   var init = function() {
     // @see https://github.com/jquery/jquery-mobile/blob/master/js/events/touch.js
@@ -47,7 +47,7 @@
 
       document.addEventListener('touchmove', function(e) {
         var currentX = e.changedTouches[0].pageX || e.pageX,
-            currentY = e.changedTouches[0].pageY || e.pageY;
+          currentY = e.changedTouches[0].pageY || e.pageY;
         if (!dispatched && Math.abs(currentX - startX) > 50 && Math.abs(currentY - startY) < 10) {
 
           dispatched = true;

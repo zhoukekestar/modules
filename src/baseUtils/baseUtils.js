@@ -1,42 +1,42 @@
-;( function( factory ) {
-    if ( typeof define === "function" && define.amd ) {
-        define(factory );
-    } else {
-        factory( jQuery );
-    }
-}( function() {
-	$.tools = {
-		getParams : function(name) {
-			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-			var r = window.location.search.substr(1).match(reg);
-			if (r != null)
-				return decodeURI(r[2]);
-			return null;
-		},
-		getStyle : function(obj, attr) {
-			if (obj.currentStyle) {
-				return obj.currentStyle[attr];
-			} else {
-				return getComputedStyle(obj, false)[attr];
-			}
-		},
-		getRandomNum : function(Min, Max) {
-			var Range = Max - Min;
-			var Rand = Math.random();
-			return (Min + Math.round(Rand * Range));
-		},
-		generateMixed : function(n) {
-			var chars = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
+  } else {
+    factory(jQuery);
+  }
+}(function() {
+  $.tools = {
+    getParams : function(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null)
+        return decodeURI(r[2]);
+      return null;
+    },
+    getStyle : function(obj, attr) {
+      if (obj.currentStyle) {
+        return obj.currentStyle[attr];
+      } else {
+        return getComputedStyle(obj, false)[attr];
+      }
+    },
+    getRandomNum : function(Min, Max) {
+      var Range = Max - Min;
+      var Rand = Math.random();
+      return (Min + Math.round(Rand * Range));
+    },
+    generateMixed : function(n) {
+      var chars = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 					'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
 					'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
 					'Y', 'Z' ];
-			var res = "";
-			for (var i = 0; i < n; i++) {
-				var id = Math.ceil(Math.random() * 35);
-				res += chars[id];
-			}
-			return res;
-		},
+      var res = "";
+      for (var i = 0; i < n; i++) {
+        var id = Math.ceil(Math.random() * 35);
+        res += chars[id];
+      }
+      return res;
+    },
     tmpl: function(id, data) {
 
 
@@ -68,7 +68,7 @@
     //                  (http:      )?(  (//  )     (jblas      )    :(password   )   @   (mycompany.com                 )    :(8080  )         (/mail/inbox                    )  (?msg...)  (#..)
     urlParseRE: /^\s*(((([^:\/#\?]+:)?(?:(\/\/)((?:(([^:@\/#\?]+)(?:\:([^:@\/#\?]+))?)@)?(([^:\/#\?\]\[]+|\[[^\/\]@#?]+\])(?:\:([0-9]+))?))?)?)?((\/?(?:[^\/\?#]+\/+)*)([^\?#]*)))?(\?[^#]+)?)(#.*)?/,
     parseUrl: function(url) {
-      var matches = utils.urlParseRE.exec( url || "" ) || [];
+      var matches = utils.urlParseRE.exec(url || "") || [];
 
       // Create an object that allows the caller to access the sub-matches
       // by name. Note that IE returns an empty string instead of undefined,
@@ -95,11 +95,11 @@
       };
     },
     readCookie: function (cookieName) {
-     var re = new RegExp('[; ]'+cookieName+'=([^\\s;]*)');
-     var sMatch = (' '+document.cookie).match(re);
-     if (cookieName && sMatch) return unescape(sMatch[1]);
-     return '';
+      var re = new RegExp('[; ]' + cookieName + '=([^\\s;]*)');
+      var sMatch = (' ' + document.cookie).match(re);
+      if (cookieName && sMatch) return unescape(sMatch[1]);
+      return '';
     }
 
-	};
+  };
 }));

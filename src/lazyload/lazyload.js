@@ -8,13 +8,13 @@
  *
  */
 
-!( function( factory ) {
- if ( typeof define === "function" && define.amd ) {
-   define(factory );
- } else {
-   factory( );
- }
-}(function( ){
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
+  } else {
+    factory();
+  }
+}(function() {
 
   // All images.
   var images            = []
@@ -26,11 +26,11 @@
       , src = el.getAttribute('data-src');
     img.onload = function() {
       el.src = src;
-      fn? fn.call(el) : null;
+      fn ? fn.call(el) : null;
     }
     img.onerror = function() {
       el.src = defaultImg;
-      fn? fn.call(el) : null;
+      fn ? fn.call(el) : null;
     }
     img.src = src;
   }
@@ -40,11 +40,11 @@
       , src = el.getAttribute('data-backgroundimage');
     img.onload = function() {
       el.style.backgroundImage = 'url(' + src + ')';
-      fn? fn.call(el) : null;
+      fn ? fn.call(el) : null;
     }
     img.onerror = function() {
       el.style.backgroundImage = 'url(' + defaultImg + ')';
-      fn? fn.call(el) : null;
+      fn ? fn.call(el) : null;
     }
     img.src = src;
   }
@@ -70,7 +70,7 @@
   function processScroll() {
 
     for (var i = 0; i < images.length; i++) {
-      if (!images[i].lazyloaded && elementInViewport(images[i]) ) {
+      if (!images[i].lazyloaded && elementInViewport(images[i])) {
         loadImage(images[i], function () {
           this.lazyloaded = true;
           this.classList.remove('lazy');
@@ -79,7 +79,7 @@
     }
 
     for (var i = 0; i < backgroundImages.length; i++) {
-      if (!backgroundImages[i].lazyloaded && elementInViewport(backgroundImages[i]) ) {
+      if (!backgroundImages[i].lazyloaded && elementInViewport(backgroundImages[i])) {
         loadBackgroundImage(backgroundImages[i], function () {
           this.lazyloaded = true;
           this.classList.remove('lazy');
@@ -116,7 +116,7 @@
       window.addEventListener('scroll', processScroll);
       window.addEventListener('touchend', processScroll);
       window.addEventListener('touchmove', processScroll);
-      setInterval(function(){
+      setInterval(function() {
         processScroll();
       }, 1000)
     }

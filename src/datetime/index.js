@@ -1,4 +1,4 @@
-(function(){
+(function() {
   var loadScript = function(url, callback) {
     var script = document.createElement('script');
     script.src = url;
@@ -6,7 +6,7 @@
     document.head.appendChild(script);
   }
 
-  loadScript('./rome.min.js', function(){
+  loadScript('./rome.min.js', function() {
 
     rome.moment.defineLocale('zh-cn', {
       months : '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),

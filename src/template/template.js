@@ -1,10 +1,10 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
-    factory( );
+    factory();
   }
-}(function(){
+}(function() {
 
   var fn = function(html) {
 
@@ -69,61 +69,61 @@
   }
 
   var namespace = '_',
-      updateBy = function(d) {
-        try {
-          var holder = this[namespace + 'holder'] || ( this.getAttribute('data-holder') && document.querySelector(this.getAttribute('data-holder')) );
-          if (!holder) {
-            console.log('Holder is empty.')
-            return;
-          }
-          holder.innerHTML = this[namespace + 'fn'](d);
-
-          this.dispatchEvent(new Event('template-updated', {bubbles: true}));
-        } catch (e) {
-          console.log(e);
-          showError.call(this, e);
+    updateBy = function(d) {
+      try {
+        var holder = this[namespace + 'holder'] || (this.getAttribute('data-holder') && document.querySelector(this.getAttribute('data-holder')));
+        if (!holder) {
+          console.log('Holder is empty.')
+          return;
         }
-      },
-      appendBy = function(d) {
-        try {
-          var holder = this[namespace + 'holder'] || ( this.getAttribute('data-holder') && document.querySelector(this.getAttribute('data-holder')) );
-          if (!holder) {
-            console.log('Holder is empty.')
-            return;
-          }
+        holder.innerHTML = this[namespace + 'fn'](d);
 
-          var wrapper = this.getAttribute('data-wrapper');
-
-          if (wrapper) {
-            wrapper = document.createElement(wrapper)
-            wrapper.innerHTML = this[namespace + 'fn'](d);
-            while (wrapper.children.length > 0)
-              holder.appendChild(wrapper.children[0])
-          } else {
-            holder.innerHTML += this[namespace + 'fn'](d);
-          }
-
-          this.dispatchEvent(new Event('template-appended', {bubbles: true}));
-        } catch (e) {
-          console.log(e);
-          showError.call(this, e);
+        this.dispatchEvent(new Event('template-updated', {bubbles: true}));
+      } catch (e) {
+        console.log(e);
+        showError.call(this, e);
+      }
+    },
+    appendBy = function(d) {
+      try {
+        var holder = this[namespace + 'holder'] || (this.getAttribute('data-holder') && document.querySelector(this.getAttribute('data-holder')));
+        if (!holder) {
+          console.log('Holder is empty.')
+          return;
         }
-      },
-      htmlBy = function(d) {
-        try {
-          return this[namespace + 'fn'](d);
-        } catch (e) {
-          console.log(e);
-          showError.call(this, e)
+
+        var wrapper = this.getAttribute('data-wrapper');
+
+        if (wrapper) {
+          wrapper = document.createElement(wrapper)
+          wrapper.innerHTML = this[namespace + 'fn'](d);
+          while (wrapper.children.length > 0)
+            holder.appendChild(wrapper.children[0])
+        } else {
+          holder.innerHTML += this[namespace + 'fn'](d);
         }
-      };
+
+        this.dispatchEvent(new Event('template-appended', {bubbles: true}));
+      } catch (e) {
+        console.log(e);
+        showError.call(this, e);
+      }
+    },
+    htmlBy = function(d) {
+      try {
+        return this[namespace + 'fn'](d);
+      } catch (e) {
+        console.log(e);
+        showError.call(this, e)
+      }
+    };
 
   var init = function() {
 
     var i         = 0,
-        eles      = document.querySelectorAll('[data-role="template"]'),
-        max       = eles.length,
-        ele;
+      eles      = document.querySelectorAll('[data-role="template"]'),
+      max       = eles.length,
+      ele;
 
     for (;i < max; i++) {
       ele = eles[i];

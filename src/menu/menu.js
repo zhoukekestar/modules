@@ -1,10 +1,10 @@
-!( function( factory ) {
-  if ( typeof define === "function" && define.amd ) {
-    define( factory );
+!(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
   } else {
     factory();
   }
-}( function() {
+}(function() {
 
   var addListener = function() {
 
@@ -21,7 +21,7 @@
       var target = path[0];
 
       // ul > li > a
-      if (target.nodeName === 'A' && path[1].nodeName === 'LI' && path[2].nodeName === 'UL'){
+      if (target.nodeName === 'A' && path[1].nodeName === 'LI' && path[2].nodeName === 'UL') {
 
         // ul.nav > li > a
         if (path[2].classList.contains('nav')) {
@@ -62,9 +62,9 @@
 
   var init = function() {
     var role = document.querySelector('[data-role="menu"]'),
-        namespace = '_',
-        i,
-        max;
+      namespace = '_',
+      i,
+      max;
 
     if (role && !role[namespace + 'inited']) {
 
