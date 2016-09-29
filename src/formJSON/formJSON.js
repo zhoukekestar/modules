@@ -228,6 +228,12 @@
       res = integerKeysAsArrayIndexes(res);
     res = options.data.call(self, res);
 
+    /**
+     * If there are no data should be sent, just return.
+     */
+    if (res === null) {
+      return;
+    }
 
     // Stringify result object.
     if (method === "GET") {
@@ -248,15 +254,6 @@
       res = JSON.stringify(res);
     }
 
-
-
-
-    /**
-     * If there are no data should be sent, just return.
-     */
-    if (res === 'null') {
-      return;
-    }
 
     /**
      *
