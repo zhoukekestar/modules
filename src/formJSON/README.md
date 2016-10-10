@@ -5,6 +5,7 @@
 * `action` 发送请求url
 * `method` 表示发送请求方法，默认使用POST，可选值为POST，GET，PUT，DELETE
 * `data-target` 传入元素选择器，表示当前的所有处理函数将由目标元素处理（包括onended, _data, onerror）
+* `timeout` 数字，表示超时时间，默认为20s
 
 ## onended(response, xhr)
 onended方法将在form表单异步提交后，成功返回时调用，返回参数

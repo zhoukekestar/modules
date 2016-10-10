@@ -261,7 +261,7 @@
      *
      */
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.timeout = 20000;
+    xmlHttp.timeout = (+self.getAttribute('data-timeout') || 20000);
     action = (action === undefined ? (self.getAttribute('action') || location.href) : action);
 
     if (method === 'GET') {
