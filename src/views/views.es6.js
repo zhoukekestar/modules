@@ -13,7 +13,7 @@
       position: fixed;
     }
     body [data-role=view] {
-      position: absolute;
+      position: fixed;
       display: none;
       top: 0;
       height: 100%;

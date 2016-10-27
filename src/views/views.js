@@ -3,16 +3,16 @@
   var ANIMATETIME = 0.2;
 
   var style = document.createElement('style');
-  style.innerHTML = '\n    html, body {\n      margin: 0;\n      padding: 0;\n      overflow: hidden;\n      height: 100%;\n      width: 100%;\n      position: fixed;\n    }\n    body [data-role=view] {\n      position: absolute;\n      display: none;\n      top: 0;\n      height: 100%;\n      width: 100%;\n      padding: 20px;\n      box-sizing: border-box;\n      transition: left ' + ANIMATETIME + 's;\n    }\n  ';
+  style.innerHTML = '\n    html, body {\n      margin: 0;\n      padding: 0;\n      overflow: hidden;\n      height: 100%;\n      width: 100%;\n      position: fixed;\n    }\n    body [data-role=view] {\n      position: fixed;\n      display: none;\n      top: 0;\n      height: 100%;\n      width: 100%;\n      padding: 20px;\n      box-sizing: border-box;\n      transition: left ' + ANIMATETIME + 's;\n    }\n  ';
   document.head.appendChild(style);
 
   var CONTROL = {},
-    views = document.querySelectorAll('[data-role=view]'),
-    defautView = location.hash && document.querySelector(location.hash + '[data-role=view]') || document.querySelector('[data-role=view][data-default=true]') || document.querySelector('[data-role=view]'),
-    currentView = defautView,
-    nextView = null,
-    prevView = null,
-    running = false;
+      views = document.querySelectorAll('[data-role=view]'),
+      defautView = location.hash && document.querySelector(location.hash + '[data-role=view]') || document.querySelector('[data-role=view][data-default=true]') || document.querySelector('[data-role=view]'),
+      currentView = defautView,
+      nextView = null,
+      prevView = null,
+      running = false;
 
   var overrideSetAttribute = function () {
     var _setAttribute = this.setAttribute;
