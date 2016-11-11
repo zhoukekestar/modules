@@ -1,3 +1,6 @@
+## webcomponents
+采用[webcomponents](https://zhoukekestar.github.io/webcomponents/components/form-json/demo.html)方式使用formJSON
+
 ## 指定formJSON
 使用`data-role='formJSON'`指定formJSON，action和method属性与form类似
 
