@@ -51,9 +51,9 @@
 * [webcomponents](http://webcomponents.org/polyfills/)
 
 ## WebComponents
-You should use [webcomponents](https://github.com/zhoukekestar/webcomponents) to build you next web application !!
+You should use [webcomponents](https://github.com/zhoukekestar/webcomponents) to build your next web application !!
 
-[This project](https://github.com/zhoukekestar/webcomponents) is a great components project for those modules.
+[This project](https://github.com/zhoukekestar/webcomponents) is a components project for those modules.
 
 ## 个人观点
 #### 1、对框架的看法：
