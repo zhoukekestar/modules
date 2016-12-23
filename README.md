@@ -50,8 +50,10 @@
 * [polyfill-service](https://github.com/Financial-Times/polyfill-service)
 * [webcomponents](http://webcomponents.org/polyfills/)
 
-## webcomponents
-* [formJSON](https://zhoukekestar.github.io/webcomponents/components/form-json/demo.html)
+## WebComponents
+You should use [webcomponents](https://github.com/zhoukekestar/webcomponents) to build you next web application !!
+
+[This project](https://github.com/zhoukekestar/webcomponents) is a great components project for those modules.
 
 ## 个人观点
 #### 1、对框架的看法：
