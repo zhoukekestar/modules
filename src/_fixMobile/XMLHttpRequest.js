@@ -28,7 +28,7 @@
 
       // <Global>.XMLHttpRequest
     global.XMLHttpRequest = function XMLHttpRequest() {
-      var request = this, nativeRequest = request._request = new NativeXMLHttpRequest();
+      var request = this, nativeRequest = request._request = NativeXMLHttpRequest ? new NativeXMLHttpRequest() : new ActiveXObject('MSXML2.XMLHTTP.3.0');
 
       nativeRequest.onreadystatechange = function () {
         request.readyState = nativeRequest.readyState;
