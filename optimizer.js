@@ -17,7 +17,7 @@ var optimizeModules = function(index, callback) {
     return callback(null, results);
   }
   config.name = currentModules[index];
-  console.log(config.name + ' is optimizing...');
+  // console.log(config.name + ' is optimizing...');
   requirejs.optimize(config, function (buildResponse) {
     results += currentContent;
     return optimizeModules(index + 1, callback);
