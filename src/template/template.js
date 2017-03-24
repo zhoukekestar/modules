@@ -76,7 +76,7 @@
           console.log('Holder is empty.')
           return;
         }
-        holder.innerHTML = this[namespace + 'fn'](d);
+        holder.innerHTML = this[namespace + 'fn'](d).replace(/\s{1,}/g, ' ');
 
         this.dispatchEvent(new Event('template-updated', {bubbles: true}));
       } catch (e) {
@@ -96,7 +96,7 @@
 
         if (wrapper) {
           wrapper = document.createElement(wrapper)
-          wrapper.innerHTML = this[namespace + 'fn'](d);
+          wrapper.innerHTML = this[namespace + 'fn'](d).replace(/\s{1,}/g, ' ');
           while (wrapper.children.length > 0)
             holder.appendChild(wrapper.children[0])
         } else {
