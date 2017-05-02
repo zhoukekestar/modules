@@ -1,3 +1,6 @@
+# Attention!
+请使用[riot](http://riotjs.com/)代替。
+
 ## 使用组件时可配置属性
 * `data-is` 指定使用的组件名称
 * `data-bind` 指定组件绑定数据
