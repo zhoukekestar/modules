@@ -14,8 +14,8 @@
 | deletable   | ios样式的删除按钮 | 5 |
 | editor      | 富文本编辑器 | 6 |
 | events      | 增加手机端事件（左划、右划、长按） | 5 |
-| formJSON    | JSON表单异步提交 | **9** |
-| formValidator| 表单字段校验 | **8** |
+| formJSON    | JSON表单异步提交 Please use [form-json](https://github.com/zhoukekestar/form-json) instead. | **9** |
+| formValidator| 表单字段校验 Please use [input-validator](https://github.com/zhoukekestar/input-validator) instead. | **8** |
 | imageView   | 图片全屏查看 | 4 |
 | lazyload    | 图片的懒加载（包括背景图片） | **9** |
 | loadingPage | “加载中”动画（屏蔽交互） | 7 |
