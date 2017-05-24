@@ -19,7 +19,7 @@
 | imageView   | 图片全屏查看 | 4 |
 | lazyload    | 图片的懒加载（包括背景图片） | **9** |
 | loadingPage | “加载中”动画（屏蔽交互） | 7 |
-| loadpage    | 理想化的单页模块，受jquery mobile启发（还不够成熟） | 4 |
+| loadpage    | 请使用[barba](https://github.com/luruke/barba.js/)代替<br>理想化的单页模块，受jquery mobile启发（还不够成熟） | 4 |
 | menu        | 菜单（未完善） | 4 |
 | paging      | 分页模块 | **8** |
 | panel       | panel（未完善） | 3 |
