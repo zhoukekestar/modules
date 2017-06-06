@@ -31,7 +31,7 @@
 | sort        | 排序（未完成）  | 2 |
 | tabs        | tab模块 | **8** |
 | template    | 模板模块 | **9** |
-| toast       | 提示消息模块 | 6 |
+| toast       | 请使用[新模块](https://github.com/zhoukekestar/toast)代替 <br>提示消息模块 | 6 |
 | tooltip     | tooltip 提示模块 | 6 |
 | upload      | 图片上传 | 6 |
 | views       | 简单的单页应用框架 | 7 |
